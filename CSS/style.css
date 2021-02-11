@@ -484,7 +484,7 @@ nav {
   top: 0;
   font-size: 16px;
   font-weight: 500;
-  color: var(--text-black-600);
+  color: var(--skin-color);
   margin-top: -40px;
 }
 
