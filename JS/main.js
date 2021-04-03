@@ -21,7 +21,7 @@
 })();
 
 function bodyScrollingToggle() {
-    document.body.classList.toggle("stop-scrolling");
+    document.body.classList.toggle("hidden-scrolling");
 }
 
 (() =>{
@@ -32,7 +32,7 @@ function bodyScrollingToggle() {
     popup = document.querySelector(".portfolio-popup"),
     prevBtn = popup.querySelector(".pp-prev"),
     nextBtn = popup.querySelector(".pp-next"),
-    closeBtn = popup.querySelector(".pp.close"),
+    closeBtn = popup.querySelector(".pp-close"),
     projectDetailsContainer = popup.querySelector(".pp-details")
     projectDetailsBtn = popup.querySelector(".pp-project-details-btn");
     let itemIndex, slideIndex, screenshots;
@@ -84,6 +84,9 @@ function bodyScrollingToggle() {
 
      closeBtn.addEventListener("click", () =>{
          popupToggle();
+         if(projectDetailsContainer.classList.contains("active")){
+            popupDetailsToggle();
+        }
      })
 
      function popupToggle() {
@@ -124,17 +127,40 @@ function bodyScrollingToggle() {
          popupSlideshow();
      })
 
-     projectDetailsBtn.addEventListener("click", () =>{
+     function popupDetails() {
+		if(!portfolioItems[itemIndex].querySelector(".portfolio-item-details")){
+			projectDetailsBtn.style.display="none";
+			return;
+		}
+		projectDetailsBtn.style.display="block";
+
+
+		const details=portfolioItems[itemIndex].querySelector(".portfolio-item-details").innerHTML;
+		popup.querySelector(".pp-project-details").innerHTML= details;
+		const title=portfolioItems[itemIndex].querySelector(".portfolio-item-title").innerHTML;
+		popup.querySelector(".pp-title h2").innerHTML=title;
+		const category=portfolioItems[itemIndex].getAttribute("data-category");
+		popup.querySelector(".pp-project-category").innerHTML=category.split("-").join(" ");
+	}
+
+     projectDetailsBtn.addEventListener("click",() =>{
          popupDetailsToggle();
      })
 
-     function popupDetailsToggle() {
+     function popupDetailsToggle(){
          if(projectDetailsContainer.classList.contains("active")){
+            // projectDetailsBtn.querySelector("i").classList.remove("fa-minus");
+            // projectDetailsBtn.querySelector("i").classList.add("fa-plus");
+            projectDetailsContainer.classList.remove("active");
+            projectDetailsContainer.style.maxHeight = 0 + "px"
 
          }
          else{
-             projectDetailsContainer.classList.add("active");
-             projectDetailsContainer.style.maxHeight = projectDetailsContainer.scrollHeight + "px";
+            // projectDetailsBtn.querySelector("i").classList.remove("fa-plus");
+            // projectDetailsBtn.querySelector("i").classList.add("fa-minus");
+            projectDetailsContainer.classList.add("active");
+            projectDetailsContainer.style.maxHeight = projectDetailsContainer.scrollHeight + "px";
+            popup.scrollTo(0,projectDetailsContainer.offsetTop);
          }
      }
 
