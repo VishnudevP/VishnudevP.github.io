@@ -699,6 +699,7 @@ nav {
   display: block;
   margin: 0 auto 30px;
   position: relative;
+  color: #d8d8d8;
 }
 
 .service-item-inner .icon:after {
@@ -716,6 +717,10 @@ nav {
   font-size: 25px;
   margin: 17.5px 0 0 0;
   transition: all 0.3s ease;
+}
+
+.service-section .service-item-inner .icon .iconthing:hover {
+  color: var(--skin-color);
 }
 
 .service-item-inner h3 {

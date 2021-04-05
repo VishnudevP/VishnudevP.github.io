@@ -14,7 +14,9 @@
   <!-- <link rel="stylesheet" type="text/css" href="/CSS/Themes/color-2.css">
   <link rel="stylesheet" type="text/css" href="/CSS/Themes/color-3.css">
   <link rel="stylesheet" type="text/css" href="/CSS/Themes/color-4.css">
-  <link rel="stylesheet" type="text/css" href="/CSS/Themes/color-5.css"> -->
+  <link rel="stylesheet" type="text/css" href="/CSS/Themes/color-5.css">
+  <link rel="stylesheet" href="/CSS/style-switcher.css"> -->
+  <link rel="stylesheet" href="/CSS/responsive.css">
 </head>
 <body>
 
@@ -25,17 +27,31 @@
   </div>
   <nav>
       <ul id="nav-links" class="nav-links">
-          <li><a id="nav-link" class="nav-link outer-shadow hover-in-shadow" href="#about">About Me</a></li>
-          <li><a id="nav-link" class="nav-link outer-shadow hover-in-shadow" href="#portoflio">Portfolio</a></li>
-          <li><a id="nav-link" class="nav-link outer-shadow hover-in-shadow" href="#contact">Contact</a></li>
-
+          <li><a id="nav-link" class="link-item nav-link outer-shadow hover-in-shadow" href="#about">About Me</a></li>
+          <li><a id="nav-link" class="link-item nav-link outer-shadow hover-in-shadow" href="#portfolio">Portfolio</a></li>
+          <li><a id="nav-link" class="link-item nav-link outer-shadow hover-in-shadow" href="#contact">Contact</a></li>
       </ul>
+      <!-- <div class="style-switcher-toggler s-icon outer-shadow hover-in-shadow">
+        <i class="fas fa-cog fa-spin"></i>
+    </div>
+    <div class="day-night s-icon outer-shadow hover-in-shadow">
+        <i class="fas"></i>
+    </div>
+    <h4>Theme Colors</h4>
+    <div class="colors">
+        <span class="color-1" onclick="setActiveStyle('color-1')"></span>
+        <span class="color-2" onclick="setActiveStyle('color-2')"></span>
+        <span class="color-3" onclick="setActiveStyle('color-3')"></span>
+        <span class="color-4" onclick="setActiveStyle('color-4')"></span>
+        <span class="color-5" onclick="setActiveStyle('color-5')"></span>
+    </div> -->
+</div>
   </nav>
 </header>
 <!-- Header End -->
 
 <!-- Home section -->
-<section class="home-section">
+<section class="home-section section " id="home">
   <div class="background-animations">
     <img src="https://github.githubassets.com/images/modules/site/home/hero-glow.svg" alt="">
     <div class="animation animation-1"></div>
@@ -56,7 +72,7 @@
         <p class="hello">👋 Hello</p>
         <h2 class="name">I'm Vishnudev Poil</h2>
         <!-- <h1 class="skills">React/Javascript/CSS</h1> -->
-        <a href="#" class="cta-btn outer-shadow hover-in-shadow">More About Me</a>
+        <a href="#about" class="link-item cta-btn outer-shadow hover-in-shadow">More About Me</a>
       </div>
       <div class="home-img">
         <div class="img-box inner-shadow">
@@ -74,7 +90,7 @@
   </div>
 </section>
 
-<section class="about-section">
+<section class="about-section" id="about">
   <div class="container">
     <div class="row">
       <div class="section-title">
@@ -96,7 +112,7 @@
       </div>
       <div class="about-info">
         <p><span>Hello! My name is Vishnudev Poil. I am a self taught developer based in Ontario, Canada.</span> I am a well-organised person, problem solver, independent student with high attention to detail. Fan of anime, outdoor activities, English literature, biology and, recently, TV series. Feel free to contact and get connected with me!</p>
-        <a href="resume.pdf" target="blank" class=" cta-btn outer-shadow hover-in-shadow">Download Resume</a>
+        <a href="resume.pdf" target="blank" class="link-item cta-btn outer-shadow hover-in-shadow">Download Resume</a>
       </div>
     </div>
   </div>
@@ -341,7 +357,7 @@
 </section>
 
 
-<section class="portfolio-section section">
+<section class="portfolio-section section" id="portfolio">
   <div class="container">
     <div class="row-g">
       <div class="section-title">
@@ -604,7 +620,7 @@
   </div>
 </div>
 
-<section class="contact-section section">
+<section class="contact-section section" id="contact">
   <div class="container">
     <div class="row-g">
       <div class="section-title">
@@ -613,22 +629,22 @@
     </div>
     <div class="row-g">
       <div class="contact-form">
-        <form>
+        <form action="https://formspree.io/f/mjvjvyod" method="POST">
             <div class="row-g">
               <div class="w-50">
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <input type="text" placeholder="Name" class="input-control">
+                  <input name="name" type="text" placeholder="Name" class="input-control">
                 </div>
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <input type="text" placeholder="Email" class="input-control">
+                  <input name="_replyto" type="text" placeholder="Email" class="input-control">
                 </div>
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <input type="text" placeholder="Subject" class="input-control">
+                  <input name="subject" type="text" placeholder="Subject" class="input-control">
                 </div>
               </div>
               <div class="w-50">
                 <div class="input-group outer-shadow hover-in-shadow">
-                  <textarea class="input-control" placeholder="Message"></textarea>
+                  <textarea name="message" class="input-control" placeholder="Message"></textarea>
                 </div>
               </div>
             </div>
@@ -645,6 +661,7 @@
 
 <!-- main js -->
 <script src="/JS/main.js"></script>
+<!-- <script src="/JS/style-switcher.js"></script> -->
 <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-a11y="true"></script>
 <!-- style switcher js -->
 </body>
