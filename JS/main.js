@@ -135,12 +135,12 @@ function bodyScrollingToggle() {
 		projectDetailsBtn.style.display="block";
 
 
-		const details=portfolioItems[itemIndex].querySelector(".portfolio-item-details").innerHTML;
-		popup.querySelector(".pp-project-details").innerHTML= details;
-		const title=portfolioItems[itemIndex].querySelector(".portfolio-item-title").innerHTML;
-		popup.querySelector(".pp-title h2").innerHTML=title;
-		const category=portfolioItems[itemIndex].getAttribute("data-category");
-		popup.querySelector(".pp-project-category").innerHTML=category.split("-").join(" ");
+		const details = portfolioItems[itemIndex].querySelector(".portfolio-item-details").innerHTML;
+		popup.querySelector(".pp-project-details").innerHTML = details;
+		const title = portfolioItems[itemIndex].querySelector(".portfolio-item-title").innerHTML;
+		popup.querySelector(".pp-title h2").innerHTML = title;
+		const category = portfolioItems[itemIndex].getAttribute("data-category");
+		popup.querySelector(".pp-project-category").innerHTML = category.split("-").join(" ");
 	}
 
      projectDetailsBtn.addEventListener("click",() =>{

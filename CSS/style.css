@@ -973,6 +973,7 @@ nav {
 
 .portfolio-popup .info ul li span {
   font-weight: 400;
+  text-transform: capitalize;
 }
 
 .portfolio-popup .info ul li a {
