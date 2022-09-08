@@ -14,6 +14,16 @@
   nav {
     flex: 3;
   }
+
+  .nav-link {
+    color: var(--bg-black-900);
+    font-size: 16px;
+
+    margin-right: 0px;
+    padding: 8px 14px 8px 14px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -33,6 +43,16 @@
 
   nav {
     flex: 3;
+  }
+
+  .nav-link {
+    color: var(--bg-black-900);
+    font-size: 15px;
+
+    margin-right: 0px;
+    padding: 8px 12px 8px 12px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
   }
 
   .home-section .home-text {
@@ -94,6 +114,19 @@
     right: auto;
   }
 }
+@media (max-width: 660px){
+  .nav-link {
+    color: var(--bg-black-900);
+    font-size: 13px;
+  
+    margin-right: 0px;
+    padding: 8px 11px 8px 11px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+  }
+}
+
+
 
 @media (max-width: 574px) {
   .logo-container {
