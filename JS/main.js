@@ -1,4 +1,11 @@
 
+//Clear contact form after refresh
+
+window.onbeforeunload = () => {
+    for(const form of document.getElementsByTagName('form')) {
+      form.reset();
+    }
+  }
 
 // About Section Tabs
 
