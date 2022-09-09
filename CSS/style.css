@@ -11,6 +11,8 @@
   --outer-shadow-0: 0 0 0 #4a83ff, 0 0 0 #68c8ff;
   --inner-shadow: inset 3px 3px 3px #4a83ff, inset -3px -3px 3px #68c8ff;
   --inner-shadow-0: inset 0 0 0 #4a83ff, inset 0 0 0 #68c8ff;
+  --skin-color: #2eb1ed;
+  
 
   
   /* --bg-black-900: #000000;
