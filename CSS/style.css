@@ -1,5 +1,5 @@
 :root {
-  --bg-black-900: #dddddd;
+  /* --bg-black-900: #dddddd;
   --bg-black-100: #ffffff;
   --bg-black-50: #00061f;
   --bg-opacity: rgba(255, 255, 255, 0.5);
@@ -11,11 +11,11 @@
   --outer-shadow-0: 0 0 0 #4a83ff, 0 0 0 #68c8ff;
   --inner-shadow: inset 3px 3px 3px #4a83ff, inset -3px -3px 3px #68c8ff;
   --inner-shadow-0: inset 0 0 0 #4a83ff, inset 0 0 0 #68c8ff;
-  --skin-color: #2eb1ed;
+  --skin-color: #2eb1ed; */
   
 
   
-  /* --bg-black-900: #000000;
+  --bg-black-900: #000000;
   --bg-black-100: #dddddd;
   --bg-black-50: #eff0f4;
   --bg-opacity: rgba(255, 255, 255, 0.5);
@@ -26,7 +26,7 @@
   --outer-shadow: 3px 3px 3px #d0d0d0, -3px -3px 3px #f8f8f8;
   --outer-shadow-0: 0 0 0 #d0d0d0, 0 0 0 #f8f8f8;
   --inner-shadow: inset 3px 3px 3px #d0d0d0, inset -3px -3px 3px #f8f8f8;
-  --inner-shadow-0: inset 0 0 0 #d0d0d0, inset 0 0 0 #f8f8f8; */
+  --inner-shadow-0: inset 0 0 0 #d0d0d0, inset 0 0 0 #f8f8f8;
   
  
 }
