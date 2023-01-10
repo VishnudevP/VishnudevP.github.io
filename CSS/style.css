@@ -316,7 +316,7 @@ nav {
   width: 580px;
   left: 55%;
   top: 150%;
-  animation: topBounce 15s ease-in-out infinite;
+  animation: topBounce 10s ease-in-out infinite;
 }
 
 .animation-4 {
