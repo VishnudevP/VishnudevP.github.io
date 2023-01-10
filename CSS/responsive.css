@@ -2,6 +2,11 @@
   nav {
     flex: 3;
   }
+  .animation-3{
+    width: 480px;
+    height: 480px;
+    top: 140%;
+  }
 }
 
 @media (max-width: 991px) {
