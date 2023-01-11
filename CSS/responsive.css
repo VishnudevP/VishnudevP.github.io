@@ -1,10 +1,25 @@
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   nav {
     flex: 3;
   }
   .animation-3{
     width: 480px;
     height: 480px;
+    top: 140%;
+  }
+}
+
+@media (max-width: 1100px) {
+  nav {
+    flex: 3;
+  }
+  
+  .animation-2{
+    width: 620px;
+  }
+  .animation-3{
+    width: 420px;
+    height: 420px;
     top: 140%;
   }
 }
@@ -29,6 +44,12 @@
     transition: all 0.3s ease;
     border-radius: 6px;
   }
+
+  .home-img {
+    flex: 0 0 42%;
+    max-width: 50%;
+    padding: 5px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -44,6 +65,7 @@
   .home-section .home-img {
     flex: 0 0 100%;
     max-width: 100%;
+    margin-left: 0px;
   }
 
   nav {
@@ -118,6 +140,17 @@
     left: -30px;
     right: auto;
   }
+  .animation-1{
+    width: 150px;
+  }
+
+  .animation-2{
+    display:  none;
+  }
+
+  .animation-3{
+    display:  none;
+  }
 }
 @media (max-width: 660px){
   .nav-link {
@@ -128,6 +161,21 @@
     padding: 8px 11px 8px 11px;
     transition: all 0.3s ease;
     border-radius: 6px;
+  }
+  .animation-1{
+    width: 150px;
+  }
+
+  .animation-2{
+    display:  none;
+  }
+
+  .animation-3{
+    display:  none;
+  }
+  .home-text{
+    padding: 0;
+    margin-left: 0;
   }
 }
 
@@ -163,5 +211,16 @@
   }
   .home-section .home-text h2 {
     font-size: 40px;
+  }
+  .animation-1{
+    width: 150px;
+  }
+
+  .animation-2{
+    display:  none;
+  }
+
+  .animation-3{
+    display:  none;
   }
 }
