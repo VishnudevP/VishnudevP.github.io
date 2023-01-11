@@ -204,8 +204,6 @@ nav {
 
   color: var(--skin-color);
   margin: 42px;
-  border: 2px solid var(--skin-color);
-  border-radius: 50%;
   text-transform: uppercase;
   cursor: pointer;
 }
