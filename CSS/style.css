@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --bg-black-900: #dddddd;
   --bg-black-100: #ffffff;
   --bg-black-50: #00061f;
@@ -13,7 +13,42 @@
   --inner-shadow-0: inset 0 0 0 #4a83ff, inset 0 0 0 #68c8ff;
   --skin-color: #2eb1ed;
  
+} */
+
+
+/* Different Color Themes */
+:root {
+  --bg-black-900: #dddddd;
+  --bg-black-100: #ffffff;
+  --bg-black-50: #00061f;
+  --bg-opacity: rgba(255, 255, 255, 0.5);
+  --text-black-900: #ffffff;
+  --text-black-700: #4ebeff;
+  --text-black-600: #3e7bff;
+  --text-black-300: #0736f5;
+  --outer-shadow: inset 3px 3px 3px #4a83ff, inset -3px -3px 3px #68c8ff;
+  --outer-shadow-0: inset 0 0 0 #4a83ff, inset 0 0 0 #68c8ff;
+  --inner-shadow: 3px 3px 3px #4a83ff, -3px -3px 3px #68c8ff;
+  --inner-shadow-0: 0 0 0 #4a83ff, 0 0 0 #68c8ff;
+  --skin-color: #2eb1ed;
+ 
 }
+/* :root {
+  --bg-black-900: #00061f;
+  --bg-black-100: #00061f;
+  --bg-black-50: #f0f0f0;
+  --bg-opacity: rgba(255, 255, 255, 0.5);
+  --text-black-900: #03124e;
+  --text-black-700: #0736f5;
+  --text-black-600: #3e7bff;
+  --text-black-300: #4ebeff;
+  --outer-shadow: inset 3px 3px 3px #4a83ff, inset -3px -3px 3px #68c8ff;
+  --outer-shadow-0: inset 0 0 0 #4a83ff, inset 0 0 0 #68c8ff;
+  --inner-shadow: 3px 3px 3px #4a83ff, -3px -3px 3px #68c8ff;
+  --inner-shadow-0: 0 0 0 #4a83ff, 0 0 0 #68c8ff;
+  --skin-color: #0736f5;
+ 
+} */
 
 * {
   margin: 0px;
