@@ -1,621 +1,492 @@
-<!DOCTYPE html>
-<html lang="zxx">
-<head>
-  <meta charset="utf-8">
-  <title>Vishnudev Poil</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="/Images/browser-icon.svg">
-  <link rel="stylesheet" type="text/css" href="/CSS/font-awesome.css">
-  <link rel="stylesheet" href="/CSS/brands.css">
-  <link rel="stylesheet" href="/CSS/regular.css">
-  <link rel="stylesheet" href="/CSS/solid.css">
-  <link rel="stylesheet" type="text/css" href="/CSS/style.css">
-  <link rel="stylesheet" type="text/css" href="/CSS/Themes/color-1.css">
-  <link rel="stylesheet" href="/CSS/responsive.css">
-</head>
-<body>
-
-<!-- Header -->
-<header>
-  <div id="logo-container" class="logo-container">
-      <img src="/Images/browser-icon.svg" id="logo" class="logo"></img>
-  </div>
-  <nav>
-      <ul id="nav-links" class="nav-links">
-          <li><a id="nav-link" class="link-item nav-link outer-shadow hover-in-shadow" href="#about">About Me</a></li>
-          <li><a id="nav-link" class="link-item nav-link outer-shadow hover-in-shadow" href="#portfolio">Portfolio</a></li>
-          <li><a id="nav-link" class="link-item nav-link outer-shadow hover-in-shadow" href="#contact">Contact</a></li>
-      </ul>
-</div>
-  </nav>
-</header>
-<!-- Header End -->
-
-<!-- Home section -->
-<section class="home-section section " id="home">
-  <div class="background-animations">
-    <img src="https://github.githubassets.com/images/modules/site/home/hero-glow.svg" alt="">
-    <div class="animation animation-1">
-      <img src="/Images/ani1.svg" alt="">
-    </div>
-    <div class="animation animation-2">
-      <img src="/Images/ani2.svg" alt="">
-    </div>
-    <div class="animation animation-3">
-      <img src="/Images/ani3.svg" alt="">
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row full-screen align-items-center">
-      <div class="home-text">
-        <p class="hello">👋 Hello</p>
-        <h2 class="name">I'm Vishnudev Poil</h2>
-        <!-- <h1 class="skills">React/Javascript/CSS</h1> -->
-        <a href="#about" class="link-item cta-btn outer-shadow hover-in-shadow">More About Me</a>
-      </div>
-      <div class="home-img">
-        <div class="img-box inner-shadow">
-          <!-- Illustration by <a href="https://dribbble.com/thierryfousse">Thierry Fousse</a> from <a href="https://icons8.com/">Icons8</a> -->
-          <img class="proflieimg outer-shadow" src="/Images/profile-pic.png" alt="profile-pic">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about-section" id="about">
-  <div class="container">
-    <div class="row">
-      <div class="section-title">
-        <h2 data-heading="main info" class="about-title">About Me</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="about-img">
-        <div class="img-box inner-shadow">
-          <img src="/Images/aboutimg.png" class="outer-shadow" alt="About Image">
-        </div>
-        <div class="social-links">
-          <a href="https://devpost.com/vipoil04?ref_content=user-portfolio&ref_feature=portfolio&ref_medium=global-nav" target="blank" class="outer-shadow hover-in-shadow"><i class="fab fa-dev"></i></a>
-          <a href="https://github.com/VishnudevP" target="blank" class="outer-shadow hover-in-shadow"><i class="fab fa-github"></i></a>
-          <a href="https://www.instagram.com/vishnudev_poil/" target="blank" class="outer-shadow hover-in-shadow"><i class="fab fa-instagram"></i></a>
-          <a href="www.linkedin.com/in/vishnudev-poil" target="blank" class="outer-shadow hover-in-shadow"><i class="fab fa-linkedin"></i></a>
-          
-        </div>
-      </div>
-      <div class="about-info">
-        <p><span>Hello! My name is Vishnudev Poil. I am a self taught developer based in Ontario, Canada.</span> I am a well-organised person, problem solver, independent student with high attention to detail. Fan of anime, outdoor activities, English literature, biology and, recently, TV series. Feel free to contact and get connected with me!</p>
-        <a href="Vishnudev_s_Resume_Website.pdf" target="blank" class="link-item cta-btn outer-shadow hover-in-shadow">Download Resume</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="about-tabs">
-      <!-- <span class="tab-item" data-target=".skills">Skills</span> -->
-      <span class="tab-item outer-shadow active" data-target=".workexperience">Timeline</span>
-      <span class="tab-item " data-target=".experience">Activities</span>
-      <span class="tab-item" data-target=".education">Education</span>
-    </div>
-  </div>
-  
-  <!-- Skills section commented for now -->
-  <!-- <div class="row-g">
-    <div class="skills tab-content">
-      <div class="row ">
-        <div class="skill-item">
-          <p>Python</p>
-          <div class="progress inner-shadow">
-            <div class="progress-bar" style="width: calc(100% - 14px)  ">
+<!doctype html>
+<html lang="en" data-palette="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Vishnudev Poil — developer with a background in Management Engineering at Waterloo. Selected projects, and a little more tucked in."
+    />
+    <meta name="theme-color" content="#1c1b1a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Vishnudev Poil — Developer" />
+    <meta property="og:url" content="https://vishnudevp.github.io/" />
+    <meta
+      property="og:description"
+      content="A small collection of my work, with a little more tucked in."
+    />
+    <meta name="twitter:card" content="summary" />
+    <title>Vishnudev Poil — Developer</title>
+    <link rel="canonical" href="https://vishnudevp.github.io/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (() => {
+        let theme = matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        try {
+          const saved = localStorage.getItem("vishnu-theme");
+          if (saved === "light" || saved === "dark") theme = saved;
+        } catch {}
+        document.documentElement.dataset.palette = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.documentElement.style.backgroundColor =
+          theme === "dark" ? "#1c1b1a" : "#f5f0e8";
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === "dark" ? "#1c1b1a" : "#f5f0e8";
+      })();
+    </script>
+    <noscript>
+      <style>
+        #portfolio {
+          display: block !important;
+        }
+        #portfolio .bc-bonus[hidden] {
+          display: block !important;
+        }
+        #portfolio .bc-theme-toggle,
+        #portfolio .bc-card-place,
+        #portfolio .bc-bonus-link,
+        #portfolio .bc-return,
+        #portfolio .bc-end-return,
+        #portfolio .bc-small-card,
+        #portfolio .bc-shuffle-hint {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#intro">Skip to content</a>
+    <div
+      id="portfolio"
+      aria-label="Vishnudev Poil’s portfolio"
+      data-palette="dark"
+      data-finish="Foil"
+      data-motion="deal"
+    >
+      <div class="bc-cover bc-sheet">
+        <header class="bc-header">
+          <a href="#intro" class="bc-home">
+            vishnu
+            <span>/</span>
+            poil
+          </a>
+          <nav aria-label="Portfolio">
+            <a href="#work">Work</a>
+            <a
+              href="https://github.com/VishnudevP"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/vishnudev-poil"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Say hello
+            </a>
+            <button
+              class="bc-theme-toggle"
+              type="button"
+              aria-label="Switch to light mode"
+            >
+              <span class="bc-theme-sun" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path
+                    d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+                  />
+                </svg>
+              </span>
+              <span class="bc-theme-moon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M20.5 13.1A8.5 8.5 0 0 1 10.9 3.5 8.5 8.5 0 1 0 20.5 13.1Z"
+                  />
+                </svg>
+              </span>
+              <span class="bc-theme-label">Light mode</span>
+            </button>
+          </nav>
+        </header>
+        <main>
+          <section class="bc-intro" id="intro">
+            <div class="bc-intro-copy">
+              <span class="bc-kicker">DEVELOPER &amp; CURIOUS PERSON</span>
+              <h1>
+                Hi, I’m Vishnu
+                <span>.</span>
+              </h1>
+              <p>
+                I build software. My background is in Management Engineering at
+                Waterloo.
+              </p>
+              <p class="bc-intro-last">
+                This is a small collection of my work,
+                <br />
+                with a little more tucked in.
+              </p>
             </div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <p>Javascript</p>
-          <div class="progress inner-shadow">
-            <div class="progress-bar" style="width: calc(100% - 14px) ">
+            <div class="bc-card-place">
+              <button
+                class="bc-playing-card"
+                type="button"
+                aria-label="Open the bonus chapter with Vishnu’s playing card"
+              >
+                <span class="bc-card-object" aria-hidden="true">
+                  <span class="bc-card-face bc-card-front">
+                    <span class="bc-card-frame"></span>
+                    <span class="bc-card-corner bc-card-corner-top">
+                      V
+                      <small>P</small>
+                    </span>
+                    <span class="bc-card-corner bc-card-corner-bottom">
+                      V
+                      <small>P</small>
+                    </span>
+                    <span class="bc-guilloche">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+                    <span class="bc-card-letter">
+                      <span>V</span>
+                      <span>V</span>
+                    </span>
+                    <span class="bc-card-imprint">VISHNUDEV POIL</span>
+                  </span>
+                  <span class="bc-card-face bc-card-back">
+                    <span class="bc-card-frame"></span>
+                    <span class="bc-card-back-text">
+                      Bonus
+                      <br />
+                      <em>chapter.</em>
+                    </span>
+                    <span class="bc-card-back-foot">THE REST OF THE STORY</span>
+                  </span>
+                </span>
+              </button>
+              <button class="bc-card-hint" type="button">
+                Open bonus chapter
+              </button>
             </div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <p>CSS</p>
-          <div class="progress inner-shadow">
-            <div class="progress-bar" style="width: calc(100% - 14px) ">
+          </section>
+          <section class="bc-work" id="work" aria-label="Selected work">
+            <div class="bc-section-top">
+              <h2>A few things I’ve built</h2>
+              <span>SELECTED WORK</span>
             </div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <p>React</p>
-          <div class="progress inner-shadow">
-            <div class="progress-bar" style="width: calc(100% - 14px) ">
+            <div class="bc-projects">
+              <a
+                class="bc-project bc-oversine"
+                href="https://oversine.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div
+                  class="bc-project-visual bc-auth-visual"
+                  aria-hidden="true"
+                >
+                  <span class="bc-auth-title">oversine</span>
+                  <div class="bc-auth-route">
+                    <span class="bc-auth-point">Agent</span>
+                    <span class="bc-auth-connection"></span>
+                    <span class="bc-auth-gate">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="8" cy="8" r="5" />
+                        <path d="m11.5 11.5 9 9m-4-4 3-3m-6 0 3-3" />
+                      </svg>
+                    </span>
+                    <span class="bc-auth-connection"></span>
+                    <span class="bc-auth-point">Account</span>
+                  </div>
+                  <span class="bc-auth-foot">
+                    Access starts with permission.
+                  </span>
+                </div>
+                <div class="bc-project-caption">
+                  <div>
+                    <h3>Oversine</h3>
+                    <p>Authentication for AI agents.</p>
+                  </div>
+                  <span class="bc-project-link-label">View</span>
+                </div>
+              </a>
+              <details class="bc-project bc-crowdsupply">
+                <summary>
+                  <div
+                    class="bc-project-visual bc-grocery-visual"
+                    aria-hidden="true"
+                  >
+                    <span class="bc-grocery-word">
+                      A little
+                      <br />
+                      local
+                      <br />
+                      <em>knowledge.</em>
+                    </span>
+                    <div class="bc-grocery-labels">
+                      <span>STOCK</span>
+                      <span>QUEUES</span>
+                      <span>COMMUNITY</span>
+                    </div>
+                  </div>
+                  <div class="bc-project-caption">
+                    <div>
+                      <h3>Crowdsupply</h3>
+                      <p>Grocery information, shared locally.</p>
+                    </div>
+                    <span class="bc-more" aria-hidden="true">+</span>
+                  </div>
+                </summary>
+                <p class="bc-project-detail">
+                  Built during COVID to help people share grocery stock and
+                  store queue information.
+                </p>
+              </details>
             </div>
+          </section>
+        </main>
+        <footer class="bc-footer">
+          <span>Vishnudev Poil</span>
+          <span>vishnudev.me</span>
+          <a
+            href="https://github.com/VishnudevP"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          <button type="button" class="bc-bonus-link">Bonus chapter</button>
+        </footer>
+      </div>
+      <section
+        id="bonus"
+        class="bc-bonus bc-sheet"
+        aria-label="Bonus chapter"
+        hidden
+      >
+        <header class="bc-header">
+          <span class="bc-home">
+            vishnu
+            <span>/</span>
+            poil
+          </span>
+          <div class="bc-header-actions">
+            <button class="bc-return" type="button">Back to work</button>
+            <button
+              class="bc-theme-toggle"
+              type="button"
+              aria-label="Switch to light mode"
+            >
+              <span class="bc-theme-sun" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path
+                    d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+                  />
+                </svg>
+              </span>
+              <span class="bc-theme-moon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M20.5 13.1A8.5 8.5 0 0 1 10.9 3.5 8.5 8.5 0 1 0 20.5 13.1Z"
+                  />
+                </svg>
+              </span>
+              <span class="bc-theme-label">Light mode</span>
+            </button>
           </div>
+        </header>
+        <div class="bc-bonus-heading">
+          <span class="bc-kicker">A LITTLE MORE ABOUT ME</span>
+          <h2>
+            The bonus
+            <em>chapter.</em>
+          </h2>
+          <p>
+            Poker, race weekends, fight nights,
+            <br />
+            and another chapter.
+          </p>
         </div>
-        <div class="skill-item">
-          <p>Node</p>
-          <div class="progress inner-shadow">
-            <div class="progress-bar" style="width: calc(100% - 14px) ">
+        <div class="bc-spread">
+          <article class="bc-weekends" data-race="idle">
+            <div class="bc-article-label">01 / AWAY FROM THE KEYBOARD</div>
+            <div class="bc-weekend-title">
+              <span>A good hand.</span>
+              <button
+                class="bc-race-button"
+                type="button"
+                aria-label="A good race. Start the race lights"
+              >
+                A good race.
+              </button>
+              <span>A good fight.</span>
             </div>
-          </div>
-        </div>
-        <div class="skill-item">
-          <p>Express</p>
-          <div class="progress inner-shadow">
-            <div class="progress-bar" style="width: calc(100% - 14px) ">
+            <p>Poker · Formula 1 · UFC</p>
+            <button
+              class="bc-small-card"
+              type="button"
+              aria-label="Shuffle the cards"
+            ></button>
+            <span class="bc-shuffle-hint" aria-hidden="true">Shuffle</span>
+            <div class="bc-race-stage" aria-hidden="true">
+              <div class="bc-race-lights">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <span class="bc-race-caption">Ready?</span>
             </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="row-g">
-      <div class="workexperience tab-content  active">
-        <div class="row">
-          <div class="timeline">
-            <div class="row">
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>May 2025 - August 2025</span>
-                <h3>Full-Stack Developer Intern</h3>
-                <h4>Ground News</h4>
-                <p>At Ground News, I worked on the backend infrastructure that powers news aggregation for thousands of readers. I optimized Elasticsearch and Redis caching to speed up queries, resolved a major MySQL bottleneck that restored reliability for 50K+ subscribers, and built a bias-scoring module that allowed the platform to process over 1,000 additional stories every day. It was a role that taught me how backend changes directly impact end-users at scale.</p>
-                <p style="font-size: 12px;"><span style="font-weight: bold;">Skills:</span>TypeScript · Node.js · Redis · Elasticsearch · MySQL · Circle CI</p>
-                </div>
+            <div class="bc-finish" aria-hidden="true"></div>
+          </article>
+          <article class="bc-chapters">
+            <div class="bc-article-label">02 / JUST ONE MORE CHAPTER</div>
+            <h3>Anime &amp; manhwa.</h3>
+            <div
+              class="bc-book-stack"
+              aria-label="Layout placeholders for your favourite anime and manhwa"
+            >
+              <div class="bc-book bc-book-one">
+                <span>ANIME</span>
+                <strong>
+                  Your
+                  <br />
+                  <em>favourites.</em>
+                </strong>
+                <small>TITLES TO COME</small>
               </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>September 2024 - March 2025</span>
-                <h3>Software Engineering Intern</h3>
-                <h4>Magnify Digital</h4>
-                <p>During this internship, I focused on building and improving a marketing analytics platform. I used Next.js and Node.js APIs to enhance user experience for 10K+ weekly visitors, redesigned ingestion pipelines with GraphQL for more reliable real-time data, and set up automated testing pipelines with Cypress and GitHub Actions. This experience gave me end-to-end exposure, from frontend optimization to backend system reliability and DevOps practices.</p>
-                <p style="font-size: 12px;"><span style="font-weight: bold;">Skills:</span> Next.js · TypeScript · Node.js · GraphQL · Cypress</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>May 2024 - August 2024</span>
-                <h3>Software Engineering Intern</h3>
-                <h4>ShyftLabs</h4>
-                <p>At ShyftLabs, I helped build a high-traffic ad tech dashboard that delivered real-time insights on 50K+ daily impressions. I worked across the stack, from developing responsive dashboards with Next.js and React to designing microservices in Kotlin and Spring Boot. I also created REST APIs with Node.js and GraphQL that improved reliability for analytics data. This was my first exposure to large-scale ad platforms and working with multiple modern backend stacks.</p>
-                <p style="font-size: 12px;"><span style="font-weight: bold;">Skills:</span> React · Next.js · Kotlin · Spring Boot · Node.js · GraphQL · REST APIs · Data Visualization </p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>June 2023 - September 2023</span>
-                <h3>Full-Stack Developer Intern</h3>
-                <h4>WENU</h4>
-                <p>Implemented secure payment processing through the Stripe API, achieving PCI compliance. Utilizing SQL and PHP for efficient server-side coding, I optimized the payment experience. Debugging and issue resolution were streamlined using Cypress and Sentry, enhancing the website's reliability and user experience.</p>
-                <p style="font-size: 12px;"><span style="font-weight: bold;">Skills:</span> React.js · Stripe API · PHP · SQL · Cypress · Sentry · Agile Methodologies </p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>August 2021 - November 2021</span>
-                <h3>Software Engineer Intern</h3>
-                <h4>Sashido</h4>
-                <p>During my tenure at Sashido.io, I conducted thorough system testing, offered feedback for website improvements, and developed a compelling sample application showcasing Sashido.io's technology alongside Google's Teachable Machine. Additionally, I created a highly-viewed tutorial blog, offering in-depth guidance to help users effectively utilize the platform.</p>
-                <p style="font-size: 12px;"><span style="font-weight: bold;">Skills:</span>Python · React.js · Software Documentation · Google's Teachable Machine</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row-g">
-      <div class="experience tab-content">
-        <div class="row">
-          <div class="timeline">
-            <div class="row">
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>March 2020 - April 2021</span>
-                <h3>Full Stack Developer</h3>
-                <h4>Crowdsupply, Canada</h4>
-                <p>Crowdsupply is a crowdsourcing platform that relies on collective grocery stock level updates and grocery store queues to support with safety precautions during the COVID-19 pandemic. The site can be accessed at crowdsupply.ca.</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>November 2020 - February 2021</span>
-                <h3>Event Organizer</h3>
-                <h4>GTA Hacks, Canada</h4>
-                <p>A Hackathon for high school students in the GTA. With numerous sponsors including Google.</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>January 2021 - January 2021</span>
-                <h3>Full Stack Developer/Lead Designer</h3>
-                <h4>Neighbour Network, Canada</h4>
-                <p>Neighbour Network is a web app which is designed to help the elderly and the disabled by providing easy communication with their neighbourhood. This allows for seniors and handicapped citizens to request others to collect groceries or medication that they would have trouble getting themselves.</p>
-                <p><span style="font-weight: bold;">Winner:</span>Blastoff Award - The Postman API Hacks 2021</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>November 2020 - November 2020</span>
-                <h3>Front-end Developer</h3>
-                <h4>Universal, Canada</h4>
-                <p>Universal is an immersive & easy-to-use platform allowing the transfer of personal data to required services through a third-party request system.</p>
-                <p><span style="font-weight: bold;">Winner:</span>People's Choice Award - Enactus Windsor Hacks 2020<br>Second Overall - Hacks and Crafts 2020</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>October 2020 - October 2020</span>
-                <h3>Full Stack Developer/Designer</h3>
-                <h4>Scare-O-Rator, Canada</h4>
-                <p>Scare-O-Rator asks the user to upload an image of their halloween costume, once the user does this, the image is run against our neural network. A rounded confidence score is then outputted to screen to let the user know how scary their costume is.</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>October 2020 - October 2020</span>
-                <h3>Full Stack Developer/Designer</h3>
-                <h4>Math-Comm, Canada</h4>
-                <p>Math-Comm is a math forum that is easy to use and has a simple method of communication. Math-Comm was built in hopes of creating a safe site where students can ask for help and not receive just solutions but actually be taught how to solve the math problem at hand and the ones to come.</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>August 2020 - August 2020</span>
-                <h3>Full Stack Developer/Designer</h3>
-                <h4>Opti-Bot, Canada</h4>
-                <p>Opti-Bot allows user to create their custom robots and take them out for a test ride by facing against other opponents. Using real-world materials to create the bots allows for a near realistic feel to the battle, from designing to battling, Opti-Bot allows user to make their own battles.</p>
-                <p><span style="font-weight: bold;">Winner:</span>Best UI/UX - iZOOM Arena 2020</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-briefcase icon"></i>
-                <span>August 2020 - August 2020</span>
-                <h3>Front-end Developer/Designer</h3>
-                <h4>Colexo, Canada</h4>
-                <p>Colexo allows any user on the Internet to collaborate and slowly make changes to the planet on the website. Using custom-made assets, the planet shifts between phases depending on how its water content, flora levels, albedo, and oxygen content are changed.</p>
-                <p><span style="font-weight: bold;">Winner:</span>First Overall - To the Moon and Hack 2020</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="row-g">
-      <div class="education tab-content">
-        <div class="row">
-          <div class="timeline">
-            <div class="row">
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-graduation-cap icon"></i>
-                <span>September 2022 - Present</span>
-                <h3>Bachelor of Applied Science - BASc, Management Engineering</h3>
-                <h4>University of Waterloo</h4>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-item-inner outer-shadow">
-                <i class="fas fa-graduation-cap icon"></i>
-                <span>September 2018 - June 2022</span>
-                <h3>High School Student</h3>
-                <h4>Port Credit Secondary School</h4>
-                <!-- <p>Graduated 2022</p> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Home section end -->
-
-<section class="service-section section">
-  <div class="container">
-    <div class="row-g">
-      <div class="section-title">
-        <h2 data-heading="Recent">Hackathons</h2>
-      </div>
-    </div>
-    <div class="row-g">
-      <div class="service-item">
-        <div class="service-item-inner outer-shadow">
-          <div class="icon inner-shadow">
-            <i class="fas fa-medal iconthing"></i>
-          </div>
-          <h3>The Postman API Hack</h3>
-          <p>Won Blastoff Award with Neighbour Network</p>
-        </div>
-      </div>
-      <div class="service-item">
-        <div class="service-item-inner outer-shadow">
-          <div class="icon inner-shadow">
-            <i class="fas fa-medal iconthing"></i>
-          </div>
-          <h3>Hacks and Crafts</h3>
-          <p>Second Overall with Universal</p>
-        </div>
-      </div>
-      <div class="service-item">
-        <div class="service-item-inner outer-shadow">
-          <div class="icon inner-shadow">
-            <i class="fas fa-medal iconthing"></i>
-          </div>
-          <h3>Enactus Windsor Hacks</h3>
-          <p>Won People's Choice Award for the most liked project with Universal</p>
-        </div>
-      </div>
-      <div class="service-item">
-        <div class="service-item-inner outer-shadow">
-          <div class="icon inner-shadow">
-            <i class="fas fa-window-close iconthing"></i>
-          </div>
-          <h3>Hackrithmitic</h3>
-          <p>Praticapated in event and submitted Math-Comm</p>
-        </div>
-      </div>
-      <div class="service-item">
-        <div class="service-item-inner outer-shadow">
-          <div class="icon inner-shadow">
-            <i class="fas fa-window-close iconthing"></i>
-          </div>
-          <h3>Hack or Treat?</h3>
-          <p>Praticapated in workshops and submitted Scare-O-Rator</p>
-        </div>
-      </div>
-      <div class="service-item">
-        <div class="service-item-inner outer-shadow">
-          <div class="icon inner-shadow">
-            <i class="fas fa-medal iconthing"></i>
-          </div>
-          <h3>iZOOM Arena</h3>
-          <p>Best UI/UX Award with Opti-Bot</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="portfolio-section section" id="portfolio">
-  <div class="container">
-    <div class="row-g">
-      <div class="section-title">
-        <h2 data-heading="Portfolio">Lastest Work</h2>
-      </div>
-    </div>
-
-    <div class="row-g">
-      <div class="portfolio-filter">
-        <span class="filter-item outer-shadow active" data-target="all">all</span>
-        <span class="filter-item" data-target="web-application">web application</span>
-        <span class="filter-item" data-target="hackathon">hackathon</span>
-        <span class="filter-item" data-target="personal-project">personal project</span>
-        <span class="filter-item" data-target="ongoing">ongoing</span>
-      </div>
-    </div>
-
-    <div class="row-g portfolio-items">
-      
-      <div class="portfolio-item" data-category="web-application">
-        <div class="portfolio-item-inner outer-shadow">
-          <div class="portfolio-item-img">
-            <img src="Images/img/portfolio/thumb/project-1.png" class="thumb" alt="Project-1" data-screenshots="Images/img/portfolio/large/project-1/1.png, Images/img/portfolio/large/project-1/2.png, Images/img/portfolio/large/project-1/3.png, Images/img/portfolio/large/project-1/4.png">
-            <span class="view-project">view project</span>
-          </div>
-          <p class="portfolio-item-title">Crowdsupply</p>
-          <div class="portfolio-item-details">
-            <div class="row-g">
-              <div class="description">
-                <h3>Project Brief:</h3>
-                <p>A crowdsourcing platform revolving around community inputs of stock levels and lines at grocery stores to assist in safety measures during the peak of the COVID-19 outbreak</p>
-              </div>
-              <div class="info">
-                <h3>Project Info</h3>
-                <ul>
-                  <li>Date - <span>March - May 2020</span></li>
-                  <li>Tools - <span>html, css, javascript</span></li>
-                  <li>Web - <span><a href="http://crowdsupply.ca/">http://crowdsupply.ca/</a></span></li>
-                </ul>
+              <div class="bc-book bc-book-two">
+                <span>MANHWA</span>
+                <strong>
+                  The next
+                  <br />
+                  <em>chapter.</em>
+                </strong>
+                <small>TITLES TO COME</small>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="portfolio-item" data-category="web-application">
-        <div class="portfolio-item-inner outer-shadow">
-          <div class="portfolio-item-img">
-            <img src="Images/img/portfolio/thumb/project-2.png" alt="Project-2" data-screenshots="Images/img/portfolio/large/project-2/1.png, Images/img/portfolio/large/project-2/2.png">
-            <span class="view-project">view project</span>
-          </div>
-          <p class="portfolio-item-title">Beacon</p>
-          <div class="portfolio-item-details">
-            <div class="row-g">
-              <div class="description">
-                <h3>Project Brief:</h3>
-                <p> Crowdsupply 2.0 Helps consumers get access to accurate, crowdsourced store data including lines and stock information for free of charge so that everyone can shop easier.</p>
-              </div>
-              <div class="info">
-                <h3>Project Info</h3>
-                <ul>
-                  <li>Date - <span>March - 2021</span></li>
-                  <li>Tools - <span>React.js, css, Node.js</span></li>
-                </ul>
-              </div>
+            <p class="bc-chapter-caption">A small shelf of favourites.</p>
+          </article>
+          <article class="bc-soundtrack">
+            <div>
+              <div class="bc-article-label">03 / A FEW SAVED MONTHS</div>
+              <h3>
+                What a month
+                <br />
+                <em>sounded like.</em>
+              </h3>
+              <p>
+                I used to make a playlist for each month,
+                <br />
+                with a photo I took as its cover.
+              </p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="portfolio-item" data-category="hackathon">
-        <div class="portfolio-item-inner outer-shadow">
-          <div class="portfolio-item-img">
-            <img src="Images/img/portfolio/thumb/project-3.png" class="thumb" alt="Project-3" data-screenshots="Images/img/portfolio/large/project-3/1.png, Images/img/portfolio/large/project-3/2.png, Images/img/portfolio/large/project-3/3.png, Images/img/portfolio/large/project-3/4.png">
-            <span class="view-project">view project</span>
-          </div>
-          <p class="portfolio-item-title">Colexo</p>
-          <div class="portfolio-item-details">
-            <div class="row-g">
-              <div class="description">
-                <h3>Project Brief:</h3>
-                <p>Colexo allows any user on the Internet to collaborate and slowly make changes to the planet on the website. Using custom-made assets, the planet shifts between phases depending on how its water content, flora levels, albedo, and oxygen content are changed.</p>
-              </div>
-              <div class="info">
-                <h3>Project Info</h3>
-                <ul>
-                  <li>Date - <span>August 2020</span></li>
-                  <li>Tools - <span>html, css, javascript</span></li>
-                  <li>Web - <span><a href="http://colexo.space/">http://colexo.space/</a></span></li>
-                </ul>
-              </div>
+            <div class="bc-playlist-list">
+              <a
+                href="https://open.spotify.com/playlist/5n2epHpOtFEQMm9WbuegXs"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>November</span>
+                <span>2025</span>
+              </a>
+              <a
+                href="https://open.spotify.com/playlist/2wEa8YBXmogelz0fnEEbVk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>September</span>
+                <span>2025</span>
+              </a>
+              <a
+                href="https://open.spotify.com/playlist/6zuuYvkXprO83aHJPNDQVU"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>July</span>
+                <span>2025</span>
+              </a>
             </div>
-          </div>
+          </article>
         </div>
-      </div>
-
-      <div class="portfolio-item" data-category="web-application">
-        <div class="portfolio-item-inner outer-shadow">
-          <div class="portfolio-item-img">
-            <img src="Images/img/portfolio/thumb/project-4.png" class="thumb" alt="Project-4" data-screenshots="Images/img/portfolio/large/project-4/1.png, Images/img/portfolio/large/project-4/2.png, Images/img/portfolio/large/project-4/3.png">
-            <span class="view-project">view project</span>
-          </div>
-          <p class="portfolio-item-title">Universal</p>
-          <div class="portfolio-item-details">
-            <div class="row-g">
-              <div class="description">
-                <h3>Project Brief:</h3>
-                <p>Universal is an immersive & easy-to-use platform allowing the transfer of personal data to required services through a third-party request system. Utilizing two-factor authentication with the assistance of Google Firebase, every individual on the platform has a unique code identifier (UCI) which automatically updates on a 30-minute interval system to ensure the highest level of privacy. As a request for information is made, the user must input their UCI into the alert field and all of the required details will be automatically transferred to the request maker’s screen. Any additional information required will appear on the user’s device prior to data submission and can be conveniently filled out through one’s personal device.
-
-                  The concept exceptionally eliminates all forms of contact, heavily reduces wait times & lineups, and overall is the perfect solution to increasing safety in our communities.</p>
-              </div>
-              <div class="info">
-                <h3>Project Info</h3>
-                <ul>
-                  <li>Date - <span>August 2020</span></li>
-                  <li>Tools - <span>html, css, javascript</span></li>
-                  <li>Web - <span><a href="https://github.com/harshithl1777/Universal-Main">https://github.com/harshithl1777/Universal-Main</a></span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-</section>
-
-<!-- portfolio popup start  -->
-
-<div class="pp portfolio-popup">
-  <div class="pp-details">
-    <div class="pp-details-inner">
-      <div class="pp-title">
-        <h2>personal protfolio</h2>
-        <p>Category - <span class="pp-project-category">Web Aplication</span> </p>
-      </div>
-      <div class="pp-project-details">
-        <div class="row">
-          <div class="description">
-            <h3>Project Brief</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit repellendus non, incidunt
-              exercitationem cumque architecto ducimus nulla voluptatum doloribus unde id ex laboriosam recusandae
-              voluptates libero vel, magni explicabo distinctio.</p>
-          </div>
-          <div class="info">
-            <h3>Project info</h3>
-            <ul>
-              <li>Date - <span>2020</span></li>
-              <li>client - <span>xyz</span></li>
-              <li>Tools - <span>html, css, javascript</span></li>
-              <li>Web - <span><a href="#">www.voker.com</a> </span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        <footer class="bc-footer">
+          <span>Vishnudev Poil</span>
+          <span>vishnudev.me</span>
+          <button class="bc-end-return" type="button">Back to work</button>
+        </footer>
+      </section>
+      <span class="bc-live" aria-live="polite"></span>
     </div>
-  </div>
-
-  <div class="separator"></div>
-
-  <div class="pp-main">
-    <div class="pp-main-inner">
-      <div class="pp-project-details-btn outer-shadow hover-in-shadow">Project Details <i class="fas fa-plus"></i></div>
-      <div class="pp-close outer-shadow hover-in-shadow">&times;</div>
-      <img src="Images/img/portfolio/large/project-1/1.png" alt="img" class="pp-img outer-shadow">
-      <div class="pp-counter">1 of 6</div>
-    </div>
-
-    <div class="pp-loader">
-      <div></div>
-    </div>
-
-    <div class="pp-prev"><i class="fas fa-angle-double-left"></i></div>
-      <div class="pp-next"><i class="fas fa-angle-double-right"></i></div>
-  </div>
-</div>
-
-<section class="contact-section section" id="contact">
-  <div class="container">
-    <div class="row-g">
-      <div class="section-title">
-        <h2 data-heading="Contact">Get In Touch</h2>
-      </div>
-    </div>
-    <div class="row-g">
-      <div class="contact-form">
-        <form action="https://formspree.io/f/mjvjvyod" method="POST">
-            <div class="row-g">
-              <div class="w-50">
-                <div class="input-group outer-shadow hover-in-shadow">
-                  <input name="name" type="text" placeholder="Name" class="input-control">
-                </div>
-                <div class="input-group outer-shadow hover-in-shadow">
-                  <input name="_replyto" type="text" placeholder="Email" class="input-control">
-                </div>
-                <div class="input-group outer-shadow hover-in-shadow">
-                  <input name="subject" type="text" placeholder="Subject" class="input-control">
-                </div>
-              </div>
-              <div class="w-50">
-                <div class="input-group outer-shadow hover-in-shadow">
-                  <textarea name="message" class="input-control" placeholder="Message"></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="row-g">
-              <div class="submit-btn">
-                <button type="submit" class="cta-btn outer-shadow hover-in-shadow">Send Message</button>
-              </div>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- main js -->
-<script src="/JS/main.js"></script>
-<script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-auto-a11y="true"></script>
-</body>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
-
