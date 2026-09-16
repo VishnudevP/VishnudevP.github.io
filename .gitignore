@@ -1,13 +1,8 @@
 node_modules/
 dist/
-.next/
 .env
 .env.*
 !.env.example
-next-env.d.ts
 .DS_Store
 *.log
 coverage/
-
-# Earlier design exploration, retained locally.
-/loft/
