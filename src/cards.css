@@ -1,0 +1,132 @@
+/* A small physical deck, with the signature card still opening Beyond Work. */
+#portfolio .bc-chapter-deck {
+  --bc-chapter-width: 166px;
+  --bc-chapter-height: 236px;
+  --bc-fan-step: 34px;
+  --bc-fan-angle: 12deg;
+  position: relative;
+  width: 100%;
+  height: 275px;
+  isolation: isolate;
+}
+
+#portfolio .bc-chapter-deck > :is(.bc-chapter-card, .bc-playing-card) {
+  position: absolute;
+  top: 14px;
+  left: calc(50% - var(--bc-chapter-width) / 2);
+  transform-origin: 50% 85%;
+  transition: transform .6s cubic-bezier(.22,.75,.22,1), filter .3s ease;
+}
+
+#portfolio .bc-chapter-card {
+  display: block;
+  position: relative;
+  width: var(--bc-chapter-width, 166px);
+  height: var(--bc-chapter-height, 236px);
+  border-radius: 9px;
+}
+
+#portfolio .bc-chapter-deck > .bc-chapter-card {
+  z-index: calc(var(--bc-card-index) + 1);
+  transform: translateX(calc((var(--bc-card-index) - 2) * 5px)) rotate(calc((var(--bc-card-index) - 1) * 5deg - 4deg));
+}
+
+#portfolio .bc-chapter-deck > .bc-playing-card { --bc-card-index: 3; z-index: 4; }
+
+#portfolio .bc-chapter-art {
+  display: block;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  color: var(--bc-card-ink);
+  background: var(--bc-card-paper);
+  box-shadow: 0 10px 24px -12px var(--bc-shadow), inset 0 0 0 1px color-mix(in srgb, var(--bc-card-ink) 30%, transparent);
+  transition: background-color .32s ease, color .32s ease;
+}
+
+#portfolio .bc-chapter-ornament { position: absolute; inset: 42px 27px 47px; opacity: .3; }
+#portfolio .bc-chapter-ornament > span { position: absolute; inset: 0; border: 1px solid currentColor; border-radius: 50%; transform: rotate(35deg); }
+#portfolio .bc-chapter-ornament > span:nth-child(2) { transform: rotate(-35deg); }
+#portfolio .bc-chapter-ornament > span:nth-child(3) { inset: 10px; transform: rotate(0); }
+#portfolio .bc-chapter-suit { display: block; position: absolute; top: 56px; right: 0; left: 0; font: 400 65px/1.2 'Instrument Serif', serif; text-align: center; }
+#portfolio .bc-chapter-title { position: absolute; top: 137px; right: 12px; left: 12px; font: 400 22px/1.2 'Instrument Serif', serif; text-align: center; }
+#portfolio .bc-chapter-card .bc-card-imprint { font-size: 6px; letter-spacing: 1px; }
+
+#portfolio .bc-chapter-deck[data-expanded='true'] > :is(.bc-chapter-card, .bc-playing-card) {
+  transform: translateX(calc((var(--bc-card-index) - 1.5) * var(--bc-fan-step))) rotate(calc((var(--bc-card-index) - 1.5) * var(--bc-fan-angle)));
+}
+
+#portfolio .bc-chapter-deck[data-expanded='true'] > :is(.bc-chapter-card, .bc-playing-card):is(:hover, :focus-visible) {
+  z-index: 8;
+  transform: translate(calc((var(--bc-card-index) - 1.5) * var(--bc-fan-step)), -16px) rotate(calc((var(--bc-card-index) - 1.5) * var(--bc-fan-angle) * .7));
+  filter: brightness(1.08);
+}
+
+#portfolio .bc-deck-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0 18px; }
+#portfolio .bc-deck-controls > :is(.bc-deck-action, .bc-card-hint) { min-height: 40px; margin: 0; padding: 5px 0; font-size: 11px; }
+#portfolio .bc-deck-action { color: var(--bc-accent); text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--bc-rule); }
+#portfolio .bc-deck-action:hover { text-decoration-color: var(--bc-accent); }
+#portfolio .bc-deck-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 17px; min-height: 32px; }
+#portfolio .bc-deck-links a { display: flex; align-items: center; min-height: 32px; color: var(--bc-muted); font-size: 10px; }
+#portfolio .bc-deck-links a:hover { color: var(--bc-accent); }
+#portfolio .bc-card-deal-ghost { position: absolute; z-index: 25; margin: 0; pointer-events: none; transform-origin: 50% 85%; }
+
+/* A small, reversible story card sits with the project name. */
+#portfolio .bc-project-name-with-card { position: relative; padding-right: 72px; }
+#portfolio .bc-project-name-with-card > span { color: var(--bc-muted); font-size: 11px; }
+#portfolio .bc-project-story-card { position: absolute; top: 4px; right: 0; width: 56px; height: 80px; perspective: 700px; transform: rotate(7deg); transition: transform .35s ease; }
+#portfolio .bc-project-story-card:hover { transform: rotate(2deg) translateY(-4px); }
+#portfolio .bc-story-card-turn { display: block; position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+#portfolio .bc-project-story-card[aria-expanded='true'] .bc-story-card-turn { transform: rotateY(180deg); }
+#portfolio :is(.bc-story-front, .bc-story-back) { display: block; position: absolute; inset: 0; border: 1px solid color-mix(in srgb, var(--bc-card-ink) 45%, transparent); border-radius: 4px; background: var(--bc-card-paper); color: var(--bc-card-ink); box-shadow: 0 7px 17px -10px var(--bc-shadow); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+#portfolio :is(.bc-story-front, .bc-story-back)::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--bc-card-ink) 40%, transparent); border-radius: 2px; }
+#portfolio .bc-story-front { transform: translateZ(1px); }
+#portfolio .bc-story-back { transform: rotateY(180deg) translateZ(1px); }
+#portfolio .bc-story-rank { display: grid; position: absolute; top: 5px; left: 6px; padding: 0 2px; background: var(--bc-card-paper); font: 11px/.85 'Instrument Serif', serif; }
+#portfolio .bc-story-rank > span { margin-top: 3px; font-size: 8px; }
+#portfolio .bc-story-mark { display: block; padding-top: 23px; font: 400 30px/1 'Instrument Serif', serif; text-align: center; }
+#portfolio .bc-story-caption { display: block; position: absolute; right: 0; bottom: 11px; left: 0; font: 400 4px/1 'IBM Plex Mono', monospace; letter-spacing: .3px; text-align: center; }
+
+@media (min-width: 961px) {
+  #portfolio .bc-intro { grid-template-columns: 1fr minmax(330px, 32%); }
+}
+
+@media (min-width: 681px) and (max-width: 960px) {
+  #portfolio .bc-intro { grid-template-columns: 1fr minmax(235px, 36%); }
+  #portfolio .bc-chapter-deck { --bc-fan-step: 27px; --bc-fan-angle: 8deg; }
+}
+
+@media (min-width: 761px) and (max-width: 960px) {
+  #portfolio .bc-intro { grid-template-columns: 1fr minmax(280px, 36%); }
+}
+
+@media (max-width: 760px) {
+  #portfolio .bc-chapter-deck { --bc-chapter-width: 134px; --bc-chapter-height: 192px; height: 231px; }
+  #portfolio .bc-chapter-suit { top: 44px; font-size: 53px; }
+  #portfolio .bc-chapter-title { top: 112px; font-size: 18px; }
+  #portfolio .bc-chapter-ornament { inset: 34px 22px 39px; }
+  #portfolio .bc-project-name-with-card { padding-right: 0; }
+  #portfolio .bc-project-story-card { position: relative; top: auto; right: auto; display: block; margin: 18px 0 0 5px; }
+}
+
+@media (max-width: 600px) {
+  #portfolio .bc-project-name-with-card { min-height: 86px; padding-right: 74px; }
+  #portfolio .bc-project-story-card { position: absolute; top: 1px; right: 7px; margin: 0; }
+}
+
+@media (max-width: 680px) {
+  #portfolio .bc-intro { grid-template-columns: 1fr; gap: 28px; }
+  #portfolio .bc-card-place-enhanced { width: 100%; max-width: 330px; justify-self: center; }
+  #portfolio .bc-chapter-deck { --bc-fan-step: 27px; --bc-fan-angle: 9deg; }
+}
+
+@media (max-width: 520px) {
+  #portfolio .bc-chapter-deck { --bc-chapter-width: 136px; --bc-chapter-height: 194px; --bc-fan-step: 27px; --bc-fan-angle: 9deg; max-width: 310px; height: 235px; }
+  #portfolio .bc-deck-controls > :is(.bc-deck-action, .bc-card-hint), #portfolio .bc-deck-links a { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #portfolio .bc-chapter-deck > :is(.bc-chapter-card, .bc-playing-card),
+  #portfolio .bc-project-story-card, #portfolio .bc-story-card-turn { transition: none; }
+}
