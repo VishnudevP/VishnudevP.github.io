@@ -1,3 +1,5 @@
+import { createExperienceScene } from './experience-scenes';
+
 /** Add keyboard-accessible company tabs while keeping every role readable without JavaScript. */
 export function initExperience(root: HTMLElement): () => void {
   const browser = root.querySelector<HTMLElement>('.bc-experience-browser');
@@ -48,6 +50,7 @@ export function initExperience(root: HTMLElement): () => void {
   const viewedRoles = new Set<number>();
   let activeAnimation: Animation | null = null;
   let destroyed = false;
+  const scenes = entries.map(({ panel, role }) => createExperienceScene(panel, role, root));
 
   function stopAnimation(): void {
     activeAnimation?.cancel();
@@ -69,6 +72,7 @@ export function initExperience(root: HTMLElement): () => void {
       button.setAttribute('aria-selected', String(current));
       button.tabIndex = current ? 0 : -1;
       panel.hidden = !current;
+      scenes[entryIndex].setActive(current);
     });
 
     const { button, panel } = entries[selected];
@@ -135,6 +139,7 @@ export function initExperience(root: HTMLElement): () => void {
     destroyed = true;
     controller.abort();
     stopAnimation();
+    scenes.forEach(scene => scene.destroy());
     originalAttributes.forEach(({ element, name, value }) => {
       if (value === null) element.removeAttribute(name);
       else element.setAttribute(name, value);

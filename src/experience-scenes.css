@@ -1,0 +1,58 @@
+/* Small engraved work sketches: every colour comes from the selected deck. */
+#portfolio .bc-job-context {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 182px;
+  align-items: center;
+  gap: 22px;
+  margin: 2px 0 16px;
+}
+
+#portfolio .bc-experience-scene { min-width: 0; margin: -8px 0 0; }
+#portfolio .bc-scene-trigger {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+  text-align: left;
+  color: var(--bc-muted);
+}
+#portfolio .bc-scene-art {
+  display: block;
+  overflow: visible;
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#portfolio .bc-scene-art .bc-scene-floor { stroke: var(--bc-rule); stroke-width: .75; opacity: .65; }
+#portfolio .bc-scene-art .bc-scene-surface { fill: var(--bc-paper); }
+#portfolio .bc-scene-art .bc-scene-quiet { opacity: .55; }
+#portfolio .bc-scene-art .bc-scene-accent { stroke: var(--bc-accent); }
+#portfolio .bc-scene-art .bc-scene-flow { stroke: var(--bc-accent); stroke-dasharray: 3 5; opacity: .6; }
+#portfolio .bc-experience-scene[data-traced='true'] :is(.bc-scene-step, .bc-scene-flow) { stroke: var(--bc-accent); opacity: 1; }
+#portfolio .bc-scene-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 1px;
+  padding-left: 8px;
+  color: var(--bc-accent);
+  font: 400 9px/1.5 'IBM Plex Mono', monospace;
+}
+#portfolio .bc-scene-caption small { color: var(--bc-muted); font: inherit; font-size: 8px; opacity: .7; }
+#portfolio .bc-scene-trigger:is(:hover, :focus-visible) .bc-scene-caption small { opacity: 1; }
+
+@media (max-width: 900px) and (min-width: 601px) {
+  #portfolio .bc-job-context { grid-template-columns: minmax(0, 1fr) 148px; gap: 12px; }
+  #portfolio .bc-scene-caption { font-size: 8px; }
+}
+
+@media (max-width: 700px) {
+  #portfolio .bc-job-context { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  #portfolio .bc-experience-scene { margin: 0; }
+  #portfolio .bc-scene-trigger { display: grid; grid-template-columns: minmax(0, 1fr) 152px; align-items: center; }
+  #portfolio .bc-scene-art { grid-column: 2; grid-row: 1; }
+  #portfolio .bc-scene-caption { grid-column: 1; grid-row: 1; padding-left: 0; font-size: 9px; }
+}
