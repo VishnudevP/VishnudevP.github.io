@@ -1,0 +1,186 @@
+/* Each deck carries its paper, foil, and accent through the whole portfolio. */
+:root[data-deck='midnight'] {
+  --bc-paper: #151c2a;
+  --bc-ink: #e7eaf0;
+  --bc-muted: #a1adbd;
+  --bc-rule: #354154;
+  --bc-accent: #a8bedc;
+  --bc-card-paper: #101726;
+  --bc-card-ink: #b3c9e6;
+  --bc-book-one: #384760;
+  --bc-book-one-ink: #e7edf7;
+  --bc-book-two: #9aaabc;
+  --bc-book-two-ink: #1d2738;
+  --bc-shadow: #02061099;
+  --bc-race-red: #ee8379;
+  --bc-race-off: #3d4658;
+}
+
+:root[data-deck='bordeaux'] {
+  --bc-paper: #241b20;
+  --bc-ink: #f3e9e6;
+  --bc-muted: #b6a1a6;
+  --bc-rule: #4d353e;
+  --bc-accent: #d6aaa0;
+  --bc-card-paper: #301a24;
+  --bc-card-ink: #dbaca0;
+  --bc-book-one: #62434f;
+  --bc-book-one-ink: #f7e9e6;
+  --bc-book-two: #c59f93;
+  --bc-book-two-ink: #351e27;
+  --bc-shadow: #12090db3;
+  --bc-race-red: #ec8078;
+  --bc-race-off: #564049;
+}
+
+#portfolio .bc-deck-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 36px;
+  color: var(--bc-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+#portfolio .bc-deck-toggle:hover { color: var(--bc-accent); }
+
+#portfolio .bc-deck-icon {
+  display: block;
+  position: relative;
+  width: 13px;
+  height: 18px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: var(--bc-paper);
+  transform: rotate(9deg);
+  transition: transform .25s ease;
+}
+
+#portfolio .bc-deck-icon::before,
+#portfolio .bc-deck-icon::after {
+  content: '';
+  position: absolute;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+
+#portfolio .bc-deck-icon::before { inset: -1px; z-index: -1; transform: translate(-4px, 1px) rotate(-18deg); }
+#portfolio .bc-deck-icon::after { inset: 4px 3px; border-radius: 50%; opacity: .7; }
+#portfolio .bc-deck-toggle:hover .bc-deck-icon { transform: rotate(15deg) translateY(-1px); }
+
+#portfolio .bc-deck-dialog {
+  width: min(700px, calc(100vw - 36px));
+  max-height: calc(100svh - 40px);
+  padding: 32px;
+  overflow: auto;
+  border: 1px solid var(--bc-rule);
+  border-radius: 16px;
+  color: var(--bc-ink);
+  background: var(--bc-paper);
+  box-shadow: 0 30px 100px #0006;
+  scrollbar-width: thin;
+}
+
+#portfolio .bc-deck-dialog::backdrop {
+  background: #08070bac;
+  backdrop-filter: blur(5px);
+}
+
+#portfolio .bc-deck-dialog-head > .bc-kicker { margin: 0 0 9px; font-size: 10px; letter-spacing: 1.4px; }
+#portfolio .bc-deck-dialog h2 { margin: 0; font: 400 40px/1.15 'Instrument Serif', serif; letter-spacing: -.9px; }
+#portfolio .bc-deck-dialog h2 > span { color: var(--bc-accent); }
+#portfolio .bc-deck-description { margin: 9px 0 0; color: var(--bc-muted); font-size: 12px; }
+
+#portfolio .bc-deck-collection { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 30px 0; }
+#portfolio .bc-deck-choice { display: flex; min-width: 0; flex-direction: column; align-items: stretch; padding: 0; text-align: left; }
+#portfolio .bc-deck-preview {
+  display: block;
+  position: relative;
+  aspect-ratio: 166 / 236;
+  overflow: hidden;
+  border-radius: 8px;
+  color: var(--deck-foil);
+  background: var(--deck-stock);
+  box-shadow: 0 7px 15px -8px #0009, inset 0 0 0 1px color-mix(in srgb, var(--deck-foil) 35%, transparent);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+}
+
+#portfolio .bc-deck-choice[data-choice='noir'] { --deck-stock: #121211; --deck-foil: #cfb176; }
+#portfolio .bc-deck-choice[data-choice='ivory'] { --deck-stock: #eddec3; --deck-foil: #713c36; }
+#portfolio .bc-deck-choice[data-choice='midnight'] { --deck-stock: #101726; --deck-foil: #b3c9e6; }
+#portfolio .bc-deck-choice[data-choice='bordeaux'] { --deck-stock: #301a24; --deck-foil: #dbaca0; }
+#portfolio .bc-deck-choice:nth-child(odd) .bc-deck-preview { transform: rotate(-2deg); }
+#portfolio .bc-deck-choice:nth-child(even) .bc-deck-preview { transform: rotate(2deg); }
+#portfolio .bc-deck-choice:hover .bc-deck-preview,
+#portfolio .bc-deck-choice:focus-visible .bc-deck-preview { transform: translateY(-7px) rotate(0); }
+#portfolio .bc-deck-choice[aria-pressed='true'] .bc-deck-preview { box-shadow: 0 7px 15px -8px #0009, 0 0 0 3px var(--bc-paper), 0 0 0 4px var(--bc-accent); }
+#portfolio .bc-deck-preview-frame { position: absolute; inset: 10px; border: 1px solid currentColor; border-radius: 2px; opacity: .8; }
+#portfolio .bc-deck-preview-frame::after { content: ''; position: absolute; inset: 3px; border: 1px solid currentColor; opacity: .5; }
+#portfolio .bc-deck-preview-corner,
+#portfolio .bc-deck-preview-bottom { display: flex; position: absolute; z-index: 1; flex-direction: column; align-items: center; padding: 2px; background: var(--deck-stock); font: 400 18px/.85 'Instrument Serif', serif; }
+#portfolio .bc-deck-preview-corner { top: 8px; left: 8px; }
+#portfolio .bc-deck-preview-bottom { bottom: 8px; right: 8px; transform: rotate(180deg); }
+#portfolio :is(.bc-deck-preview-corner, .bc-deck-preview-bottom) > small { margin-top: 4px; font: 400 10px/1 serif; }
+#portfolio .bc-deck-preview-monogram { display: flex; position: absolute; inset: 0; flex-direction: column; align-items: center; justify-content: center; font: 400 clamp(45px, 5vw, 63px)/.7 'Instrument Serif', serif; letter-spacing: -3px; }
+#portfolio .bc-deck-preview-monogram > span { transform: rotate(180deg); }
+#portfolio .bc-deck-preview-pattern { position: absolute; inset: 30px 17px; opacity: .43; overflow: hidden; }
+#portfolio .bc-deck-preview-pattern > i { position: absolute; inset: 6px; border: 1px solid currentColor; border-radius: 50%; transform: rotate(30deg); }
+#portfolio .bc-deck-preview-pattern > i:nth-child(2) { inset: 10px -2px; transform: rotate(-30deg); }
+#portfolio .bc-deck-preview-pattern > i:nth-child(3) { inset: 14px -4px; transform: rotate(60deg); }
+#portfolio .bc-deck-preview-pattern > i:nth-child(4) { inset: 14px -4px; transform: rotate(-60deg); }
+#portfolio .bc-deck-choice[data-choice='ivory'] .bc-deck-preview-pattern > i { border-radius: 2px; }
+#portfolio .bc-deck-choice[data-choice='midnight'] .bc-deck-preview-frame { border-radius: 20px 2px; }
+#portfolio .bc-deck-choice[data-choice='midnight'] .bc-deck-preview-pattern > i { border-radius: 0; transform: rotate(45deg); }
+#portfolio .bc-deck-choice[data-choice='midnight'] .bc-deck-preview-pattern > i:nth-child(2) { inset: 14px; }
+#portfolio .bc-deck-choice[data-choice='midnight'] .bc-deck-preview-pattern > i:nth-child(3) { inset: 24px; }
+#portfolio .bc-deck-choice[data-choice='midnight'] .bc-deck-preview-pattern > i:nth-child(4) { inset: 34px; }
+#portfolio .bc-deck-choice[data-choice='bordeaux'] .bc-deck-preview-pattern > i { border-radius: 50% 15%; }
+#portfolio .bc-deck-choice[data-choice='bordeaux'] .bc-deck-preview-frame { border-radius: 40% 40% 3px 3px; }
+#portfolio .bc-deck-choice-name { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; font-size: 13px; }
+#portfolio .bc-deck-choice-finish { margin-top: 3px; color: var(--bc-muted); font-size: 10px; white-space: nowrap; }
+#portfolio .bc-deck-selection-mark { color: var(--bc-accent); font-size: 11px; opacity: 0; }
+#portfolio .bc-deck-choice[aria-pressed='true'] .bc-deck-selection-mark { opacity: 1; }
+#portfolio .bc-deck-dialog-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 20px; border-top: 1px solid var(--bc-rule); }
+#portfolio .bc-deck-status { margin: 0; color: var(--bc-muted); font-size: 11px; }
+#portfolio .bc-deck-done { min-width: 83px; min-height: 39px; padding: 10px 20px; border: 1px solid var(--bc-rule); border-radius: 5px; font-size: 12px; }
+#portfolio .bc-deck-done:hover { border-color: var(--bc-accent); color: var(--bc-accent); }
+
+/* The same motifs remain visible on the interactive cards outside the picker. */
+:root[data-deck='ivory'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 2px; }
+:root[data-deck='midnight'] #portfolio .bc-card-frame { border-radius: 24px 3px; }
+:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 0; transform: rotate(45deg); }
+:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(2) { inset: 13px; }
+:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(3) { inset: 23px; }
+:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(4) { inset: 33px; }
+:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(5) { inset: 43px; }
+:root[data-deck='bordeaux'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 50% 15%; }
+:root[data-deck='bordeaux'] #portfolio .bc-card-frame { border-radius: 40% 40% 3px 3px; }
+:root:is([data-deck='midnight'], [data-deck='bordeaux']) #portfolio .bc-card-face { box-shadow: 0 16px 25px -12px var(--bc-shadow), inset 0 0 0 1px color-mix(in srgb, var(--bc-card-ink) 45%, transparent), inset 0 0 0 3px color-mix(in srgb, var(--bc-card-ink) 10%, var(--bc-card-paper)); }
+:root:is([data-deck='midnight'], [data-deck='bordeaux']) #portfolio[data-finish='Foil'] :is(.bc-card-letter > span, .bc-card-back-text) { background-image: linear-gradient(115deg, color-mix(in srgb, var(--bc-card-ink) 60%, var(--bc-card-paper)) 5%, var(--bc-card-ink) 26%, color-mix(in srgb, var(--bc-card-ink) 55%, white) 42%, var(--bc-card-ink) 54%, color-mix(in srgb, var(--bc-card-ink) 75%, white) 73%, var(--bc-card-ink) 94%); }
+
+@media (max-width: 600px) {
+  #portfolio .bc-deck-dialog { width: min(390px, calc(100vw - 28px)); padding: 24px; border-radius: 12px; }
+  #portfolio .bc-deck-dialog h2 { font-size: 35px; }
+  #portfolio .bc-deck-description { max-width: 245px; font-size: 11px; }
+  #portfolio .bc-deck-collection { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px; margin: 24px 4px; }
+  #portfolio .bc-deck-preview { aspect-ratio: 166 / 216; }
+  #portfolio .bc-deck-choice-name { margin-top: 10px; }
+  #portfolio .bc-deck-dialog-foot { padding-top: 16px; }
+}
+
+@media (max-width: 360px) {
+  #portfolio .bc-deck-dialog { padding: 21px; }
+  #portfolio .bc-deck-collection { gap: 20px; }
+  #portfolio .bc-deck-choice-finish { font-size: 9px; }
+}
+
+@media (max-width: 520px) {
+  #portfolio .bc-deck-toggle { width: 44px; min-height: 44px; gap: 0; }
+  #portfolio .bc-deck-label { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #portfolio :is(.bc-deck-icon, .bc-deck-preview) { transition: none; }
+}
