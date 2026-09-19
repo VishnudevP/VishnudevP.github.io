@@ -1,6 +1,7 @@
 import './styles.css';
 import './decks.css';
 import './cards.css';
+import './transitions.css';
 import { initPortfolio } from './interactions';
 import { initExperience } from './experience';
 import { initDecks } from './decks';

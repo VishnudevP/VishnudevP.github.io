@@ -148,17 +148,17 @@
 #portfolio .bc-deck-done:hover { border-color: var(--bc-accent); color: var(--bc-accent); }
 
 /* The same motifs remain visible on the interactive cards outside the picker. */
-:root[data-deck='ivory'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 2px; }
-:root[data-deck='midnight'] #portfolio .bc-card-frame { border-radius: 24px 3px; }
-:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 0; transform: rotate(45deg); }
-:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(2) { inset: 13px; }
-:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(3) { inset: 23px; }
-:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(4) { inset: 33px; }
-:root[data-deck='midnight'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(5) { inset: 43px; }
-:root[data-deck='bordeaux'] #portfolio :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 50% 15%; }
-:root[data-deck='bordeaux'] #portfolio .bc-card-frame { border-radius: 40% 40% 3px 3px; }
-:root:is([data-deck='midnight'], [data-deck='bordeaux']) #portfolio .bc-card-face { box-shadow: 0 16px 25px -12px var(--bc-shadow), inset 0 0 0 1px color-mix(in srgb, var(--bc-card-ink) 45%, transparent), inset 0 0 0 3px color-mix(in srgb, var(--bc-card-ink) 10%, var(--bc-card-paper)); }
-:root:is([data-deck='midnight'], [data-deck='bordeaux']) #portfolio[data-finish='Foil'] :is(.bc-card-letter > span, .bc-card-back-text) { background-image: linear-gradient(115deg, color-mix(in srgb, var(--bc-card-ink) 60%, var(--bc-card-paper)) 5%, var(--bc-card-ink) 26%, color-mix(in srgb, var(--bc-card-ink) 55%, white) 42%, var(--bc-card-ink) 54%, color-mix(in srgb, var(--bc-card-ink) 75%, white) 73%, var(--bc-card-ink) 94%); }
+:root[data-deck='ivory'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 2px; }
+:root[data-deck='midnight'] :is(#portfolio, .bc-transition-layer) .bc-card-frame { border-radius: 24px 3px; }
+:root[data-deck='midnight'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 0; transform: rotate(45deg); }
+:root[data-deck='midnight'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(2) { inset: 13px; }
+:root[data-deck='midnight'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(3) { inset: 23px; }
+:root[data-deck='midnight'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(4) { inset: 33px; }
+:root[data-deck='midnight'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span:nth-child(5) { inset: 43px; }
+:root[data-deck='bordeaux'] :is(#portfolio, .bc-transition-layer) :is(.bc-guilloche, .bc-chapter-ornament) > span { border-radius: 50% 15%; }
+:root[data-deck='bordeaux'] :is(#portfolio, .bc-transition-layer) .bc-card-frame { border-radius: 40% 40% 3px 3px; }
+:root:is([data-deck='midnight'], [data-deck='bordeaux']) :is(#portfolio, .bc-transition-layer) .bc-card-face { box-shadow: 0 16px 25px -12px var(--bc-shadow), inset 0 0 0 1px color-mix(in srgb, var(--bc-card-ink) 45%, transparent), inset 0 0 0 3px color-mix(in srgb, var(--bc-card-ink) 10%, var(--bc-card-paper)); }
+:root:is([data-deck='midnight'], [data-deck='bordeaux']) :is(#portfolio, .bc-transition-layer)[data-finish='Foil'] :is(.bc-card-letter > span, .bc-card-back-text) { background-image: linear-gradient(115deg, color-mix(in srgb, var(--bc-card-ink) 60%, var(--bc-card-paper)) 5%, var(--bc-card-ink) 26%, color-mix(in srgb, var(--bc-card-ink) 55%, white) 42%, var(--bc-card-ink) 54%, color-mix(in srgb, var(--bc-card-ink) 75%, white) 73%, var(--bc-card-ink) 94%); }
 
 @media (max-width: 600px) {
   #portfolio .bc-deck-dialog { width: min(390px, calc(100vw - 28px)); padding: 24px; border-radius: 12px; }

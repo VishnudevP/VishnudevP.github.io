@@ -10,6 +10,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   const card = required<HTMLButtonElement>('.bc-playing-card');
   const cardObject = required('.bc-playing-card .bc-card-object');
   const smallCard = required<HTMLButtonElement>('.bc-small-card');
+  const seal = required<HTMLElement>('.bc-chapter-seal');
   const live = required('.bc-live');
   const returnButton = required<HTMLButtonElement>('.bc-return');
   const weekends = required('.bc-weekends');
@@ -31,6 +32,8 @@ export function initPortfolio(root: HTMLElement): () => void {
     clone.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
     return clone;
   };
+  const sealArtwork = cloneArtwork();
+  seal.append(sealArtwork);
   const miniature = cloneArtwork();
   const shuffleLeaves = [cloneArtwork(), cloneArtwork()];
   shuffleLeaves.forEach(leaf => leaf.classList.add('bc-shuffle-leaf'));
@@ -40,7 +43,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   let busy = false;
   let epoch = 0;
   let pendingChapter = state.chapter;
-  let flying: HTMLButtonElement | null = null;
+  let transitionLayer: HTMLDivElement | null = null;
   let detailEpoch = 0;
   let shuffling = false;
   let racing = false;
@@ -72,6 +75,13 @@ export function initPortfolio(root: HTMLElement): () => void {
     const size = cardDimensions();
     if (!size) return;
     smallCard.style.height = `${size.height * size.scale}px`;
+    const sealWidth = Number.parseFloat(getComputedStyle(seal).width);
+    if (Number.isFinite(sealWidth) && sealWidth > 0) {
+      seal.style.height = `${size.height * sealWidth / size.width}px`;
+      sealArtwork.style.width = `${size.width}px`;
+      sealArtwork.style.height = `${size.height}px`;
+      sealArtwork.style.transform = `scale(${sealWidth / size.width})`;
+    }
     for (const artwork of [miniature, ...shuffleLeaves]) {
       artwork.style.width = `${size.width}px`;
       artwork.style.height = `${size.height}px`;
@@ -110,6 +120,7 @@ export function initPortfolio(root: HTMLElement): () => void {
     }
     const imprint = miniature.querySelector('.bc-card-imprint');
     if (imprint) imprint.textContent = face.name.toUpperCase();
+    root.dispatchEvent(new CustomEvent('carddiscovered', { detail: { suit: 'hearts' } }));
     shuffleHint.textContent = face.name;
     live.textContent = `${face.name}. Shuffle again to draw another card.`;
   }
@@ -133,9 +144,9 @@ export function initPortfolio(root: HTMLElement): () => void {
     epoch++;
     animations.forEach(animation => animation.cancel());
     animations.clear();
-    flying?.remove();
-    flying = null;
-    for (const element of [cover, bonus, card, cardObject, smallCard]) {
+    transitionLayer?.remove();
+    transitionLayer = null;
+    for (const element of [cover, bonus, card, cardObject, smallCard, seal]) {
       for (const property of ['opacity', 'transform', 'visibility', 'z-index']) element.style.removeProperty(property);
     }
     root.style.removeProperty('height');
@@ -180,6 +191,8 @@ export function initPortfolio(root: HTMLElement): () => void {
   }
 
   function settle(open: boolean, focus = true): void {
+    // Interrupted transitions and Escape must restore the active hero card too.
+    if (!open) root.dispatchEvent(new CustomEvent('chapterwillchange', { detail: { open } }));
     cancelAnimations();
     state.chapter = open;
     pendingChapter = open;
@@ -187,15 +200,26 @@ export function initPortfolio(root: HTMLElement): () => void {
     if (focus) focusDestination();
   }
 
+  function cardPose(element: HTMLElement): { x: number; y: number; angle: number; width: number } {
+    const box = element.getBoundingClientRect();
+    let angle = 0;
+    try {
+      const matrix = new DOMMatrixReadOnly(getComputedStyle(element).transform);
+      angle = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
+    } catch { /* Straight cards also provide a continuous transition. */ }
+    return { x: box.left + box.width / 2, y: box.top + box.height / 2, angle, width: element.offsetWidth };
+  }
+
   async function go(open: boolean, userInitiated = false): Promise<void> {
     if (destroyed || busy || state.chapter === open) return;
     if (userInitiated) updateHistory(open);
+    root.dispatchEvent(new CustomEvent('chapterwillchange', { detail: { open } }));
     resetCardTilt();
     stopDetails();
     pendingChapter = open;
-    root.scrollIntoView({ block: 'start', behavior: 'instant' });
     if (!hasMotion()) {
       settle(open);
+      window.scrollTo({ top: 0, behavior: 'instant' });
       return;
     }
     const token = ++epoch;
@@ -203,75 +227,73 @@ export function initPortfolio(root: HTMLElement): () => void {
     root.dataset.busy = 'true';
     const outgoing = open ? cover : bonus;
     const incoming = open ? bonus : cover;
+    const source = open ? card : seal;
+    const destination = open ? seal : card;
     outgoing.inert = true;
     incoming.inert = true;
     try {
-      const fromHeight = outgoing.getBoundingClientRect().height;
-      root.style.height = `${fromHeight}px`;
-      incoming.hidden = false;
-      incoming.style.opacity = '0';
-      incoming.style.zIndex = '2';
-      syncMiniature();
-      const toHeight = incoming.getBoundingClientRect().height;
-      const rootBox = root.getBoundingClientRect();
-      const mainBox = card.getBoundingClientRect();
-      const miniBox = smallCard.getBoundingClientRect();
-      const destination = open ? miniBox : mainBox;
+      // Lift one card into a viewport layer before either page changes its layout.
+      const from = cardPose(source);
       const size = cardDimensions();
-      const visibleDestination = destination.top >= 0 && destination.bottom <= window.innerHeight;
-      const canDeal = root.clientWidth > 520 && visibleDestination && size !== null;
-      const duration = canDeal ? 600 : 320;
-      const promises: Promise<void>[] = [];
-      if (canDeal && size) {
-        const mainX = mainBox.left + mainBox.width / 2 - rootBox.left;
-        const mainY = mainBox.top + mainBox.height / 2 - rootBox.top;
-        const miniX = miniBox.left + miniBox.width / 2 - rootBox.left;
-        const miniY = miniBox.top + miniBox.height / 2 - rootBox.top;
-        let mainAngle = 0;
-        try {
-          const matrix = new DOMMatrixReadOnly(getComputedStyle(card).transform);
-          mainAngle = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
-        } catch { /* A browser without DOMMatrix still gets the same planar card deal. */ }
-        const arc = clamp(Math.hypot(miniX - mainX, miniY - mainY) * 0.13, 20, 56);
-        flying = card.cloneNode(true) as HTMLButtonElement;
-        flying.classList.add('bc-flying-card');
-        flying.removeAttribute('id');
-        flying.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
-        flying.disabled = true;
-        flying.inert = true;
-        flying.setAttribute('aria-hidden', 'true');
-        flying.removeAttribute('aria-label');
-        flying.style.width = `${size.width}px`;
-        flying.style.height = `${size.height}px`;
-        flying.style.left = `${mainX - size.width / 2}px`;
-        flying.style.top = `${mainY - size.height / 2}px`;
-        root.append(flying);
-        card.style.visibility = 'hidden';
-        smallCard.style.visibility = 'hidden';
-        const frames = [0, 0.16, 0.36, 0.6, 0.82, 1].map(t => {
-          const bow = Math.sin(Math.PI * t);
-          const x = (miniX - mainX) * t + arc * bow;
-          const y = (miniY - mainY) * t - arc * 0.8 * bow;
-          const rotation = mainAngle + (15 - mainAngle) * t - 17 * bow;
-          const scale = 1 + (size.scale - 1) * t + 0.035 * bow;
-          return { offset: t, transform: `translate(${x}px,${y}px) rotate(${rotation}deg) scale(${scale})` };
-        });
-        const dealFrames = open ? frames : frames.slice().reverse().map(frame => ({ ...frame, offset: 1 - frame.offset }));
-        promises.push(animate(flying, dealFrames, { duration, easing: 'cubic-bezier(.2,.65,.25,1)' }));
+      const sourceVisible = source.getClientRects().length > 0
+        && (!open || !card.inert)
+        && from.x > 0 && from.x < window.innerWidth && from.y > 0 && from.y < window.innerHeight;
+      let flight: HTMLButtonElement | null = null;
+      if (sourceVisible && size) {
+        transitionLayer = document.createElement('div');
+        transitionLayer.className = 'bc-transition-layer';
+        transitionLayer.dataset.finish = root.dataset.finish ?? 'Foil';
+        transitionLayer.setAttribute('aria-hidden', 'true');
+        transitionLayer.inert = true;
+        flight = card.cloneNode(true) as HTMLButtonElement;
+        flight.className = 'bc-playing-card bc-page-flight';
+        flight.removeAttribute('id');
+        flight.removeAttribute('aria-label');
+        flight.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+        flight.disabled = true;
+        flight.style.cssText = `left:${from.x - size.width / 2}px;top:${from.y - size.height / 2}px;width:${size.width}px;height:${size.height}px;transform:rotate(${from.angle}deg) scale(${from.width / size.width});`;
+        transitionLayer.append(flight);
+        document.body.append(transitionLayer);
+        source.style.visibility = 'hidden';
       }
-      promises.push(
-        animate(root, [{ height: `${fromHeight}px` }, { height: `${toHeight}px` }], { duration }),
-        animate(outgoing, [{ opacity: 1 }, { opacity: 0 }], { duration: duration * 0.58 }),
-        animate(incoming, [{ opacity: 0 }, { opacity: 1 }], { duration: duration * 0.86 }),
-      );
-      await Promise.all(promises);
+
+      // The pages never overlap: clear the outgoing text, switch, then reveal.
+      await animate(outgoing, [{ opacity: 1 }, { opacity: 0 }], { duration: 130, easing: 'ease-out' });
+      if (destroyed || token !== epoch) return;
+      outgoing.hidden = true;
+      incoming.style.opacity = '0';
+      incoming.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      syncMiniature();
+      const arrivals: Promise<void>[] = [];
+      if (flight && size) {
+        const to = cardPose(destination);
+        destination.style.visibility = 'hidden';
+        arrivals.push(animate(flight, [
+          { transform: `rotate(${from.angle}deg) scale(${from.width / size.width})` },
+          { transform: `translate(${to.x - from.x}px,${to.y - from.y}px) rotate(${to.angle}deg) scale(${to.width / size.width})` },
+        ], { duration: 430, easing: 'cubic-bezier(.22,.8,.22,1)' }));
+      }
+      arrivals.push(animate(incoming, [
+        { opacity: 0, transform: 'translateY(7px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ], { duration: flight ? 340 : 240, delay: flight ? 55 : 0, easing: 'cubic-bezier(.22,.75,.25,1)' }));
+      await Promise.all(arrivals);
       if (!destroyed && token === epoch) settle(open);
     } catch {
-      if (!destroyed && token === epoch) settle(open);
+      if (!destroyed && token === epoch) {
+        settle(open);
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
     }
   }
 
-  for (const selector of ['.bc-playing-card', '.bc-card-hint', '.bc-bonus-link']) {
+  root.addEventListener('chapterrequest', event => {
+    const detail = (event as CustomEvent<{ open: boolean }>).detail;
+    if (typeof detail?.open === 'boolean') void go(detail.open, true);
+  }, listenerOptions);
+
+  for (const selector of ['.bc-playing-card', '.bc-bonus-link']) {
     required(selector).addEventListener('click', () => { void go(true, true); }, listenerOptions);
   }
   for (const selector of ['.bc-return', '.bc-end-return']) {
@@ -414,6 +436,7 @@ export function initPortfolio(root: HTMLElement): () => void {
     resetCardTilt();
     stopDetails();
     settle(false);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, listenerOptions);
   reduced.addEventListener('change', () => {
     if (!reduced.matches) return;
@@ -457,6 +480,7 @@ export function initPortfolio(root: HTMLElement): () => void {
     cancelAnimations();
     state.chapter = pendingChapter;
     paint();
+    sealArtwork.remove();
     smallCard.replaceChildren(...originalMiniContents);
     if (originalMiniHeight) smallCard.style.height = originalMiniHeight;
     else smallCard.style.removeProperty('height');
