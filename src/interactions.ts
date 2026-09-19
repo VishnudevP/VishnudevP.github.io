@@ -32,9 +32,10 @@ export function initPortfolio(root: HTMLElement): () => void {
     catch { return null; }
   };
   const saved = storedPalette();
+  const isBeyondWork = (): boolean => ['#beyond-work', '#bonus'].includes(window.location.hash);
   let followsSystem = saved === null;
   const state = {
-    chapter: window.location.hash === '#bonus',
+    chapter: isBeyondWork(),
     palette: saved ?? paletteValue(root.dataset.theme)
       ?? paletteValue(document.documentElement.dataset.palette)
       ?? paletteValue(root.dataset.palette) ?? (systemTheme.matches ? 'dark' : 'light'),
@@ -107,6 +108,7 @@ export function initPortfolio(root: HTMLElement): () => void {
 
   function paint(): void {
     paintTheme();
+    document.title = state.chapter ? 'Beyond work — Vishnudev Poil' : 'Vishnudev Poil — Developer';
     cover.hidden = state.chapter;
     bonus.hidden = !state.chapter;
     cover.inert = state.chapter;
@@ -170,11 +172,11 @@ export function initPortfolio(root: HTMLElement): () => void {
 
   function focusDestination(): void {
     (state.chapter ? returnButton : card).focus({ preventScroll: true });
-    live.textContent = state.chapter ? 'Bonus chapter opened.' : 'Returned to the portfolio.';
+    live.textContent = state.chapter ? 'Beyond work opened.' : 'Returned to the portfolio.';
   }
 
   function updateHistory(open: boolean): void {
-    const hash = open ? '#bonus' : '#work';
+    const hash = open ? '#beyond-work' : '#work';
     if (window.location.hash === hash) return;
     try {
       const url = new URL(window.location.href);
@@ -398,7 +400,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   }
 
   function followLocation(): void {
-    const open = window.location.hash === '#bonus';
+    const open = isBeyondWork();
     if (busy) {
       if (pendingChapter !== open) {
         stopDetails();

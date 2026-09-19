@@ -1,6 +1,6 @@
 # Vishnu’s portfolio
 
-A local TypeScript portfolio built with Vite. This is the first foundation of the redesign: selected work on the front, personal interests in a bonus chapter, and a playing card connecting the two. The full rebuild stays on the local `codex/portfolio-rebuild` branch until it is explicitly approved for publication.
+A local TypeScript portfolio built with Vite. The main page separates Oversine, internship experience, and past projects. A playing card opens Beyond Work as a separate full-page view for personal interests. The full rebuild stays on the local `codex/portfolio-rebuild` branch until it is explicitly approved for publication.
 
 ## Develop
 
@@ -22,6 +22,7 @@ npm run preview # Serve the production build locally
 - `index.html`: copy, project links, playlist archive, and page metadata. The content is in HTML so the introduction and project links render before JavaScript loads.
 - `src/styles.css`: responsive layout, light and dark palettes, and card artwork.
 - `src/interactions.ts`: chapter navigation, card deal, theme preference, card shuffle, and race lights.
+- `src/experience.ts`: company selection, keyboard navigation, and role transitions. Without JavaScript, every role stays visible.
 - `src/main.ts`: entry point.
 - `public/`: files copied directly into the build, including the favicon.
 
@@ -34,10 +35,11 @@ Theme preference is saved only in the visitor’s browser. There is no backend, 
 Before pushing UI changes, run the type check and production build, then verify:
 
 1. Open the card and return, using mouse and keyboard. Try Escape during a transition.
-2. Open `/#bonus` directly, and use the browser Back and Forward buttons.
+2. Open `/#beyond-work` directly, and use the browser Back and Forward buttons. The older `/#bonus` address still works.
 3. Change themes, reload, and confirm the choice persists.
 4. Shuffle the smaller card and start the race lights. Navigate away while an effect is running.
 5. Check narrow screens, visible keyboard focus, and the OS reduced-motion setting.
+6. Select each employer. Use Up/Down on desktop or Left/Right on mobile, plus Home/End, to move through the roles.
 
 The card deal uses a quiet transition on narrow screens or when its destination would be outside the viewport. Reduced motion opens the chapter without animation.
 
