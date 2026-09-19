@@ -17,8 +17,24 @@ interface Collection {
   clues: HTMLElement[];
   list: HTMLUListElement;
   reward: HTMLElement;
-  cards: HTMLElement[];
+  cards: HTMLButtonElement[];
+  hand: HTMLElement;
+  instruction: HTMLElement;
+  reader: HTMLElement;
+  action: HTMLButtonElement;
+  phase: 'ready' | 'mixing' | 'choosing' | 'result';
+  order: number[];
+  selected: number | null;
+  epoch: number;
+  motions: Set<Animation>;
 }
+
+const trickCards = [
+  { rank: 'A', suit: '♠', label: 'Ace of spades' },
+  { rank: 'K', suit: '♦', label: 'King of diamonds' },
+  { rank: 'Q', suit: '♣', label: 'Queen of clubs' },
+] as const;
+const positions = ['left', 'middle', 'right'] as const;
 
 /** Small, optional discoveries shared by the two page footers. */
 export function initDiscoveries(root: HTMLElement): () => void {
@@ -34,32 +50,134 @@ export function initDiscoveries(root: HTMLElement): () => void {
   const controller = new AbortController();
   const { signal } = controller;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const motions = new Set<Animation>();
   const live = document.createElement('span');
   live.className = 'bc-discoveries-live';
   live.setAttribute('role', 'status');
   live.setAttribute('aria-live', 'polite');
   root.append(live);
 
-  function track(animation: Animation): void {
-    motions.add(animation);
-    void animation.finished.catch(() => {}).finally(() => motions.delete(animation));
+  async function motion(collection: Collection, animation: Animation): Promise<void> {
+    collection.motions.add(animation);
+    try { await animation.finished; } catch { /* A closed panel cancels its current round. */ }
+    finally { collection.motions.delete(animation); animation.cancel(); }
   }
 
-  function deal(collection: Collection): void {
-    collection.cards.forEach(card => card.getAnimations().forEach(animation => animation.cancel()));
-    if (reducedMotion.matches) return;
-    collection.cards.forEach((card, index) => {
-      track(card.animate([
-        { opacity: 0, transform: 'translate(0, 19px) rotate(0deg)' },
-        { opacity: 1, transform: card.style.transform },
-      ], {
-        duration: 420,
-        delay: index * 64,
-        easing: 'cubic-bezier(.22,.8,.25,1)',
-        fill: 'backwards',
-      }));
+  function stop(collection: Collection): void {
+    collection.epoch++;
+    collection.motions.forEach(animation => animation.cancel());
+    collection.motions.clear();
+  }
+
+  function paintTrick(collection: Collection): void {
+    const { phase } = collection;
+    collection.reward.dataset.phase = phase;
+    const faceDown = phase === 'mixing' || phase === 'choosing';
+    collection.order.forEach((identity, slot) => {
+      const card = collection.cards[identity]!;
+      card.style.left = `${(slot + .5) * 100 / 3}%`;
+      card.dataset.faceDown = String(faceDown);
+      card.dataset.correct = String(phase === 'result' && identity === 0);
+      card.dataset.selected = String(phase === 'result' && identity === collection.selected);
+      card.tabIndex = phase === 'choosing' ? 0 : -1;
+      card.setAttribute('aria-disabled', String(phase !== 'choosing'));
+      card.setAttribute('aria-label', faceDown
+        ? `${phase === 'choosing' ? 'Choose the' : 'Face down,'} ${positions[slot]} card`
+        : `${trickCards[identity]!.label}, ${positions[slot]} card${phase === 'result' && identity === collection.selected ? ', your pick' : ''}`);
+      card.querySelector<HTMLElement>('.bc-trick-card-result')!.textContent = phase === 'result'
+        ? identity === 0 ? 'The ace' : identity === collection.selected ? 'Your pick' : ''
+        : '';
+      // Keep keyboard navigation in the same left-to-right order as the cards.
+      if (collection.hand.children[slot] !== card) collection.hand.insertBefore(card, collection.hand.children[slot] ?? null);
     });
+    collection.action.setAttribute('aria-disabled', String(phase === 'mixing'));
+    collection.action.textContent = phase === 'mixing' ? 'Keep watching…'
+      : phase === 'result' ? 'Try again'
+      : phase === 'choosing' ? 'Start over'
+      : reducedMotion.matches ? 'Hide the cards' : 'Mix the cards';
+  }
+
+  function reset(collection: Collection, rearrange = false): void {
+    stop(collection);
+    collection.phase = 'ready';
+    collection.selected = null;
+    if (rearrange) {
+      for (let index = collection.order.length - 1; index > 0; index--) {
+        const other = Math.floor(Math.random() * (index + 1));
+        [collection.order[index], collection.order[other]] = [collection.order[other]!, collection.order[index]!];
+      }
+    }
+    collection.instruction.textContent = reducedMotion.matches
+      ? 'Remember where the ace is, then hide the cards.'
+      : 'Follow the ace. Keep an eye on where it goes.';
+    collection.reader.textContent = '';
+    paintTrick(collection);
+  }
+
+  async function mix(collection: Collection): Promise<void> {
+    if (collection.phase !== 'ready' || !collection.details.open) return;
+    stop(collection);
+    const token = collection.epoch;
+    const active = () => token === collection.epoch && collection.details.open && !signal.aborted;
+    const restoreFocus = document.activeElement === collection.action;
+    collection.phase = 'mixing';
+    collection.instruction.textContent = reducedMotion.matches ? 'Remember the ace’s position.' : 'Watch closely…';
+    paintTrick(collection);
+    const swaps: string[] = [];
+
+    if (!reducedMotion.matches) {
+      await Promise.all(collection.cards.map(card => motion(collection,
+        card.querySelector<HTMLElement>('.bc-trick-flipper')!.animate([
+          { transform: 'rotateY(0deg)' }, { transform: 'rotateY(180deg)' },
+        ], { duration: 240, easing: 'ease-in-out' }))));
+      if (!active()) return;
+      const pairs: ReadonlyArray<readonly [number, number]> = [[0, 1], [1, 2], [0, 2]];
+      let previous = -1;
+      for (let step = 0; step < 3; step++) {
+        const choices = pairs.map((_, index) => index).filter(index => index !== previous);
+        const choice = choices[Math.floor(Math.random() * choices.length)]!;
+        previous = choice;
+        const [firstSlot, secondSlot] = pairs[choice]!;
+        const first = collection.cards[collection.order[firstSlot]!]!;
+        const second = collection.cards[collection.order[secondSlot]!]!;
+        const distance = (secondSlot - firstSlot) * collection.hand.clientWidth / 3;
+        swaps.push(`${positions[firstSlot]} and ${positions[secondSlot]}`);
+        await Promise.all([first, second].map((card, index) => {
+          const direction = index === 0 ? 1 : -1;
+          return motion(collection, card.animate([
+            { transform: 'translateX(-50%)', offset: 0 },
+            { transform: `translate(calc(-50% + ${distance * direction / 2}px), ${direction * -13}px) rotate(${direction * 4}deg)`, offset: .5 },
+            { transform: `translateX(calc(-50% + ${distance * direction}px))`, offset: 1 },
+          ], { duration: 420, easing: 'cubic-bezier(.45,0,.25,1)' }));
+        }));
+        if (!active()) return;
+        [collection.order[firstSlot], collection.order[secondSlot]] = [collection.order[secondSlot]!, collection.order[firstSlot]!];
+        paintTrick(collection);
+      }
+    }
+    if (!active()) return;
+    collection.phase = 'choosing';
+    collection.instruction.textContent = 'Where’s the ace? Pick a card.';
+    collection.reader.textContent = swaps.length ? `The swaps were: ${swaps.join('; then ')}.` : 'The cards stayed in their original positions.';
+    paintTrick(collection);
+    if (restoreFocus && document.activeElement === collection.action) collection.cards[collection.order[0]!]!.focus({ preventScroll: true });
+  }
+
+  function choose(collection: Collection, identity: number): void {
+    if (collection.phase !== 'choosing') return;
+    collection.selected = identity;
+    collection.phase = 'result';
+    collection.instruction.textContent = identity === 0
+      ? 'You kept up. Ace found.'
+      : `The ace was ${collection.order.indexOf(0) === 1 ? 'in the middle' : `on the ${positions[collection.order.indexOf(0)]}`}. One more?`;
+    collection.reader.textContent = '';
+    paintTrick(collection);
+    if (!reducedMotion.matches) {
+      collection.cards.forEach(card => {
+        void motion(collection, card.querySelector<HTMLElement>('.bc-trick-flipper')!.animate([
+          { transform: 'rotateY(180deg)' }, { transform: 'rotateY(0deg)' },
+        ], { duration: 280, easing: 'ease-in-out' }));
+      });
+    }
   }
 
   const collections = footers.map(footer => {
@@ -75,16 +193,23 @@ export function initDiscoveries(root: HTMLElement): () => void {
           ${discoveries.map(item => `<li><span aria-hidden="true">${item.mark}</span><span class="bc-discovery-clue"></span></li>`).join('')}
         </ul>
         <div class="bc-discoveries-reward" hidden>
-          <div class="bc-discoveries-hand" role="img" aria-label="A royal flush in spades: ten, jack, queen, king, ace.">
-            ${['10', 'J', 'Q', 'K', 'A'].map(rank => `
-              <span class="bc-discoveries-card" aria-hidden="true">
-                <span class="bc-discoveries-rank">${rank}<small>♠</small></span>
-                <span class="bc-discoveries-pip">♠</span>
-                <span class="bc-discoveries-rank bc-discoveries-rank-bottom">${rank}<small>♠</small></span>
-              </span>`).join('')}
+          <div class="bc-trick-table" role="group" aria-label="Find the ace">
+            ${trickCards.map(card => `
+              <button class="bc-trick-card" type="button" tabindex="-1" aria-disabled="true">
+                <span class="bc-trick-flipper" aria-hidden="true">
+                  <span class="bc-trick-face">
+                    <span class="bc-trick-rank">${card.rank}<small>${card.suit}</small></span>
+                    <span class="bc-trick-pip">${card.suit}</span>
+                    <span class="bc-trick-rank bc-trick-rank-bottom">${card.rank}<small>${card.suit}</small></span>
+                  </span>
+                  <span class="bc-trick-back"><span>V</span></span>
+                </span>
+                <span class="bc-trick-card-result" aria-hidden="true"></span>
+              </button>`).join('')}
           </div>
-          <p class="bc-discoveries-thanks">Thanks for looking around.</p>
-          <button class="bc-discoveries-redeal" type="button">Deal again</button>
+          <p class="bc-trick-instruction" role="status" aria-live="polite"></p>
+          <span class="bc-trick-reader bc-discoveries-live" role="status" aria-live="polite"></span>
+          <button class="bc-trick-action" type="button">Mix the cards</button>
         </div>
       </div>`;
     footer.append(details);
@@ -96,16 +221,34 @@ export function initDiscoveries(root: HTMLElement): () => void {
       clues: Array.from(details.querySelectorAll<HTMLElement>('.bc-discovery-clue')),
       list: details.querySelector<HTMLUListElement>('.bc-discoveries-clues')!,
       reward: details.querySelector<HTMLElement>('.bc-discoveries-reward')!,
-      cards: Array.from(details.querySelectorAll<HTMLElement>('.bc-discoveries-card')),
+      cards: Array.from(details.querySelectorAll<HTMLButtonElement>('.bc-trick-card')),
+      hand: details.querySelector<HTMLElement>('.bc-trick-table')!,
+      instruction: details.querySelector<HTMLElement>('.bc-trick-instruction')!,
+      reader: details.querySelector<HTMLElement>('.bc-trick-reader')!,
+      action: details.querySelector<HTMLButtonElement>('.bc-trick-action')!,
+      phase: 'ready',
+      order: [0, 1, 2],
+      selected: null,
+      epoch: 0,
+      motions: new Set(),
     };
-    collection.cards.forEach((card, index) => {
-      const offset = index - 2;
-      card.style.transform = `translate(${offset * 39}px, ${Math.abs(offset) * 4}px) rotate(${offset * 7}deg)`;
+    collection.cards.forEach((card, identity) => {
+      card.addEventListener('click', () => choose(collection, identity), { signal });
+      card.addEventListener('keydown', event => {
+        if (collection.phase !== 'choosing' || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const index = collection.order.indexOf(identity);
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : (index + (event.key === 'ArrowRight' ? 1 : -1) + 3) % 3;
+        collection.cards[collection.order[next]!]!.focus({ preventScroll: true });
+      }, { signal });
     });
     details.addEventListener('toggle', () => {
-      if (details.open && found.size === discoveries.length) deal(collection);
+      if (!details.open) reset(collection);
     }, { signal });
-    details.querySelector<HTMLButtonElement>('.bc-discoveries-redeal')!.addEventListener('click', () => deal(collection), { signal });
+    collection.action.addEventListener('click', () => {
+      if (collection.phase === 'ready') void mix(collection);
+      else if (collection.phase !== 'mixing') reset(collection, true);
+    }, { signal });
     details.addEventListener('keydown', event => {
       if (event.key === 'Escape' && details.open) {
         event.preventDefault();
@@ -114,13 +257,15 @@ export function initDiscoveries(root: HTMLElement): () => void {
         collection.summary.focus({ preventScroll: true });
       }
     }, { signal });
+    reset(collection);
     return collection;
   });
 
   function paint(): void {
     const complete = found.size === discoveries.length;
     collections.forEach(collection => {
-      collection.summary.setAttribute('aria-label', `Card discoveries, ${found.size} of ${discoveries.length}`);
+      collection.summary.setAttribute('aria-label', `Card discoveries, ${found.size} of ${discoveries.length}${complete ? '. Find the ace unlocked' : ''}`);
+      collection.summary.title = complete ? 'All four suits found. Play Find the ace.' : 'A few things to find';
       collection.details.dataset.complete = String(complete);
       discoveries.forEach((item, index) => {
         const discovered = found.has(item.suit);
@@ -133,7 +278,7 @@ export function initDiscoveries(root: HTMLElement): () => void {
       collection.list.hidden = complete;
       collection.reward.hidden = !complete;
       collection.details.querySelector<HTMLElement>('.bc-discoveries-heading')!.textContent = complete
-        ? 'All four suits, found.'
+        ? 'Find the ace.'
         : 'A few things to find';
     });
   }
@@ -145,25 +290,23 @@ export function initDiscoveries(root: HTMLElement): () => void {
     try { sessionStorage.setItem(storageKey, JSON.stringify([...found])); } catch { /* Storage is optional. */ }
     paint();
     if (found.size === discoveries.length) {
-      live.textContent = 'All four card discoveries found. A royal flush is waiting in the footer.';
-      collections.filter(collection => collection.details.open).forEach(deal);
+      live.textContent = 'All four card discoveries found. A small Find the ace card trick is unlocked in the footer.';
     }
   }, { signal });
 
   root.addEventListener('chapterwillchange', () => {
-    collections.forEach(collection => { collection.details.open = false; });
-    motions.forEach(animation => animation.cancel());
+    collections.forEach(collection => { collection.details.open = false; reset(collection); });
   }, { signal });
 
+  root.addEventListener('deckchange', () => collections.forEach(collection => reset(collection)), { signal });
   reducedMotion.addEventListener('change', () => {
-    if (reducedMotion.matches) motions.forEach(animation => animation.cancel());
+    collections.forEach(collection => reset(collection));
   }, { signal });
 
   paint();
   return () => {
     controller.abort();
-    motions.forEach(animation => animation.cancel());
-    collections.forEach(collection => collection.details.remove());
+    collections.forEach(collection => { stop(collection); collection.details.remove(); });
     live.remove();
   };
 }

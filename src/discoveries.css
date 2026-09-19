@@ -82,58 +82,135 @@
 #portfolio .bc-discoveries-clues > li[data-found='true'] > span:first-child { opacity: 1; }
 #portfolio .bc-discoveries-reward { text-align: center; }
 
-#portfolio .bc-discoveries-hand {
+#portfolio .bc-trick-table {
   position: relative;
   width: 100%;
-  height: 121px;
+  height: 137px;
   margin-top: 28px;
   isolation: isolate;
 }
 
-#portfolio .bc-discoveries-card {
+#portfolio .bc-trick-card {
   display: block;
   position: absolute;
-  top: 0;
-  left: calc(50% - 29px);
-  width: 58px;
-  height: 86px;
+  top: 6px;
+  width: calc(100% / 3 - 8px);
+  height: 98px;
+  padding: 0;
   box-sizing: border-box;
-  border: 1px solid color-mix(in srgb, var(--bc-card-ink) 54%, var(--bc-card-paper));
-  border-radius: 5px;
-  background: var(--bc-card-paper);
+  border: 0;
+  border-radius: 6px;
+  background: none;
   color: var(--bc-card-ink);
-  box-shadow: -3px 3px 10px -5px var(--bc-shadow);
-  transform-origin: center 90%;
+  transform: translateX(-50%);
+  perspective: 500px;
+  cursor: default;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#portfolio .bc-discoveries-card::after {
+#portfolio .bc-trick-flipper {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-style: preserve-3d;
+}
+
+#portfolio .bc-trick-card[data-face-down='true'] .bc-trick-flipper { transform: rotateY(180deg); }
+
+#portfolio .bc-trick-face,
+#portfolio .bc-trick-back {
+  display: block;
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--bc-card-ink) 50%, var(--bc-card-paper));
+  border-radius: 6px;
+  background: var(--bc-card-paper);
+  box-shadow: 0 5px 12px -5px var(--bc-shadow);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+#portfolio .bc-trick-face::after {
   content: '';
   position: absolute;
   inset: 4px;
-  z-index: -1;
   border: 1px solid color-mix(in srgb, var(--bc-card-ink) 14%, transparent);
   border-radius: 2px;
+  pointer-events: none;
 }
 
-#portfolio .bc-discoveries-rank {
+#portfolio .bc-trick-rank {
   display: grid;
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 6px;
+  left: 6px;
   gap: 2px;
-  font: 12px/.85 Georgia, serif;
+  font: 13px/.85 Georgia, serif;
   text-align: center;
 }
 
-#portfolio .bc-discoveries-rank > small { font-size: 9px; }
-#portfolio .bc-discoveries-rank-bottom { top: auto; left: auto; right: 5px; bottom: 5px; transform: rotate(180deg); }
-#portfolio .bc-discoveries-pip { position: absolute; inset: 26px 0 auto; font: 28px/1 Georgia, serif; }
-#portfolio .bc-discoveries-thanks { margin: 0; color: var(--bc-muted); font: 11px/1.6 'DM Sans', sans-serif; }
+#portfolio .bc-trick-rank > small { font-size: 9px; }
+#portfolio .bc-trick-rank-bottom { top: auto; left: auto; right: 6px; bottom: 6px; transform: rotate(180deg); }
+#portfolio .bc-trick-pip { position: absolute; inset: 32px 0 auto; font: 30px/1 Georgia, serif; }
 
-#portfolio .bc-discoveries-redeal {
+#portfolio .bc-trick-back {
+  display: grid;
+  place-items: center;
+  transform: rotateY(180deg);
+  background-image: repeating-linear-gradient(45deg, transparent 0 5px, color-mix(in srgb, var(--bc-card-ink) 8%, transparent) 5px 6px);
+}
+
+#portfolio .bc-trick-back::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid color-mix(in srgb, var(--bc-card-ink) 38%, transparent);
+  border-radius: 2px;
+}
+
+#portfolio .bc-trick-back > span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 45px;
+  border: 1px solid color-mix(in srgb, var(--bc-card-ink) 45%, transparent);
+  border-radius: 50%;
+  background: var(--bc-card-paper);
+  font: 26px/1 'Instrument Serif', Georgia, serif;
+}
+
+#portfolio .bc-trick-card-result {
+  position: absolute;
+  top: calc(100% + 9px);
+  left: -5px;
+  right: -5px;
+  color: var(--bc-muted);
+  font: 9px/1.3 'DM Sans', sans-serif;
+}
+
+#portfolio .bc-trick-card[data-correct='true'] .bc-trick-face {
+  border-color: var(--bc-card-ink);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--bc-card-ink) 24%, transparent), 0 6px 15px -5px var(--bc-shadow);
+}
+
+#portfolio .bc-trick-card[data-correct='true'] .bc-trick-card-result { color: var(--bc-accent); }
+#portfolio .bc-trick-card[data-selected='true'][data-correct='false'] .bc-trick-face { border-style: dashed; }
+#portfolio .bc-discoveries-reward[data-phase='choosing'] .bc-trick-card { cursor: pointer; }
+#portfolio .bc-discoveries-reward[data-phase='choosing'] .bc-trick-card:hover .bc-trick-back { border-color: var(--bc-card-ink); box-shadow: 0 0 0 2px color-mix(in srgb, var(--bc-card-ink) 20%, transparent); }
+
+#portfolio .bc-trick-instruction {
   min-height: 36px;
-  margin-top: 6px;
-  padding: 0 8px;
+  margin: 0;
+  color: var(--bc-muted);
+  font: 11px/1.6 'DM Sans', sans-serif;
+  text-wrap: balance;
+}
+
+#portfolio .bc-trick-action {
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 0 12px;
   color: var(--bc-accent);
   font: 11px/1.4 'DM Sans', sans-serif;
   text-decoration: underline;
@@ -141,13 +218,13 @@
   text-underline-offset: 4px;
 }
 
-#portfolio .bc-discoveries-redeal:hover { text-decoration-color: currentColor; }
+#portfolio .bc-trick-action:hover { text-decoration-color: currentColor; }
+#portfolio .bc-trick-action[aria-disabled='true'] { cursor: default; text-decoration-color: transparent; }
 #portfolio .bc-discoveries-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 
 @media (max-width: 520px) {
   #portfolio .bc-discoveries { margin-left: auto; }
   #portfolio .bc-discoveries-summary { min-height: 44px; }
-  #portfolio .bc-discoveries-redeal { min-height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
