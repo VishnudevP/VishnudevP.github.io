@@ -35,6 +35,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   const sealArtwork = cloneArtwork();
   seal.append(sealArtwork);
   const miniature = cloneArtwork();
+  miniature.classList.add('bc-personal-mini');
   const shuffleLeaves = [cloneArtwork(), cloneArtwork()];
   shuffleLeaves.forEach(leaf => leaf.classList.add('bc-shuffle-leaf'));
   smallCard.replaceChildren(...shuffleLeaves, miniature);
@@ -47,13 +48,6 @@ export function initPortfolio(root: HTMLElement): () => void {
   let detailEpoch = 0;
   let shuffling = false;
   let racing = false;
-  let drawnCard = 0;
-  const faces = [
-    { rank: 'A', suit: '♠', name: 'Ace of spades' },
-    { rank: 'K', suit: '♦', name: 'King of diamonds' },
-    { rank: 'Q', suit: '♥', name: 'Queen of hearts' },
-    { rank: 'J', suit: '♣', name: 'Jack of clubs' },
-  ];
   const animations = new Set<Animation>();
   const detailAnimations = new Set<Animation>();
   const hasMotion = (): boolean => !reduced.matches && typeof root.animate === 'function';
@@ -105,24 +99,8 @@ export function initPortfolio(root: HTMLElement): () => void {
   }
 
   function revealCard(): void {
-    const face = faces[drawnCard++ % faces.length];
-    miniature.classList.add('bc-mini-drawn');
-    miniature.querySelectorAll<HTMLElement>('.bc-card-corner').forEach(corner => {
-      const suit = document.createElement('small');
-      suit.textContent = face.suit;
-      corner.replaceChildren(document.createTextNode(face.rank), suit);
-    });
-    const letter = miniature.querySelector('.bc-card-letter');
-    if (letter) {
-      const suit = document.createElement('span');
-      suit.textContent = face.suit;
-      letter.replaceChildren(suit);
-    }
-    const imprint = miniature.querySelector('.bc-card-imprint');
-    if (imprint) imprint.textContent = face.name.toUpperCase();
     root.dispatchEvent(new CustomEvent('carddiscovered', { detail: { suit: 'hearts' } }));
-    shuffleHint.textContent = face.name;
-    live.textContent = `${face.name}. Shuffle again to draw another card.`;
+    root.dispatchEvent(new CustomEvent('personaldeckdraw'));
   }
 
   function stopDetails(): void {
@@ -136,8 +114,9 @@ export function initPortfolio(root: HTMLElement): () => void {
     miniature.replaceChildren(...cloneArtwork().childNodes);
     raceButton.removeAttribute('aria-busy');
     weekends.dataset.race = 'idle';
-    shuffleHint.textContent = 'Shuffle';
+    shuffleHint.textContent = 'Draw a card';
     raceCaption.textContent = 'Ready?';
+    root.dispatchEvent(new CustomEvent('personaldeckreset'));
   }
 
   function cancelAnimations(): void {
@@ -293,6 +272,8 @@ export function initPortfolio(root: HTMLElement): () => void {
     if (typeof detail?.open === 'boolean') void go(detail.open, true);
   }, listenerOptions);
 
+  root.addEventListener('personaldeckclose', stopDetails, listenerOptions);
+
   for (const selector of ['.bc-playing-card', '.bc-bonus-link']) {
     required(selector).addEventListener('click', () => { void go(true, true); }, listenerOptions);
   }
@@ -317,6 +298,7 @@ export function initPortfolio(root: HTMLElement): () => void {
 
   smallCard.addEventListener('click', async () => {
     if (busy || shuffling || !state.chapter) return;
+    if (racing) stopDetails();
     if (!hasMotion()) {
       revealCard();
       return;

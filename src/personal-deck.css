@@ -1,0 +1,68 @@
+/* A small card dealt onto the page, with room for the deck beside it. */
+#portfolio .bc-weekends[data-personal-open='true'] { min-height: 432px; overflow-anchor: none; }
+#portfolio .bc-weekends[data-personal-open='true'] > :is(.bc-weekend-title, p, .bc-race-stage, .bc-finish) { display: none; }
+#portfolio .bc-personal-stage { position: relative; margin: 26px 0 10px 16px; width: min(270px, calc(100% - 116px)); z-index: 2; }
+#portfolio .bc-personal-card {
+  position: relative; display: flex; flex-direction: column; min-height: 370px; padding: 18px 19px 20px;
+  border: 1px solid color-mix(in srgb, var(--bc-card-ink) 38%, transparent); border-radius: 9px;
+  color: var(--bc-card-ink); background: var(--bc-card-paper); transform: rotate(-2deg);
+  box-shadow: 0 14px 25px -14px var(--bc-shadow); transform-origin: bottom right;
+}
+#portfolio .bc-personal-card::before { content: ''; position: absolute; inset: 6px; border: 1px solid color-mix(in srgb, var(--bc-card-ink) 16%, transparent); border-radius: 5px; pointer-events: none; }
+#portfolio .bc-personal-card-top { display: flex; align-items: center; justify-content: space-between; }
+#portfolio .bc-personal-rank { font: 16px/1 'Instrument Serif', serif; }
+#portfolio .bc-personal-count { font: 8px/1 'IBM Plex Mono', monospace; opacity: .6; }
+#portfolio .bc-personal-topic { font: 8px/1.5 'IBM Plex Mono', monospace; letter-spacing: 1px; opacity: .7; }
+#portfolio .bc-personal-card h3 { margin: 7px 0 9px; font: 400 clamp(24px, 3cqw, 32px)/1.05 'Instrument Serif', serif; letter-spacing: -.4px; }
+#portfolio .bc-personal-copy { margin: 0; font: 12px/1.7 'DM Sans', sans-serif; opacity: .85; }
+#portfolio .bc-personal-action { margin-top: auto; padding-top: 12px; }
+#portfolio .bc-personal-action :is(button, a) { display: inline-flex; min-height: 30px; align-items: center; font: 10px/1.5 'DM Sans', sans-serif; color: var(--bc-card-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 30%, transparent); text-underline-offset: 4px; }
+#portfolio .bc-personal-action button[aria-disabled='true'] { cursor: default; opacity: .65; }
+#portfolio .bc-personal-close { position: absolute; top: -31px; right: -97px; min-height: 30px; color: var(--bc-muted); font-size: 10px; text-decoration: underline; text-decoration-color: var(--bc-rule); text-underline-offset: 4px; }
+#portfolio .bc-personal-leaving { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+#portfolio .bc-personal-art { position: relative; display: grid; place-items: center; flex: 0 0 70px; margin: 2px 0 8px; }
+#portfolio .bc-personal-lights { display: flex; gap: 7px; padding: 10px; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; }
+#portfolio .bc-personal-lights i { width: 12px; height: 12px; border-radius: 50%; background: color-mix(in srgb, var(--bc-card-ink) 18%, transparent); }
+#portfolio .bc-personal-lights i[data-on='true'] { background: var(--bc-race-red); box-shadow: 0 0 12px color-mix(in srgb, var(--bc-race-red) 45%, transparent); }
+#portfolio .bc-personal-record { display: grid; place-items: center; width: 63px; height: 63px; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 3px, color-mix(in srgb, var(--bc-card-ink) 23%, transparent) 4px 5px); border: 1px solid currentColor; transform: rotate(-24deg); }
+#portfolio .bc-personal-record i { width: 20px; height: 20px; border: 7px solid currentColor; border-radius: 50%; }
+#portfolio .bc-personal-aperture { position: relative; width: 64px; height: 64px; border: 1px solid currentColor; border-radius: 50%; overflow: hidden; }
+#portfolio .bc-personal-aperture i { position: absolute; left: 50%; top: 50%; width: 50px; height: 31px; border-top: 1px solid currentColor; transform-origin: top left; }
+#portfolio .bc-personal-aperture i:nth-child(1) { transform: rotate(0deg) translate(10px, -15px); }
+#portfolio .bc-personal-aperture i:nth-child(2) { transform: rotate(60deg) translate(10px, -15px); }
+#portfolio .bc-personal-aperture i:nth-child(3) { transform: rotate(120deg) translate(10px, -15px); }
+#portfolio .bc-personal-aperture i:nth-child(4) { transform: rotate(180deg) translate(10px, -15px); }
+#portfolio .bc-personal-aperture i:nth-child(5) { transform: rotate(240deg) translate(10px, -15px); }
+#portfolio .bc-personal-aperture i:nth-child(6) { transform: rotate(300deg) translate(10px, -15px); }
+#portfolio .bc-personal-octagon, #portfolio .bc-personal-octagon i { display: block; width: 63px; height: 63px; background: currentColor; clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); }
+#portfolio .bc-personal-octagon { padding: 1px; transform: rotate(22.5deg); }
+#portfolio .bc-personal-octagon i { width: 61px; height: 61px; background: var(--bc-card-paper); }
+#portfolio .bc-personal-hand, #portfolio .bc-personal-pages, #portfolio .bc-personal-rune { display: block; position: relative; width: 66px; height: 66px; }
+#portfolio .bc-personal-hand i { position: absolute; left: 14px; top: 8px; width: 37px; height: 52px; padding: 5px; border: 1px solid currentColor; border-radius: 3px; background: var(--bc-card-paper); transform-origin: center bottom; font: 16px/1 'Instrument Serif', serif; }
+#portfolio .bc-personal-hand i:first-child { transform: rotate(-20deg) translateX(-8px); }
+#portfolio .bc-personal-hand i:last-child { transform: rotate(20deg) translateX(8px); }
+#portfolio .bc-personal-pages i { position: absolute; inset: 6px 12px; border: 1px solid currentColor; background: var(--bc-card-paper); transform: rotate(-9deg); }
+#portfolio .bc-personal-pages i:nth-child(2) { transform: rotate(4deg); }
+#portfolio .bc-personal-pages i:nth-child(3) { transform: rotate(17deg); }
+#portfolio .bc-personal-rune i { position: absolute; inset: 10px 20px; border: 1px solid currentColor; transform: skewY(-35deg); }
+#portfolio .bc-personal-rune i:nth-child(2) { inset: 0 12px; opacity: .4; }
+#portfolio .bc-personal-rune i:nth-child(3) { inset: 20px 28px; opacity: .6; }
+@media (min-width: 521px) and (max-width: 760px) {
+  #portfolio .bc-spread:has(.bc-weekends[data-personal-open='true']) { grid-template-columns: 1fr; }
+  #portfolio .bc-weekends[data-personal-open='true'] { border-right: 0; border-bottom: 1px solid var(--bc-rule); }
+  #portfolio .bc-weekends[data-personal-open='true'] + .bc-chapters { padding-left: 0; }
+}
+@media (max-width: 520px) {
+  #portfolio .bc-weekends[data-personal-open='true'] { min-height: 429px; }
+  #portfolio .bc-personal-stage { margin: 28px 0 100px 16px; width: calc(100% - 32px); }
+  #portfolio .bc-personal-card { padding: 16px 15px; }
+  #portfolio .bc-personal-copy { font-size: 11px; line-height: 1.65; }
+  #portfolio .bc-personal-art { flex-basis: 75px; margin-bottom: 10px; }
+  #portfolio .bc-personal-action :is(button, a) { min-height: 36px; }
+  #portfolio .bc-personal-close { top: -50px; right: -10px; min-height: 44px; }
+  #portfolio .bc-weekends[data-personal-open='true'] .bc-small-card { right: 20px; }
+  #portfolio .bc-weekends[data-personal-open='true'] .bc-shuffle-hint { right: -9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #portfolio .bc-personal-card { transform: none; }
+}

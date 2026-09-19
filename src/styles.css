@@ -654,7 +654,7 @@ body {
 #portfolio .bc-weekends {
   min-height: 353px;
   padding: 30px 30px 36px 0;
-  overflow: hidden;
+  overflow: clip;
   border-right: 1px solid var(--bc-rule);
 }
 
