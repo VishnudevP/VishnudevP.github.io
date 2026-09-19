@@ -727,35 +727,6 @@ body {
   pointer-events: none;
 }
 
-#portfolio .bc-race-stage {
-  display: flex;
-  position: absolute;
-  bottom: 29px;
-  left: 0;
-  flex-direction: column;
-  gap: 10px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-#portfolio .bc-race-lights { display: flex; gap: 6px; }
-
-#portfolio .bc-race-lights > span {
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--bc-race-off);
-}
-
-#portfolio .bc-race-caption {
-  color: var(--bc-muted);
-  font: 400 11px/1.2 'IBM Plex Mono', monospace;
-}
-
-#portfolio .bc-weekends:is([data-race='running'], [data-race='done']) .bc-race-stage { opacity: 1; }
-#portfolio .bc-weekends:is([data-race='running'], [data-race='done']) .bc-finish { display: none; }
-
 #portfolio .bc-finish {
   position: absolute;
   bottom: 36px;
@@ -924,7 +895,6 @@ body {
   #portfolio .bc-race-button { min-height: 36px; }
   #portfolio .bc-small-card { right: 9px; bottom: 35px; width: 66px; height: 94px; }
   #portfolio .bc-shuffle-hint { right: -11px; bottom: 12px; width: 106px; font-size: 10px; }
-  #portfolio .bc-race-stage { bottom: 21px; }
   #portfolio .bc-finish { bottom: 24px; width: 55px; height: 8px; background-size: 8px 8px; }
   #portfolio .bc-chapters { padding: 26px 0 30px; }
   #portfolio .bc-chapters h3 { margin: 20px 0; font-size: 24px; }

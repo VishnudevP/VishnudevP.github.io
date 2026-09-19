@@ -4,6 +4,8 @@ import './cards.css';
 import './transitions.css';
 import './discoveries.css';
 import './personal-deck.css';
+import './record-crate.css';
+import './starting-grid.css';
 import './experience-scenes.css';
 import { initPortfolio } from './interactions';
 import { initExperience } from './experience';

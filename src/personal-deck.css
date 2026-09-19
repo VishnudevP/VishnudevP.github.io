@@ -1,7 +1,14 @@
 /* A small card dealt onto the page, with room for the deck beside it. */
 #portfolio .bc-weekends[data-personal-open='true'] { min-height: 432px; overflow-anchor: none; }
-#portfolio .bc-weekends[data-personal-open='true'] > :is(.bc-weekend-title, p, .bc-race-stage, .bc-finish) { display: none; }
+#portfolio .bc-weekends[data-personal-open='true'] > :is(.bc-weekend-title, p, .bc-finish) { display: none; }
 #portfolio .bc-personal-stage { position: relative; margin: 26px 0 10px 16px; width: min(270px, calc(100% - 116px)); z-index: 2; }
+#portfolio .bc-personal-object-stage { width: min(300px, calc(100% - 112px)); }
+#portfolio .bc-personal-picks { display: flex; flex-wrap: wrap; gap: 4px 16px; width: calc(100% - 115px); margin-top: 18px; }
+#portfolio .bc-personal-picks > button { min-height: 34px; text-align: left; color: var(--bc-muted); font-size: 11px; text-decoration: underline; text-decoration-color: var(--bc-rule); text-underline-offset: 5px; }
+#portfolio .bc-personal-picks > button[aria-pressed='true'] { color: var(--bc-accent); text-decoration-color: currentColor; }
+#portfolio .bc-personal-picks > button[aria-disabled='true'] { opacity: .5; }
+#portfolio .bc-weekends[data-personal-open='true'] .bc-personal-picks { width: 100%; margin-top: 12px; }
+#portfolio .bc-personal-card:is([data-interest='music'], [data-interest='f1']) > .bc-personal-copy { display: none; }
 #portfolio .bc-personal-card {
   position: relative; display: flex; flex-direction: column; min-height: 370px; padding: 18px 19px 20px;
   border: 1px solid color-mix(in srgb, var(--bc-card-ink) 38%, transparent); border-radius: 9px;
@@ -12,7 +19,7 @@
 #portfolio .bc-personal-card-top { display: flex; align-items: center; justify-content: space-between; }
 #portfolio .bc-personal-rank { font: 16px/1 'Instrument Serif', serif; }
 #portfolio .bc-personal-count { font: 8px/1 'IBM Plex Mono', monospace; opacity: .6; }
-#portfolio .bc-personal-topic { font: 8px/1.5 'IBM Plex Mono', monospace; letter-spacing: 1px; opacity: .7; }
+#portfolio .bc-personal-topic { margin-top: 20px; font: 8px/1.5 'IBM Plex Mono', monospace; letter-spacing: 1px; opacity: .7; }
 #portfolio .bc-personal-card h3 { margin: 7px 0 9px; font: 400 clamp(24px, 3cqw, 32px)/1.05 'Instrument Serif', serif; letter-spacing: -.4px; }
 #portfolio .bc-personal-copy { margin: 0; font: 12px/1.7 'DM Sans', sans-serif; opacity: .85; }
 #portfolio .bc-personal-action { margin-top: auto; padding-top: 12px; }
@@ -21,11 +28,6 @@
 #portfolio .bc-personal-close { position: absolute; top: -31px; right: -97px; min-height: 30px; color: var(--bc-muted); font-size: 10px; text-decoration: underline; text-decoration-color: var(--bc-rule); text-underline-offset: 4px; }
 #portfolio .bc-personal-leaving { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
 #portfolio .bc-personal-art { position: relative; display: grid; place-items: center; flex: 0 0 70px; margin: 2px 0 8px; }
-#portfolio .bc-personal-lights { display: flex; gap: 7px; padding: 10px; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; }
-#portfolio .bc-personal-lights i { width: 12px; height: 12px; border-radius: 50%; background: color-mix(in srgb, var(--bc-card-ink) 18%, transparent); }
-#portfolio .bc-personal-lights i[data-on='true'] { background: var(--bc-race-red); box-shadow: 0 0 12px color-mix(in srgb, var(--bc-race-red) 45%, transparent); }
-#portfolio .bc-personal-record { display: grid; place-items: center; width: 63px; height: 63px; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 3px, color-mix(in srgb, var(--bc-card-ink) 23%, transparent) 4px 5px); border: 1px solid currentColor; transform: rotate(-24deg); }
-#portfolio .bc-personal-record i { width: 20px; height: 20px; border: 7px solid currentColor; border-radius: 50%; }
 #portfolio .bc-personal-aperture { position: relative; width: 64px; height: 64px; border: 1px solid currentColor; border-radius: 50%; overflow: hidden; }
 #portfolio .bc-personal-aperture i { position: absolute; left: 50%; top: 50%; width: 50px; height: 31px; border-top: 1px solid currentColor; transform-origin: top left; }
 #portfolio .bc-personal-aperture i:nth-child(1) { transform: rotate(0deg) translate(10px, -15px); }
@@ -59,6 +61,7 @@
   #portfolio .bc-personal-copy { font-size: 11px; line-height: 1.65; }
   #portfolio .bc-personal-art { flex-basis: 75px; margin-bottom: 10px; }
   #portfolio .bc-personal-action :is(button, a) { min-height: 36px; }
+  #portfolio .bc-personal-picks > button { min-height: 44px; }
   #portfolio .bc-personal-close { top: -50px; right: -10px; min-height: 44px; }
   #portfolio .bc-weekends[data-personal-open='true'] .bc-small-card { right: 20px; }
   #portfolio .bc-weekends[data-personal-open='true'] .bc-shuffle-hint { right: -9px; }

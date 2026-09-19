@@ -1,3 +1,6 @@
+import { mountRecordCrate } from './record-crate';
+import { mountStartingGrid } from './starting-grid';
+
 interface PersonalCard {
   id: string;
   rank: string;
@@ -33,6 +36,8 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   const motions = new Set<Animation>();
   let bag: PersonalCard[] = [];
   let previous = '';
+  const seen = new Set<string>();
+  let disposeScene = (): void => {};
   let effectEpoch = 0;
   let drawing = false;
   const stage = document.createElement('div');
@@ -41,9 +46,9 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   stage.innerHTML = `
     <article class="bc-personal-card" aria-labelledby="personal-card-title">
       <div class="bc-personal-card-top"><span class="bc-personal-rank" aria-hidden="true"></span><span class="bc-personal-count"></span></div>
-      <div class="bc-personal-art" aria-hidden="true"></div>
       <span class="bc-personal-topic"></span>
       <h3 id="personal-card-title"></h3>
+      <div class="bc-personal-art" aria-hidden="true"></div>
       <p class="bc-personal-copy"></p>
       <div class="bc-personal-action"></div>
     </article>
@@ -53,6 +58,17 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   const art = stage.querySelector<HTMLElement>('.bc-personal-art')!;
   const action = stage.querySelector<HTMLElement>('.bc-personal-action')!;
   const close = stage.querySelector<HTMLButtonElement>('.bc-personal-close')!;
+  const picks = document.createElement('div');
+  picks.className = 'bc-personal-picks';
+  picks.setAttribute('role', 'group');
+  picks.setAttribute('aria-label', 'Explore a card');
+  picks.innerHTML = '<button type="button" data-interest="music" aria-pressed="false">Record crate</button><button type="button" data-interest="f1" aria-pressed="false">Starting grid</button>';
+  article.insertBefore(picks, stage);
+  picks.querySelectorAll<HTMLButtonElement>('button').forEach(button => {
+    button.addEventListener('click', () => {
+      root.dispatchEvent(new CustomEvent('personaldeckrequest', { detail: { id: button.dataset.interest } }));
+    }, options);
+  });
 
   function clearMotions(): void {
     effectEpoch++;
@@ -70,7 +86,7 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     motions.delete(animation);
   }
 
-  function next(): PersonalCard {
+  function next(requestedId?: string): PersonalCard {
     if (!bag.length) {
       bag = [...cards];
       for (let i = bag.length - 1; i > 0; i--) {
@@ -79,25 +95,35 @@ export function initPersonalDeck(root: HTMLElement): () => void {
       }
       if (bag[bag.length - 1].id === previous) [bag[0], bag[bag.length - 1]] = [bag[bag.length - 1], bag[0]];
     }
-    const card = bag.pop()!;
+    const requested = cards.find(card => card.id === requestedId);
+    const card = requested ?? bag.pop()!;
+    if (requested) bag = bag.filter(item => item.id !== requested.id);
     previous = card.id;
+    seen.add(card.id);
     return card;
   }
 
   function render(card: PersonalCard): void {
+    disposeScene();
+    disposeScene = () => {};
     sheet.dataset.interest = card.id;
+    stage.classList.toggle('bc-personal-object-stage', card.id === 'music' || card.id === 'f1');
     stage.querySelector('.bc-personal-rank')!.textContent = `${card.rank} ${card.suit}`;
-    stage.querySelector('.bc-personal-count')!.textContent = `${cards.length - bag.length} / ${cards.length}`;
+    stage.querySelector('.bc-personal-count')!.textContent = `${seen.size} / ${cards.length}`;
     stage.querySelector('.bc-personal-topic')!.textContent = card.topic;
     stage.querySelector('h3')!.textContent = card.title;
     stage.querySelector('.bc-personal-copy')!.textContent = card.copy;
     action.replaceChildren();
-    if (card.action === 'race') {
-      art.innerHTML = '<span class="bc-personal-lights">' + '<i></i>'.repeat(5) + '</span>';
-    } else if (card.action === 'camera') {
+    art.replaceChildren();
+    art.className = 'bc-personal-art';
+    action.className = 'bc-personal-action';
+    art.setAttribute('aria-hidden', 'true');
+    picks.querySelectorAll<HTMLButtonElement>('button').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.interest === card.id));
+      button.removeAttribute('aria-disabled');
+    });
+    if (card.action === 'camera') {
       art.innerHTML = '<span class="bc-personal-aperture">' + '<i></i>'.repeat(6) + '</span>';
-    } else if (card.id === 'music') {
-      art.innerHTML = '<span class="bc-personal-record"><i></i></span>';
     } else if (card.id === 'ufc') {
       art.innerHTML = '<span class="bc-personal-octagon"><i></i></span>';
     } else if (card.id === 'chapters') {
@@ -109,48 +135,27 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     }
 
     if (card.action === 'music') {
-      const playlists = Array.from(root.querySelectorAll<HTMLAnchorElement>('.bc-playlist-list a'));
-      const playlist = playlists[Math.floor(Math.random() * playlists.length)];
-      if (playlist) {
-        const link = document.createElement('a');
-        link.href = playlist.href;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = `Listen to ${playlist.textContent!.trim().replace(/\s+/g, ' ')}`;
-        action.append(link);
-      }
-    } else if (card.action) {
+      art.removeAttribute('aria-hidden');
+      const playlists = Array.from(root.querySelectorAll<HTMLAnchorElement>('.bc-playlist-list a'), link => ({
+        title: link.textContent!.trim().replace(/\s+/g, ' '), href: link.href,
+      }));
+      disposeScene = mountRecordCrate(art, action, { playlists, announce: message => { live!.textContent = message; } });
+    } else if (card.action === 'race') {
+      art.removeAttribute('aria-hidden');
+      disposeScene = mountStartingGrid(art, action, { announce: message => { live!.textContent = message; } });
+    } else if (card.action === 'camera') {
       const button = document.createElement('button');
       button.type = 'button';
-      button.textContent = card.action === 'race' ? 'Start the lights' : 'Take a shot';
+      button.textContent = 'Take a shot';
       button.addEventListener('click', async () => {
         if (drawing) return;
         drawing = true;
         const token = effectEpoch;
         button.setAttribute('aria-disabled', 'true');
-        if (card.action === 'race') {
-          const lamps = Array.from(art.querySelectorAll<HTMLElement>('i'));
-          if (reduced.matches) {
-            button.textContent = 'Lights out. Again?';
-          } else {
-            lamps.forEach(lamp => { lamp.dataset.on = 'false'; });
-            for (const lamp of lamps) {
-              lamp.dataset.on = 'true';
-              await motion(lamp, [{ opacity: .5 }, { opacity: 1 }], 190);
-              if (token !== effectEpoch) return;
-            }
-            await motion(art, [{ opacity: 1 }, { opacity: 1 }], 380);
-            if (token !== effectEpoch) return;
-            lamps.forEach(lamp => { lamp.dataset.on = 'false'; });
-            button.textContent = 'Lights out. Again?';
-          }
-          live!.textContent = 'Lights out.';
-        } else {
-          await motion(art, [{ transform: 'scale(1)' }, { transform: 'scale(.25) rotate(60deg)', offset: .45 }, { transform: 'scale(1) rotate(120deg)' }], 450);
-          if (token !== effectEpoch) return;
-          button.textContent = 'One more shot';
-          live!.textContent = 'Click. A little shutter animation.';
-        }
+        await motion(art, [{ transform: 'scale(1)' }, { transform: 'scale(.25) rotate(60deg)', offset: .45 }, { transform: 'scale(1) rotate(120deg)' }], 450);
+        if (token !== effectEpoch) return;
+        button.textContent = 'One more shot';
+        live!.textContent = 'Click. A little shutter animation.';
         drawing = false;
         button.removeAttribute('aria-disabled');
       }, options);
@@ -169,10 +174,11 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     miniature!.querySelector('.bc-card-imprint')!.textContent = card.topic;
     hint!.textContent = 'Draw another';
     trigger!.setAttribute('aria-label', 'Draw another card about me');
-    live!.textContent = `${card.topic}. ${card.title} ${card.copy} Card ${cards.length - bag.length} of ${cards.length}.`;
+    live!.textContent = `${card.topic}. ${card.title} ${card.copy} ${seen.size} of ${cards.length} interests explored.`;
   }
 
-  root.addEventListener('personaldeckdraw', () => {
+  root.addEventListener('personaldeckdraw', event => {
+    const focusFromTitle = title!.contains(document.activeElement);
     clearMotions();
     const prior = !stage.hidden ? sheet.cloneNode(true) as HTMLElement : null;
     if (prior) {
@@ -184,11 +190,13 @@ export function initPersonalDeck(root: HTMLElement): () => void {
       stage.append(prior);
       void motion(prior, [{ opacity: 1, transform: 'rotate(-2deg)' }, { opacity: 0, transform: 'translate(-30px, 12px) rotate(-10deg)' }], 220).finally(() => prior.remove());
     }
-    render(next());
+    const requestedId: unknown = (event as CustomEvent<{ id?: unknown }>).detail?.id;
+    render(next(typeof requestedId === 'string' ? requestedId : undefined));
     stage.hidden = false;
     article!.dataset.personalOpen = 'true';
     title!.inert = true;
     trigger!.setAttribute('aria-expanded', 'true');
+    if (focusFromTitle) (sheet.querySelector<HTMLButtonElement>('.bc-grid-trigger') ?? close).focus({ preventScroll: true });
     if (!prior) stage.scrollIntoView({ block: 'nearest', behavior: reduced.matches ? 'instant' : 'smooth' });
     void motion(sheet, [{ opacity: 0, transform: 'translate(45px, 24px) rotate(9deg) scale(.88)' }, { opacity: 1, transform: 'rotate(-2deg) scale(1)' }], 380);
   }, options);
@@ -196,12 +204,18 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   function reset(): void {
     const restoreFocus = stage.contains(document.activeElement);
     clearMotions();
+    disposeScene();
+    disposeScene = () => {};
     stage.hidden = true;
     delete article!.dataset.personalOpen;
     title!.inert = false;
     hint!.textContent = 'Draw a card';
     trigger!.setAttribute('aria-label', 'Draw a card about me');
     trigger!.setAttribute('aria-expanded', 'false');
+    picks.querySelectorAll('button').forEach(button => {
+      button.setAttribute('aria-pressed', 'false');
+      button.removeAttribute('aria-disabled');
+    });
     if (restoreFocus && trigger!.getClientRects().length && !trigger!.closest('[inert]')) trigger!.focus({ preventScroll: true });
   }
   close.addEventListener('click', () => {
@@ -217,7 +231,17 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     }
   }, options);
   root.addEventListener('personaldeckreset', reset, options);
+  root.addEventListener('personaldeckdrawing', () => {
+    clearMotions();
+    const artClasses = art.className;
+    const controlClasses = action.className;
+    disposeScene();
+    disposeScene = () => {};
+    art.className = artClasses;
+    action.className = controlClasses;
+    picks.querySelectorAll('button').forEach(button => button.setAttribute('aria-disabled', 'true'));
+  }, options);
   reduced.addEventListener('change', reset, options);
   trigger.setAttribute('aria-expanded', 'false');
-  return () => { controller.abort(); reset(); stage.remove(); trigger.removeAttribute('aria-expanded'); };
+  return () => { controller.abort(); reset(); stage.remove(); picks.remove(); trigger.removeAttribute('aria-expanded'); };
 }

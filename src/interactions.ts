@@ -13,10 +13,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   const seal = required<HTMLElement>('.bc-chapter-seal');
   const live = required('.bc-live');
   const returnButton = required<HTMLButtonElement>('.bc-return');
-  const weekends = required('.bc-weekends');
   const raceButton = required<HTMLButtonElement>('.bc-race-button');
-  const raceCaption = required('.bc-race-caption');
-  const raceLights = [...root.querySelectorAll<HTMLElement>('.bc-race-lights > span')];
   const shuffleHint = required('.bc-shuffle-hint');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -47,7 +44,6 @@ export function initPortfolio(root: HTMLElement): () => void {
   let transitionLayer: HTMLDivElement | null = null;
   let detailEpoch = 0;
   let shuffling = false;
-  let racing = false;
   const animations = new Set<Animation>();
   const detailAnimations = new Set<Animation>();
   const hasMotion = (): boolean => !reduced.matches && typeof root.animate === 'function';
@@ -98,9 +94,9 @@ export function initPortfolio(root: HTMLElement): () => void {
     }
   }
 
-  function revealCard(): void {
+  function revealCard(requestedId?: string): void {
     root.dispatchEvent(new CustomEvent('carddiscovered', { detail: { suit: 'hearts' } }));
-    root.dispatchEvent(new CustomEvent('personaldeckdraw'));
+    root.dispatchEvent(new CustomEvent('personaldeckdraw', { detail: { id: requestedId } }));
   }
 
   function stopDetails(): void {
@@ -108,14 +104,10 @@ export function initPortfolio(root: HTMLElement): () => void {
     detailAnimations.forEach(animation => animation.cancel());
     detailAnimations.clear();
     shuffling = false;
-    racing = false;
     smallCard.removeAttribute('aria-busy');
     miniature.classList.remove('bc-mini-drawn');
     miniature.replaceChildren(...cloneArtwork().childNodes);
-    raceButton.removeAttribute('aria-busy');
-    weekends.dataset.race = 'idle';
     shuffleHint.textContent = 'Draw a card';
-    raceCaption.textContent = 'Ready?';
     root.dispatchEvent(new CustomEvent('personaldeckreset'));
   }
 
@@ -296,15 +288,18 @@ export function initPortfolio(root: HTMLElement): () => void {
   card.addEventListener('pointercancel', resetCardTilt, listenerOptions);
   finePointer.addEventListener('change', resetCardTilt, listenerOptions);
 
-  smallCard.addEventListener('click', async () => {
+  async function drawPersonalCard(requestedId?: string): Promise<void> {
     if (busy || shuffling || !state.chapter) return;
-    if (racing) stopDetails();
+    root.dispatchEvent(new CustomEvent('personaldeckdrawing'));
     if (!hasMotion()) {
-      revealCard();
+      revealCard(requestedId);
       return;
     }
     const size = cardDimensions();
-    if (!size) return;
+    if (!size) {
+      revealCard(requestedId);
+      return;
+    }
     shuffling = true;
     smallCard.setAttribute('aria-busy', 'true');
     const token = detailEpoch;
@@ -329,7 +324,7 @@ export function initPortfolio(root: HTMLElement): () => void {
         { transform: `scale(${size.scale}) rotateY(90deg)` },
       ], { duration: 140, easing: 'ease-in' });
       if (destroyed || token !== detailEpoch) return;
-      revealCard();
+      revealCard(requestedId);
       await detailAnimate(miniature, [
         { transform: `scale(${size.scale}) rotateY(-90deg)` },
         { transform: `scale(${size.scale}) rotateY(0deg)` },
@@ -341,55 +336,13 @@ export function initPortfolio(root: HTMLElement): () => void {
     if (destroyed || token !== detailEpoch) return;
     shuffling = false;
     smallCard.removeAttribute('aria-busy');
-  }, listenerOptions);
-
-  // Resolve theme-aware CSS colors before passing them to the animation engine.
-  function raceColors(): { off: string; red: string } {
-    const probe = document.createElement('span');
-    probe.setAttribute('aria-hidden', 'true');
-    probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;width:0;height:0;';
-    root.append(probe);
-    probe.style.color = 'var(--bc-race-off)';
-    const off = getComputedStyle(probe).color;
-    probe.style.color = 'var(--bc-race-red)';
-    const red = getComputedStyle(probe).color;
-    probe.remove();
-    return { off, red };
   }
 
-  raceButton.addEventListener('click', async () => {
-    if (busy || racing || !state.chapter) return;
-    if (!hasMotion()) {
-      weekends.dataset.race = 'done';
-      raceCaption.textContent = 'Lights out.';
-      live.textContent = 'Lights out. Race started.';
-      return;
-    }
-    racing = true;
-    raceButton.setAttribute('aria-busy', 'true');
-    weekends.dataset.race = 'running';
-    raceCaption.textContent = 'On the grid.';
-    const token = detailEpoch;
-    try {
-      const { off, red } = raceColors();
-      await Promise.all(raceLights.map((light, index) => detailAnimate(light, [
-        { backgroundColor: off, offset: 0 },
-        { backgroundColor: off, offset: (index * 170 + 50) / 1600 },
-        { backgroundColor: red, offset: (index * 170 + 51) / 1600 },
-        { backgroundColor: red, offset: 0.8 },
-        { backgroundColor: off, offset: 0.801 },
-        { backgroundColor: off, offset: 1 },
-      ], { duration: 1600, easing: 'linear' })));
-    } catch {
-      if (token === detailEpoch) stopDetails();
-      return;
-    }
-    if (destroyed || token !== detailEpoch) return;
-    racing = false;
-    raceButton.removeAttribute('aria-busy');
-    weekends.dataset.race = 'done';
-    raceCaption.textContent = 'Lights out.';
-    live.textContent = 'Lights out. Race started.';
+  smallCard.addEventListener('click', () => { void drawPersonalCard(); }, listenerOptions);
+  raceButton.addEventListener('click', () => { void drawPersonalCard('f1'); }, listenerOptions);
+  root.addEventListener('personaldeckrequest', event => {
+    const id: unknown = (event as CustomEvent<{ id?: unknown }>).detail?.id;
+    if (id === 'music' || id === 'f1') void drawPersonalCard(id);
   }, listenerOptions);
 
   root.addEventListener('deckchange', () => {

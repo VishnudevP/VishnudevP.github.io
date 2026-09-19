@@ -1,0 +1,70 @@
+/* A saved month has a place on the shelf. Fine linework, one ink, real playlists. */
+#portfolio .bc-personal-art.bc-crate-art {
+  display: block;
+  flex-basis: auto;
+  width: 100%;
+  margin: -7px 0 9px;
+}
+#portfolio .bc-crate-browse {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--bc-card-ink);
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;
+  -webkit-tap-highlight-color: transparent;
+}
+#portfolio .bc-crate-browse[data-dragging='true'] { cursor: grabbing; }
+#portfolio .bc-crate-browse:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; border-radius: 3px; }
+#portfolio .bc-crate-scene { display: block; width: min(100%, 226px); height: 183px; overflow: visible; stroke: currentColor; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+#portfolio .bc-crate-ground { opacity: .07; transform: translateY(-13px); }
+#portfolio .bc-crate-shadow { fill: currentColor; stroke: none; opacity: .06; transform: translateY(-10px); }
+#portfolio .bc-crate-box-front, #portfolio .bc-crate-box-back { transform: translateY(-10px); }
+#portfolio .bc-crate-fill, #portfolio .bc-crate-cover, #portfolio .bc-crate-disc { fill: var(--bc-card-paper); }
+#portfolio .bc-crate-sleeve { transform-box: view-box; transform-origin: 0 0; }
+#portfolio .bc-crate-sleeve[data-active='false'] { color: color-mix(in srgb, var(--bc-card-ink) 55%, var(--bc-card-paper)); }
+#portfolio .bc-crate-soft { opacity: .26; }
+#portfolio .bc-crate-slats { opacity: .46; }
+#portfolio .bc-crate-label { fill: currentColor; fill-opacity: .1; }
+#portfolio .bc-crate-label-ink { opacity: .65; }
+#portfolio .bc-crate-nails { opacity: .7; stroke-width: 1.5; }
+#portfolio .bc-crate-vinyl { stroke-width: .7; }
+#portfolio .bc-crate-disc-label { fill: currentColor; fill-opacity: .18; }
+#portfolio .bc-crate-disc-hole { fill: currentColor; stroke: none; }
+#portfolio .bc-crate-cover-motif { opacity: .65; stroke-width: .8; }
+#portfolio .bc-crate-cover-motif path { opacity: .35; }
+#portfolio .bc-crate-cover-name, #portfolio .bc-crate-cover-number { fill: currentColor; stroke: none; font: 5.5px/1 'IBM Plex Mono', monospace; letter-spacing: .2px; }
+#portfolio .bc-crate-cover-number { font-size: 6px; opacity: .6; }
+#portfolio .bc-crate-guide { margin-top: 5px; font: 8px/1.4 'IBM Plex Mono', monospace; opacity: .58; letter-spacing: .2px; }
+#portfolio .bc-personal-action.bc-crate-controls { padding-top: 13px; }
+#portfolio .bc-crate-months { display: flex; gap: 5px; flex-wrap: wrap; }
+#portfolio .bc-crate-controls .bc-crate-month {
+  justify-content: center;
+  flex: 1;
+  min-height: 32px;
+  padding: 3px 9px;
+  border: 1px solid color-mix(in srgb, var(--bc-card-ink) 19%, transparent);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--bc-card-ink);
+  text-decoration: none;
+  font: 9px/1 'IBM Plex Mono', monospace;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+#portfolio .bc-crate-controls .bc-crate-month[aria-pressed='true'] { background: color-mix(in srgb, var(--bc-card-ink) 10%, transparent); border-color: color-mix(in srgb, var(--bc-card-ink) 58%, transparent); }
+#portfolio .bc-crate-controls .bc-crate-month:hover { border-color: currentColor; }
+#portfolio .bc-crate-caption { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
+#portfolio .bc-crate-selected { font: 8px/1.5 'IBM Plex Mono', monospace; opacity: .75; }
+#portfolio .bc-crate-controls .bc-crate-open { flex-shrink: 0; font-size: 9px; }
+@media (max-width: 520px) {
+  #portfolio .bc-crate-scene { height: 173px; }
+  #portfolio .bc-crate-controls .bc-crate-month { min-height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #portfolio .bc-crate-controls .bc-crate-month { transition: none; }
+}
