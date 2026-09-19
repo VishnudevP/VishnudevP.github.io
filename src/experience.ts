@@ -45,6 +45,7 @@ export function initExperience(root: HTMLElement): () => void {
   });
 
   let selected = 0;
+  const viewedRoles = new Set<number>();
   let activeAnimation: Animation | null = null;
   let destroyed = false;
 
@@ -57,6 +58,10 @@ export function initExperience(root: HTMLElement): () => void {
     if (destroyed || index < 0 || index >= entries.length) return;
     const changed = index !== selected;
     selected = index;
+    viewedRoles.add(index);
+    if (viewedRoles.size >= 3) {
+      root.dispatchEvent(new CustomEvent('carddiscovered', { detail: { suit: 'diamonds' } }));
+    }
     stopAnimation();
 
     entries.forEach(({ button, panel }, entryIndex) => {

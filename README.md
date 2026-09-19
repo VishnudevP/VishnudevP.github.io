@@ -21,9 +21,10 @@ npm run preview # Serve the production build locally
 
 - `index.html`: copy, project links, playlist archive, and page metadata. The content is in HTML so the introduction and project links render before JavaScript loads.
 - `src/styles.css`: responsive layout, base palettes, and card artwork.
-- `src/interactions.ts`: Beyond Work navigation, card deal, shuffle reveals, and race lights.
+- `src/interactions.ts` and `src/transitions.css`: Beyond Work navigation, shared-card transition, shuffle reveals, and race lights.
 - `src/decks.ts` and `src/decks.css`: the deck picker, saved choice, and four coordinated card/page themes.
-- `src/cards.ts` and `src/cards.css`: the chapter pack, section deals, and Crowdsupply story card.
+- `src/cards.ts` and `src/cards.css`: the cut/swipe chapter deck and Crowdsupply story card.
+- `src/discoveries.ts` and `src/discoveries.css`: four optional suit discoveries and the footer’s hidden royal flush. Progress stays in session storage.
 - `src/experience.ts`: company selection, keyboard navigation, and role transitions. Without JavaScript, every role stays visible.
 - `src/main.ts`: entry point.
 - `public/`: files copied directly into the build, including the favicon.
@@ -42,9 +43,10 @@ Before pushing UI changes, run the type check and production build, then verify:
 4. Shuffle the smaller card to reveal a playing card, and start the race lights. Navigate away while an effect is running.
 5. Check narrow screens, visible keyboard focus, and the OS reduced-motion setting.
 6. Select each employer. Use Up/Down on desktop or Left/Right on mobile, plus Home/End, to move through the roles.
-7. Fan and gather the hero pack, select each section card, and open Crowdsupply’s story using either its card or text disclosure.
+7. Cut the hero deck using its button, Left/Right keys, and horizontal swipes. Check that vertical touch scrolling works and releasing a swipe does not open a page. Select each chapter card, then open Crowdsupply’s story using either its card or text disclosure.
+8. Find all four suits: cycle through the deck, view three companies, open the project story, and draw a card in Beyond Work. Check the footer hints and reward, reload to confirm session progress, and close the hints with Escape without leaving the page.
 
-The card deal uses a quiet transition on narrow screens or when its destination would be outside the viewport. Reduced motion opens the chapter without animation.
+Chapter navigation fades the outgoing page before revealing the next. When the source card is visible, it settles into a small card beside the Beyond Work heading; footer navigation uses the same page fade. Reduced motion changes chapters without animation.
 
 ## Publishing is manual
 
