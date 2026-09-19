@@ -44,7 +44,7 @@ export function initExperience(root: HTMLElement): () => void {
     remember(panel, ['id', 'role', 'aria-labelledby', 'hidden', 'tabindex']);
   });
 
-  let selected = Math.max(0, entries.findIndex(entry => entry.role === 'ground-news'));
+  let selected = 0;
   let activeAnimation: Animation | null = null;
   let destroyed = false;
 

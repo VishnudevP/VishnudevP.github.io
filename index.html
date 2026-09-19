@@ -166,10 +166,16 @@
           <section class="bc-experience" id="experience" aria-labelledby="experience-title">
             <div class="bc-section-heading">
               <h2 id="experience-title">Experience<span>.</span></h2>
-              <span class="bc-kicker">2021 — 2025</span>
+              <span class="bc-kicker">2021 — 2026</span>
             </div>
             <div class="bc-experience-browser">
               <div class="bc-employer-list" hidden>
+                <button class="bc-employer" data-role="amazon" type="button">
+                  <span>Amazon</span><small>2026</small>
+                </button>
+                <button class="bc-employer" data-role="opentext" type="button">
+                  <span>OpenText</span><small>2026</small>
+                </button>
                 <button class="bc-employer" data-role="ground-news" type="button">
                   <span>Ground News</span><small>2025</small>
                 </button>
@@ -187,48 +193,80 @@
                 </button>
               </div>
               <div class="bc-job-pages">
-                <article class="bc-job" id="job-ground-news" data-role="ground-news">
+                <article class="bc-job" id="job-amazon" data-role="amazon">
                   <header class="bc-job-head">
-                    <div><h3>Ground News</h3><p>Full-Stack Developer Intern</p></div>
-                    <span class="bc-job-dates">May – August 2025</span>
+                    <div><h3>Amazon</h3><p>Software Engineer Intern, Amazon Ads</p></div>
+                    <span class="bc-job-dates">May – August 2026</span>
                   </header>
-                  <h4>News infrastructure, from search to scoring.</h4>
-                  <p class="bc-job-intro">Worked on the backend systems powering news aggregation, improving how stories were searched, cached, and processed.</p>
+                  <h4>AI tools for testing and dashboard actions.</h4>
+                  <p class="bc-job-intro">Built AI-assisted UI testing and an interactive dashboard assistant for Amazon Ads.</p>
                   <dl class="bc-job-results">
-                    <div><dt>subscribers affected by the database fix</dt><dd>50K+</dd></div>
-                    <div><dt>additional stories processed per day</dt><dd>1,000+</dd></div>
+                    <div><dt>rendered states validated</dt><dd>60+</dd></div>
+                    <div><dt>per validation run</dt><dd>&lt;8 min</dd></div>
                   </dl>
                   <ul class="bc-job-contributions">
-                    <li>Optimized Elasticsearch and Redis caching, and resolved a MySQL bottleneck affecting 50K+ subscribers.</li>
-                    <li>Built a bias-scoring module that supported 1,000+ additional stories every day.</li>
+                    <li>Built a Playwright and TypeScript framework that used a language model to generate test suites, catching three customer-facing regressions before release.</li>
+                    <li>Developed a React and TypeScript assistant that turned natural-language requests into live dashboard actions across three smart-widget types using model tool calling.</li>
+                    <li>Added UI validation as a release gate in an eight-stage CI/CD pipeline using AWS CDK, blocking promotions when checks failed.</li>
                   </ul>
-                  <p class="bc-job-stack"><span>BUILT WITH</span>TypeScript · Node.js · Redis · Elasticsearch · MySQL</p>
+                  <p class="bc-job-stack"><span>BUILT WITH</span>TypeScript · React · Playwright · AWS CDK</p>
+                </article>
+                <article class="bc-job" id="job-opentext" data-role="opentext">
+                  <header class="bc-job-head">
+                    <div><h3>OpenText</h3><p>Software Engineer Intern</p></div>
+                    <span class="bc-job-dates">January – April 2026</span>
+                  </header>
+                  <h4>Bringing traffic data into one view.</h4>
+                  <p class="bc-job-intro">Built log analytics and reporting tools that connected CDN, origin, and analytics data.</p>
+                  <ul class="bc-job-contributions">
+                    <li>Consolidated IIS, Akamai CDN, and Google Analytics data into a Graylog and OpenSearch platform processing 3M+ log events monthly.</li>
+                    <li>Standardized log formats to correlate traffic across CDN, origin, and analytics layers, enabling analysis of 10M+ historical events.</li>
+                    <li>Built an Angular and Node.js reporting dashboard backed by normalized JSON data and PostgreSQL.</li>
+                  </ul>
+                  <p class="bc-job-stack"><span>BUILT WITH</span>Python · Graylog · OpenSearch · PostgreSQL · Angular · Node.js</p>
+                </article>
+                <article class="bc-job" id="job-ground-news" data-role="ground-news">
+                  <header class="bc-job-head">
+                    <div><h3>Ground News</h3><p>Software Engineer Intern</p></div>
+                    <span class="bc-job-dates">May – August 2025</span>
+                  </header>
+                  <h4>News retrieval, ranking, and reliability.</h4>
+                  <p class="bc-job-intro">Rebuilt news retrieval and ranking, and improved backend reliability during peak traffic.</p>
+                  <dl class="bc-job-results">
+                    <div><dt>improvement in article relevance</dt><dd>35%</dd></div>
+                    <div><dt>concurrent request capacity</dt><dd>2×</dd></div>
+                  </dl>
+                  <ul class="bc-job-contributions">
+                    <li>Rebuilt the retrieval and ranking engine with Elasticsearch, Redis, and TypeScript.</li>
+                    <li>Implemented database partitioning and deployed AWS microservices to support reliable performance for 500K+ monthly readers.</li>
+                  </ul>
+                  <p class="bc-job-stack"><span>BUILT WITH</span>TypeScript · Elasticsearch · Redis · AWS EC2 · S3 · CloudFront</p>
                 </article>
                 <article class="bc-job" id="job-magnify" data-role="magnify">
                   <header class="bc-job-head">
-                    <div><h3>Magnify Digital</h3><p>Software Engineering Intern</p></div>
+                    <div><h3>Magnify Digital</h3><p>Software Engineer Intern</p></div>
                     <span class="bc-job-dates">September 2024 – March 2025</span>
                   </header>
-                  <h4>Marketing analytics, across the stack.</h4>
-                  <p class="bc-job-intro">Worked across the product interface, data pipelines, and test infrastructure of a marketing analytics platform.</p>
+                  <h4>Ad performance, in real time.</h4>
+                  <p class="bc-job-intro">Developed campaign analytics and data pipelines for marketing teams.</p>
                   <ul class="bc-job-contributions">
-                    <li>Improved the experience for 10K+ weekly visitors through Next.js and Node.js APIs.</li>
-                    <li>Redesigned ingestion with GraphQL and automated Cypress testing through GitHub Actions.</li>
+                    <li>Built Next.js, TypeScript, and GraphQL analytics tools that visualized real-time ad performance and improved reporting accuracy by 30%.</li>
+                    <li>Created AWS Lambda and RDS ingestion pipelines that combined third-party APIs to aggregate millions of ad impressions daily.</li>
                   </ul>
-                  <p class="bc-job-stack"><span>BUILT WITH</span>Next.js · TypeScript · Node.js · GraphQL · Cypress</p>
+                  <p class="bc-job-stack"><span>BUILT WITH</span>Next.js · TypeScript · GraphQL · AWS Lambda · RDS</p>
                 </article>
                 <article class="bc-job" id="job-shyftlabs" data-role="shyftlabs">
                   <header class="bc-job-head">
-                    <div><h3>ShyftLabs</h3><p>Software Engineering Intern</p></div>
+                    <div><h3>ShyftLabs</h3><p>Software Engineer Intern</p></div>
                     <span class="bc-job-dates">May – August 2024</span>
                   </header>
-                  <h4>Real-time insights for advertising.</h4>
-                  <p class="bc-job-intro">Helped build an advertising dashboard delivering real-time insights on 50K+ daily impressions.</p>
+                  <h4>Campaign analytics for retail media.</h4>
+                  <p class="bc-job-intro">Built dashboards and backend services for Carter, an AI-powered retail media network.</p>
                   <ul class="bc-job-contributions">
-                    <li>Developed responsive analytics dashboards with Next.js and React.</li>
-                    <li>Built Kotlin and Spring Boot microservices, and Node.js and GraphQL APIs supporting analytics data.</li>
+                    <li>Developed Next.js and React dashboards that visualized campaign performance and improved ad-reporting accuracy by 25%.</li>
+                    <li>Built Kotlin, Spring Boot, and GraphQL services that powered automated ad delivery and reduced response times by 30%.</li>
                   </ul>
-                  <p class="bc-job-stack"><span>BUILT WITH</span>React · Next.js · Kotlin · Spring Boot · GraphQL</p>
+                  <p class="bc-job-stack"><span>BUILT WITH</span>Next.js · React · Kotlin · Spring Boot · GraphQL</p>
                 </article>
                 <article class="bc-job" id="job-wenu" data-role="wenu">
                   <header class="bc-job-head">
