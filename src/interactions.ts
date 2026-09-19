@@ -1,5 +1,3 @@
-type Palette = 'light' | 'dark';
-
 /** Enhance the two portfolio chapters. Call the returned function before remounting. */
 export function initPortfolio(root: HTMLElement): () => void {
   const required = <T extends HTMLElement>(selector: string): T => {
@@ -14,7 +12,6 @@ export function initPortfolio(root: HTMLElement): () => void {
   const smallCard = required<HTMLButtonElement>('.bc-small-card');
   const live = required('.bc-live');
   const returnButton = required<HTMLButtonElement>('.bc-return');
-  const themeButtons = root.querySelectorAll<HTMLButtonElement>('.bc-theme-toggle');
   const weekends = required('.bc-weekends');
   const raceButton = required<HTMLButtonElement>('.bc-race-button');
   const raceCaption = required('.bc-race-caption');
@@ -22,24 +19,10 @@ export function initPortfolio(root: HTMLElement): () => void {
   const shuffleHint = required('.bc-shuffle-hint');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
   const controller = new AbortController();
   const listenerOptions = { signal: controller.signal };
-  const paletteValue = (value: string | null | undefined): Palette | null =>
-    value === 'light' || value === 'dark' ? value : null;
-  const storedPalette = (): Palette | null => {
-    try { return paletteValue(window.localStorage.getItem('vishnu-theme')); }
-    catch { return null; }
-  };
-  const saved = storedPalette();
   const isBeyondWork = (): boolean => ['#beyond-work', '#bonus'].includes(window.location.hash);
-  let followsSystem = saved === null;
-  const state = {
-    chapter: isBeyondWork(),
-    palette: saved ?? paletteValue(root.dataset.theme)
-      ?? paletteValue(document.documentElement.dataset.palette)
-      ?? paletteValue(root.dataset.palette) ?? (systemTheme.matches ? 'dark' : 'light'),
-  };
+  const state = { chapter: isBeyondWork() };
   const originalMiniContents = [...smallCard.childNodes];
   const originalMiniHeight = smallCard.style.height;
   const cloneArtwork = (): HTMLElement => {
@@ -61,6 +44,13 @@ export function initPortfolio(root: HTMLElement): () => void {
   let detailEpoch = 0;
   let shuffling = false;
   let racing = false;
+  let drawnCard = 0;
+  const faces = [
+    { rank: 'A', suit: '♠', name: 'Ace of spades' },
+    { rank: 'K', suit: '♦', name: 'King of diamonds' },
+    { rank: 'Q', suit: '♥', name: 'Queen of hearts' },
+    { rank: 'J', suit: '♣', name: 'Jack of clubs' },
+  ];
   const animations = new Set<Animation>();
   const detailAnimations = new Set<Animation>();
   const hasMotion = (): boolean => !reduced.matches && typeof root.animate === 'function';
@@ -89,25 +79,7 @@ export function initPortfolio(root: HTMLElement): () => void {
     }
   }
 
-  function paintTheme(): void {
-    root.dataset.palette = state.palette;
-    root.style.colorScheme = state.palette;
-    document.documentElement.dataset.palette = state.palette;
-    document.documentElement.style.colorScheme = state.palette;
-    const background = state.palette === 'dark' ? '#1c1b1a' : '#f5f0e8';
-    document.documentElement.style.backgroundColor = background;
-    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-    if (themeColor) themeColor.content = background;
-    const next = state.palette === 'dark' ? 'light' : 'dark';
-    for (const button of themeButtons) {
-      button.setAttribute('aria-label', `Switch to ${next} mode`);
-      const label = button.querySelector('.bc-theme-label');
-      if (label) label.textContent = next === 'light' ? 'Light mode' : 'Dark mode';
-    }
-  }
-
   function paint(): void {
-    paintTheme();
     document.title = state.chapter ? 'Beyond work — Vishnudev Poil' : 'Vishnudev Poil — Developer';
     cover.hidden = state.chapter;
     bonus.hidden = !state.chapter;
@@ -122,6 +94,26 @@ export function initPortfolio(root: HTMLElement): () => void {
     }
   }
 
+  function revealCard(): void {
+    const face = faces[drawnCard++ % faces.length];
+    miniature.classList.add('bc-mini-drawn');
+    miniature.querySelectorAll<HTMLElement>('.bc-card-corner').forEach(corner => {
+      const suit = document.createElement('small');
+      suit.textContent = face.suit;
+      corner.replaceChildren(document.createTextNode(face.rank), suit);
+    });
+    const letter = miniature.querySelector('.bc-card-letter');
+    if (letter) {
+      const suit = document.createElement('span');
+      suit.textContent = face.suit;
+      letter.replaceChildren(suit);
+    }
+    const imprint = miniature.querySelector('.bc-card-imprint');
+    if (imprint) imprint.textContent = face.name.toUpperCase();
+    shuffleHint.textContent = face.name;
+    live.textContent = `${face.name}. Shuffle again to draw another card.`;
+  }
+
   function stopDetails(): void {
     detailEpoch++;
     detailAnimations.forEach(animation => animation.cancel());
@@ -129,6 +121,8 @@ export function initPortfolio(root: HTMLElement): () => void {
     shuffling = false;
     racing = false;
     smallCard.removeAttribute('aria-busy');
+    miniature.classList.remove('bc-mini-drawn');
+    miniature.replaceChildren(...cloneArtwork().childNodes);
     raceButton.removeAttribute('aria-busy');
     weekends.dataset.race = 'idle';
     shuffleHint.textContent = 'Shuffle';
@@ -176,7 +170,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   }
 
   function updateHistory(open: boolean): void {
-    const hash = open ? '#beyond-work' : '#work';
+    const hash = open ? '#beyond-work' : '#intro';
     if (window.location.hash === hash) return;
     try {
       const url = new URL(window.location.href);
@@ -302,8 +296,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   smallCard.addEventListener('click', async () => {
     if (busy || shuffling || !state.chapter) return;
     if (!hasMotion()) {
-      shuffleHint.textContent = 'Fresh hand.';
-      live.textContent = 'Cards shuffled.';
+      revealCard();
       return;
     }
     const size = cardDimensions();
@@ -326,6 +319,17 @@ export function initPortfolio(root: HTMLElement): () => void {
         { transform: `translate(-7px,-13px) rotate(-8deg) scale(${size.scale})`, offset: 0.42 },
         { transform: `scale(${size.scale})` },
       ], { duration: 650 })]);
+      if (destroyed || token !== detailEpoch) return;
+      await detailAnimate(miniature, [
+        { transform: `scale(${size.scale}) rotateY(0deg)` },
+        { transform: `scale(${size.scale}) rotateY(90deg)` },
+      ], { duration: 140, easing: 'ease-in' });
+      if (destroyed || token !== detailEpoch) return;
+      revealCard();
+      await detailAnimate(miniature, [
+        { transform: `scale(${size.scale}) rotateY(-90deg)` },
+        { transform: `scale(${size.scale}) rotateY(0deg)` },
+      ], { duration: 180, easing: 'ease-out' });
     } catch {
       if (token === detailEpoch) stopDetails();
       return;
@@ -333,8 +337,6 @@ export function initPortfolio(root: HTMLElement): () => void {
     if (destroyed || token !== detailEpoch) return;
     shuffling = false;
     smallCard.removeAttribute('aria-busy');
-    shuffleHint.textContent = 'Fresh hand.';
-    live.textContent = 'Cards shuffled.';
   }, listenerOptions);
 
   // Resolve theme-aware CSS colors before passing them to the animation engine.
@@ -386,18 +388,11 @@ export function initPortfolio(root: HTMLElement): () => void {
     live.textContent = 'Lights out. Race started.';
   }, listenerOptions);
 
-  for (const button of themeButtons) {
-    button.addEventListener('click', () => {
-      if (busy) return;
-      resetCardTilt();
-      stopDetails();
-      followsSystem = false;
-      state.palette = state.palette === 'dark' ? 'light' : 'dark';
-      try { window.localStorage.setItem('vishnu-theme', state.palette); } catch { /* Keep the theme usable when storage is blocked. */ }
-      paintTheme();
-      live.textContent = state.palette === 'dark' ? 'Dark mode.' : 'Light mode.';
-    }, listenerOptions);
-  }
+  root.addEventListener('deckchange', () => {
+    resetCardTilt();
+    stopDetails();
+    if (busy) settle(pendingChapter);
+  }, listenerOptions);
 
   function followLocation(): void {
     const open = isBeyondWork();
@@ -413,7 +408,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   window.addEventListener('popstate', followLocation, listenerOptions);
   window.addEventListener('hashchange', followLocation, listenerOptions);
   document.addEventListener('keydown', event => {
-    if (event.key !== 'Escape' || !root.getClientRects().length || (!state.chapter && !busy)) return;
+    if (event.key !== 'Escape' || root.querySelector('dialog[open]') || !root.getClientRects().length || (!state.chapter && !busy)) return;
     event.preventDefault();
     updateHistory(false);
     resetCardTilt();
@@ -426,21 +421,6 @@ export function initPortfolio(root: HTMLElement): () => void {
     stopDetails();
     if (busy) settle(pendingChapter);
   }, listenerOptions);
-  systemTheme.addEventListener('change', () => {
-    if (!followsSystem) return;
-    stopDetails();
-    state.palette = systemTheme.matches ? 'dark' : 'light';
-    paintTheme();
-  }, listenerOptions);
-  window.addEventListener('storage', event => {
-    if (event.key !== 'vishnu-theme' && event.key !== null) return;
-    const palette = paletteValue(event.newValue);
-    followsSystem = palette === null;
-    state.palette = palette ?? (systemTheme.matches ? 'dark' : 'light');
-    stopDetails();
-    paintTheme();
-  }, listenerOptions);
-
   let lastWidth = root.clientWidth;
   function onResize(): void {
     if (destroyed || root.clientWidth === lastWidth) return;

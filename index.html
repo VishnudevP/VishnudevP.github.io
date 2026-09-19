@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-palette="dark">
+<html lang="en" data-palette="dark" data-deck="noir">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,19 +27,23 @@
     />
     <script>
       (() => {
-        let theme = matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
+        const decks = {
+          noir: ['dark', '#1c1b1a'], ivory: ['light', '#f5f0e8'],
+          midnight: ['dark', '#151c2a'], bordeaux: ['dark', '#241b20'],
+        };
+        let deck = matchMedia('(prefers-color-scheme: dark)').matches ? 'noir' : 'ivory';
         try {
-          const saved = localStorage.getItem("vishnu-theme");
-          if (saved === "light" || saved === "dark") theme = saved;
+          const saved = localStorage.getItem('vishnu-deck');
+          const legacy = localStorage.getItem('vishnu-theme');
+          if (Object.hasOwn(decks, saved)) deck = saved;
+          else if (legacy === 'light' || legacy === 'dark') deck = legacy === 'light' ? 'ivory' : 'noir';
         } catch {}
-        document.documentElement.dataset.palette = theme;
-        document.documentElement.style.colorScheme = theme;
-        document.documentElement.style.backgroundColor =
-          theme === "dark" ? "#1c1b1a" : "#f5f0e8";
-        document.querySelector('meta[name="theme-color"]').content =
-          theme === "dark" ? "#1c1b1a" : "#f5f0e8";
+        const [palette, background] = decks[deck];
+        document.documentElement.dataset.deck = deck;
+        document.documentElement.dataset.palette = palette;
+        document.documentElement.style.colorScheme = palette;
+        document.documentElement.style.backgroundColor = background;
+        document.querySelector('meta[name="theme-color"]').content = background;
       })();
     </script>
     <noscript>
@@ -50,7 +54,7 @@
         #portfolio .bc-bonus[hidden] {
           display: block !important;
         }
-        #portfolio .bc-theme-toggle,
+        #portfolio .bc-deck-toggle,
         #portfolio .bc-card-place,
         #portfolio .bc-bonus-link,
         #portfolio .bc-return,
@@ -79,52 +83,11 @@
             poil
           </a>
           <nav aria-label="Portfolio">
-            <a href="#work">Now</a>
             <a href="#experience">Experience</a>
             <a class="bc-nav-projects" href="#projects">Projects</a>
-            <button
-              class="bc-theme-toggle"
-              type="button"
-              aria-label="Switch to light mode"
-            >
-              <span class="bc-theme-sun" aria-hidden="true">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="4" />
-                  <path
-                    d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
-                  />
-                </svg>
-              </span>
-              <span class="bc-theme-moon" aria-hidden="true">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20.5 13.1A8.5 8.5 0 0 1 10.9 3.5 8.5 8.5 0 1 0 20.5 13.1Z"
-                  />
-                </svg>
-              </span>
-              <span class="bc-theme-label">Light mode</span>
+            <button class="bc-deck-toggle" type="button" aria-label="Choose your deck" aria-haspopup="dialog">
+              <span class="bc-deck-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+              <span class="bc-deck-label">Choose deck</span>
             </button>
           </nav>
         </header>
@@ -342,49 +305,9 @@
           </span>
           <div class="bc-header-actions">
             <button class="bc-return" type="button">Back to work</button>
-            <button
-              class="bc-theme-toggle"
-              type="button"
-              aria-label="Switch to light mode"
-            >
-              <span class="bc-theme-sun" aria-hidden="true">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="4" />
-                  <path
-                    d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
-                  />
-                </svg>
-              </span>
-              <span class="bc-theme-moon" aria-hidden="true">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20.5 13.1A8.5 8.5 0 0 1 10.9 3.5 8.5 8.5 0 1 0 20.5 13.1Z"
-                  />
-                </svg>
-              </span>
-              <span class="bc-theme-label">Light mode</span>
+            <button class="bc-deck-toggle" type="button" aria-label="Choose your deck" aria-haspopup="dialog">
+              <span class="bc-deck-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+              <span class="bc-deck-label">Choose deck</span>
             </button>
           </div>
         </header>

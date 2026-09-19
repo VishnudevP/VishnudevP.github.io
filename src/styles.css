@@ -160,37 +160,6 @@ body {
   color: var(--bc-accent);
 }
 
-#portfolio .bc-theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  min-height: 32px;
-  color: var(--bc-muted);
-  font-size: 11px;
-  white-space: nowrap;
-}
-
-#portfolio .bc-theme-toggle:hover {
-  color: var(--bc-ink);
-}
-
-#portfolio .bc-theme-toggle svg {
-  display: block;
-  width: 14px;
-  height: 14px;
-  stroke-width: 1.5;
-}
-
-#portfolio .bc-theme-moon,
-:root[data-palette='light'] #portfolio .bc-theme-sun {
-  display: none;
-}
-
-:root[data-palette='light'] #portfolio .bc-theme-moon {
-  display: inline;
-}
-
 #portfolio .bc-intro {
   display: grid;
   grid-template-columns: 1fr 32%;
@@ -386,6 +355,13 @@ body {
 #portfolio .bc-card-letter > span:first-child {
   margin-top: 0;
   transform: none;
+}
+
+#portfolio .bc-mini-drawn .bc-card-letter {
+  inset: 44px 0;
+  font-size: 104px;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 #portfolio .bc-card-imprint {
@@ -742,9 +718,9 @@ body {
 
 #portfolio .bc-shuffle-hint {
   position: absolute;
-  right: 37px;
+  right: 12px;
   bottom: 9px;
-  width: 70px;
+  width: 120px;
   color: var(--bc-muted);
   font-size: 11px;
   text-align: center;
@@ -944,9 +920,6 @@ body {
   #portfolio .bc-home > span { padding: 0 3px; }
   #portfolio nav, #portfolio .bc-header-actions { gap: 12px; }
   #portfolio nav { font-size: 11px; }
-  #portfolio .bc-theme-toggle { gap: 5px; }
-  #portfolio .bc-theme-label { display: none; }
-  #portfolio .bc-theme-toggle svg { width: 13px; height: 13px; }
   #portfolio .bc-intro { grid-template-columns: 1fr; gap: 28px; padding: 27px 0 38px; }
   #portfolio .bc-intro-copy { max-width: 100%; }
   #portfolio h1 { margin: 16px 0; font-size: 39px; letter-spacing: -1.9px; }
@@ -967,7 +940,7 @@ body {
   #portfolio .bc-weekend-title { margin-top: 23px; font-size: 29px; letter-spacing: -1px; }
   #portfolio .bc-race-button { min-height: 36px; }
   #portfolio .bc-small-card { right: 9px; bottom: 35px; width: 66px; height: 94px; }
-  #portfolio .bc-shuffle-hint { right: 7px; bottom: 12px; width: 70px; }
+  #portfolio .bc-shuffle-hint { right: -11px; bottom: 12px; width: 106px; font-size: 10px; }
   #portfolio .bc-race-stage { bottom: 21px; }
   #portfolio .bc-finish { bottom: 24px; width: 55px; height: 8px; background-size: 8px 8px; }
   #portfolio .bc-chapters { padding: 26px 0 30px; }
@@ -982,12 +955,6 @@ body {
   #portfolio .bc-soundtrack p br { display: none; }
 }
 
-@media (max-width: 360px) {
-  #portfolio nav .bc-nav-projects { display: none; }
-  #portfolio .bc-theme-label { display: none; }
-  #portfolio .bc-theme-toggle { min-width: 32px; }
-}
-
 @media (pointer: coarse) {
   #portfolio nav > a,
   #portfolio .bc-card-hint,
@@ -998,7 +965,6 @@ body {
     min-height: 44px;
   }
 
-  #portfolio .bc-theme-toggle { min-width: 44px; min-height: 44px; }
   #portfolio .bc-race-button { min-height: 44px; }
 }
 
