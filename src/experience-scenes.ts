@@ -106,8 +106,8 @@ export function createExperienceScene(panel: HTMLElement, role: string, root: HT
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'bc-scene-trigger';
-  button.setAttribute('aria-label', `Play animation: ${spec.label}. ${spec.description}`);
-  button.innerHTML = `<svg class="bc-scene-art" viewBox="0 0 220 130" aria-hidden="true" focusable="false">${spec.artwork}</svg><span class="bc-scene-caption"><span>${spec.label}</span><small><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m6 4 6 4-6 4Z"/></svg>Play animation</small></span>`;
+  button.setAttribute('aria-label', `${spec.label} illustration. ${spec.description} Activate to trace the flow.`);
+  button.innerHTML = `<svg class="bc-scene-art" viewBox="0 0 220 130" aria-hidden="true" focusable="false">${spec.artwork}</svg><span class="bc-scene-caption">${spec.label}</span>`;
   figure.append(button);
   context.append(figure);
 
