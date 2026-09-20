@@ -14,6 +14,7 @@ export function initCards(root: HTMLElement): () => void {
   const originalHint = [...hint.childNodes];
   const originalMainAttributes = [...mainCard.attributes].map(attribute => [attribute.name, attribute.value]);
   const originalHintLabel = hint.getAttribute('aria-label');
+  const originalHintDescription = hint.getAttribute('aria-describedby');
   let active = 0;
   let cutting = false;
   let epoch = 0;
@@ -24,10 +25,10 @@ export function initCards(root: HTMLElement): () => void {
   let deckDiscovered = false;
 
   const chapters = [
-    { name: 'Beyond work', target: 'beyond-work', description: 'A little more about me.', rank: 'V', suit: '♥', caption: 'OFF THE CLOCK' },
-    { name: 'Building', target: 'work', description: 'What I’m building with Oversine.', rank: 'A', suit: '♣', caption: 'OVERSINE' },
-    { name: 'Experience', target: 'experience', description: 'The teams I’ve been part of.', rank: 'K', suit: '♦', caption: 'THE EXPERIENCE' },
-    { name: 'Projects', target: 'projects', description: 'Things I’ve brought to life.', rank: 'Q', suit: '♠', caption: 'PAST BUILDS' },
+    { name: 'Beyond work', action: 'Explore beyond work', target: 'beyond-work', description: 'A little more about me.', rank: 'V', suit: '♥', caption: 'OFF THE CLOCK' },
+    { name: 'Building', action: 'Explore Oversine', target: 'work', description: 'What I’m building with Oversine.', rank: 'A', suit: '♣', caption: 'OVERSINE' },
+    { name: 'Experience', action: 'View experience', target: 'experience', description: 'The teams I’ve been part of.', rank: 'K', suit: '♦', caption: 'THE EXPERIENCE' },
+    { name: 'Projects', action: 'View projects', target: 'projects', description: 'Things I’ve brought to life.', rank: 'Q', suit: '♠', caption: 'PAST BUILDS' },
   ];
 
   function artwork(rank: string, suit: string, caption: string, name: string): string {
@@ -66,28 +67,33 @@ export function initCards(root: HTMLElement): () => void {
   const count = document.createElement('span');
   count.className = 'bc-deck-count';
   count.setAttribute('aria-hidden', 'true');
-  caption.append(count, hint);
-  const description = document.createElement('p');
+  caption.append(hint);
+  const destinationLabel = document.createElement('strong');
+  destinationLabel.className = 'bc-deck-destination';
+  const description = document.createElement('span');
   description.className = 'bc-deck-card-description';
+  description.id = 'chapter-card-description';
+  hint.setAttribute('aria-describedby', description.id);
+  hint.replaceChildren(destinationLabel, description);
   const action = document.createElement('button');
   action.className = 'bc-deck-action';
   action.type = 'button';
-  action.textContent = 'Cut deck';
+  action.innerHTML = '<span class="bc-next-card-icon" aria-hidden="true"></span><span>Next card</span>';
   action.setAttribute('aria-controls', deck.id);
-  action.setAttribute('aria-label', 'Cut deck to the next chapter card');
+  action.setAttribute('aria-label', 'Next card');
   const guide = document.createElement('span');
   guide.className = 'bc-deck-guide';
-  guide.textContent = 'or swipe the cards';
+  guide.textContent = 'You can also swipe the deck';
   guide.setAttribute('aria-hidden', 'true');
   const controls = document.createElement('div');
   controls.className = 'bc-deck-controls';
-  controls.append(action, guide);
+  controls.append(action, count);
   const status = document.createElement('span');
   status.className = 'bc-sr-only';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.setAttribute('aria-atomic', 'true');
-  place.replaceChildren(deck, caption, description, controls, status);
+  place.replaceChildren(deck, caption, controls, guide, status);
   place.classList.add('bc-card-place-enhanced');
 
   function paint(announce = false): void {
@@ -101,9 +107,9 @@ export function initCards(root: HTMLElement): () => void {
       else card.setAttribute('aria-hidden', 'true');
     });
     const chapter = chapters[active];
-    count.textContent = `0${active + 1} / 0${cards.length}`;
-    hint.textContent = chapter.name;
-    hint.setAttribute('aria-label', `Open ${chapter.name.toLowerCase()}`);
+    count.textContent = `${active + 1} of ${cards.length} cards`;
+    destinationLabel.textContent = chapter.action;
+    hint.setAttribute('aria-label', chapter.action);
     description.textContent = chapter.description;
     status.textContent = announce ? `${chapter.name}, card ${active + 1} of ${cards.length}. ${chapter.description}` : '';
   }
@@ -261,34 +267,30 @@ export function initCards(root: HTMLElement): () => void {
   themeObserver.observe(root, { attributes: true, attributeFilter: ['data-deck', 'data-palette'] });
   paint();
 
-  const projectName = root.querySelector<HTMLElement>('.bc-project-name');
   const projectNotes = root.querySelector<HTMLDetailsElement>('.bc-project-notes');
-  let projectCard: HTMLButtonElement | null = null;
+  const projectSummary = projectNotes?.querySelector<HTMLElement>('summary');
+  let projectCard: HTMLSpanElement | null = null;
   let originalDetailsId: string | null = null;
-  if (projectName && projectNotes) {
+  if (projectSummary && projectNotes) {
     originalDetailsId = projectNotes.getAttribute('id');
     if (!projectNotes.id) projectNotes.id = 'crowdsupply-story';
-    projectCard = document.createElement('button');
-    projectCard.type = 'button';
+    projectCard = document.createElement('span');
     projectCard.className = 'bc-project-story-card';
-    projectCard.setAttribute('aria-controls', projectNotes.id);
+    projectCard.setAttribute('aria-hidden', 'true');
     projectCard.innerHTML = `<span class="bc-story-card-turn" aria-hidden="true">
       <span class="bc-story-front"><span class="bc-story-rank">Q<span>♠</span></span><span class="bc-story-mark">C</span><span class="bc-story-caption">THE STORY</span></span>
       <span class="bc-story-back"><span class="bc-story-mark">♠</span><span class="bc-story-caption">CROWDSUPPLY</span></span>
     </span>`;
     const syncStory = (): void => {
-      projectCard?.setAttribute('aria-expanded', String(projectNotes.open));
-      projectCard?.setAttribute('aria-label', `${projectNotes.open ? 'Close' : 'Read'} the Crowdsupply story`);
+      if (projectCard) projectCard.dataset.open = String(projectNotes.open);
       if (projectNotes.open) {
         root.dispatchEvent(new CustomEvent('carddiscovered', { detail: { suit: 'spades' } }));
         const story = projectNotes.querySelector<HTMLElement>('p');
         if (story) void animate(story, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }], 260);
       }
     };
-    projectCard.addEventListener('click', () => { projectNotes.open = !projectNotes.open; }, options);
     projectNotes.addEventListener('toggle', syncStory, options);
-    projectName.classList.add('bc-project-name-with-card');
-    projectName.append(projectCard);
+    projectSummary.prepend(projectCard);
     syncStory();
   }
 
@@ -298,13 +300,14 @@ export function initCards(root: HTMLElement): () => void {
     themeObserver.disconnect();
     stopMotion();
     projectCard?.remove();
-    projectName?.classList.remove('bc-project-name-with-card');
     if (projectNotes && originalDetailsId === null) projectNotes.removeAttribute('id');
     for (const attribute of [...mainCard.attributes]) mainCard.removeAttribute(attribute.name);
     for (const [name, value] of originalMainAttributes) mainCard.setAttribute(name, value);
     hint.replaceChildren(...originalHint);
     if (originalHintLabel === null) hint.removeAttribute('aria-label');
     else hint.setAttribute('aria-label', originalHintLabel);
+    if (originalHintDescription === null) hint.removeAttribute('aria-describedby');
+    else hint.setAttribute('aria-describedby', originalHintDescription);
     place.replaceChildren(...originalChildren);
     place.classList.remove('bc-card-place-enhanced');
   };

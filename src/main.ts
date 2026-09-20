@@ -8,6 +8,7 @@ import './record-crate.css';
 import './starting-grid.css';
 import './experience-scenes.css';
 import './experience-controls.css';
+import './work-controls.css';
 import { initPortfolio } from './interactions';
 import { initExperience } from './experience';
 import { initDecks } from './decks';

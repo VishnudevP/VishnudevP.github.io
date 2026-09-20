@@ -61,30 +61,32 @@
 #portfolio .bc-chapter-title { position: absolute; top: 137px; right: 12px; left: 12px; font: 400 22px/1.2 'Instrument Serif', serif; text-align: center; }
 #portfolio .bc-chapter-card .bc-card-imprint { font-size: 6px; letter-spacing: 1px; }
 
-#portfolio .bc-deck-caption { display: flex; align-items: center; justify-content: center; gap: 12px; }
-#portfolio .bc-deck-count { color: var(--bc-muted); font: 9px/1 'IBM Plex Mono', monospace; letter-spacing: .5px; opacity: .8; }
-#portfolio .bc-deck-caption > .bc-card-hint { justify-content: center; min-height: 36px; margin: 0; padding: 4px 0; color: var(--bc-ink); font-size: 12px; }
-#portfolio .bc-deck-card-description { min-height: 18px; margin: 0; color: var(--bc-muted); font-size: 10px; line-height: 1.7; text-align: center; }
-#portfolio .bc-deck-controls { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 8px; }
-#portfolio .bc-deck-action { min-height: 36px; padding: 4px 0; color: var(--bc-accent); font-size: 10px; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--bc-rule); }
-#portfolio .bc-deck-action:hover { text-decoration-color: var(--bc-accent); }
-#portfolio .bc-deck-guide { color: var(--bc-muted); font-size: 9px; opacity: .72; }
+#portfolio .bc-deck-caption { width: 100%; max-width: 320px; }
+#portfolio .bc-deck-count { color: var(--bc-muted); font: 11px/1.5 'IBM Plex Mono', monospace; white-space: nowrap; }
+#portfolio .bc-deck-caption > .bc-card-hint { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 100%; min-height: 76px; margin: 0; padding: 14px 16px; border: 1px solid var(--bc-accent); border-radius: 8px; background: color-mix(in srgb, var(--bc-accent) 12%, var(--bc-paper)); color: var(--bc-ink); text-decoration: none; transition: background .18s ease; }
+#portfolio .bc-deck-caption > .bc-card-hint:hover { background: color-mix(in srgb, var(--bc-accent) 20%, var(--bc-paper)); }
+#portfolio .bc-deck-destination { font: 500 15px/1.4 'DM Sans', sans-serif; }
+#portfolio .bc-deck-card-description { margin: 0; color: var(--bc-muted); font: 12px/1.5 'DM Sans', sans-serif; text-align: center; }
+#portfolio .bc-deck-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; max-width: 320px; margin-top: 10px; }
+#portfolio .bc-deck-action { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 44px; padding: 10px 15px; border: 1px solid var(--bc-rule); border-radius: 6px; color: var(--bc-ink); font-size: 13px; }
+#portfolio .bc-deck-action:hover { border-color: var(--bc-accent); background: color-mix(in srgb, var(--bc-accent) 6%, var(--bc-paper)); }
+#portfolio .bc-next-card-icon { position: relative; width: 13px; height: 18px; border: 1px solid var(--bc-accent); border-radius: 2px; transform: rotate(8deg); }
+#portfolio .bc-next-card-icon::before { content: ''; position: absolute; inset: -1px; border: 1px solid var(--bc-accent); border-radius: inherit; transform: translate(-4px, 1px) rotate(-14deg); }
+#portfolio .bc-deck-guide { margin-top: 12px; color: var(--bc-muted); font-size: 11px; }
 
-/* A small, reversible story card sits with the project name. */
-#portfolio .bc-project-name-with-card { position: relative; padding-right: 72px; }
-#portfolio .bc-project-name-with-card > span { color: var(--bc-muted); font-size: 11px; }
-#portfolio .bc-project-story-card { position: absolute; top: 4px; right: 0; width: 56px; height: 80px; perspective: 700px; transform: rotate(7deg); transition: transform .35s ease; }
-#portfolio .bc-project-story-card:hover { transform: rotate(2deg) translateY(-4px); }
+/* The native story disclosure includes a reversible card in its button. */
+#portfolio .bc-project-story-card { display: block; position: relative; flex: 0 0 40px; width: 40px; height: 57px; perspective: 700px; transform: rotate(7deg); transition: transform .35s ease; }
+#portfolio .bc-project-notes summary:hover .bc-project-story-card { transform: rotate(2deg) translateY(-2px); }
 #portfolio .bc-story-card-turn { display: block; position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
-#portfolio .bc-project-story-card[aria-expanded='true'] .bc-story-card-turn { transform: rotateY(180deg); }
+#portfolio .bc-project-story-card[data-open='true'] .bc-story-card-turn { transform: rotateY(180deg); }
 #portfolio :is(.bc-story-front, .bc-story-back) { display: block; position: absolute; inset: 0; border: 1px solid color-mix(in srgb, var(--bc-card-ink) 45%, transparent); border-radius: 4px; background: var(--bc-card-paper); color: var(--bc-card-ink); box-shadow: 0 7px 17px -10px var(--bc-shadow); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 #portfolio :is(.bc-story-front, .bc-story-back)::before { content: ''; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--bc-card-ink) 40%, transparent); border-radius: 2px; }
 #portfolio .bc-story-front { transform: translateZ(1px); }
 #portfolio .bc-story-back { transform: rotateY(180deg) translateZ(1px); }
 #portfolio .bc-story-rank { display: grid; position: absolute; top: 5px; left: 6px; padding: 0 2px; background: var(--bc-card-paper); font: 11px/.85 'Instrument Serif', serif; }
 #portfolio .bc-story-rank > span { margin-top: 3px; font-size: 8px; }
-#portfolio .bc-story-mark { display: block; padding-top: 23px; font: 400 30px/1 'Instrument Serif', serif; text-align: center; }
-#portfolio .bc-story-caption { display: block; position: absolute; right: 0; bottom: 11px; left: 0; font: 400 4px/1 'IBM Plex Mono', monospace; letter-spacing: .3px; text-align: center; }
+#portfolio .bc-story-mark { display: block; padding-top: 17px; font: 400 24px/1 'Instrument Serif', serif; text-align: center; }
+#portfolio .bc-story-caption { display: block; position: absolute; right: 0; bottom: 8px; left: 0; font: 400 3px/1 'IBM Plex Mono', monospace; letter-spacing: .3px; text-align: center; }
 
 @media (hover: hover) and (pointer: fine) {
   #portfolio .bc-chapter-deck:not([data-cutting='true']):not([data-dragging='true']) > .bc-deck-card[data-depth='0']:hover { transform: translateY(-5px) rotate(-1deg); }
@@ -103,8 +105,6 @@
   #portfolio .bc-chapter-suit { top: 44px; font-size: 53px; }
   #portfolio .bc-chapter-title { top: 112px; font-size: 18px; }
   #portfolio .bc-chapter-ornament { inset: 34px 22px 39px; }
-  #portfolio .bc-project-name-with-card { padding-right: 0; }
-  #portfolio .bc-project-story-card { position: relative; top: auto; right: auto; display: block; margin: 18px 0 0 5px; }
 }
 
 @media (max-width: 680px) {
@@ -112,19 +112,13 @@
   #portfolio .bc-card-place-enhanced { width: 100%; max-width: 310px; justify-self: center; }
 }
 
-@media (max-width: 600px) {
-  #portfolio .bc-project-name-with-card { min-height: 86px; padding-right: 74px; }
-  #portfolio .bc-project-story-card { position: absolute; top: 1px; right: 7px; margin: 0; }
-}
-
 @media (max-width: 520px) {
   #portfolio .bc-chapter-deck { --bc-chapter-width: 136px; --bc-chapter-height: 194px; height: 246px; }
-  #portfolio .bc-deck-caption > .bc-card-hint, #portfolio .bc-deck-action { min-height: 44px; }
-  #portfolio .bc-deck-controls { margin-top: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   #portfolio .bc-chapter-deck > .bc-deck-card,
   #portfolio .bc-chapter-art, #portfolio .bc-chapter-art::after,
+  #portfolio .bc-deck-caption > .bc-card-hint,
   #portfolio .bc-project-story-card, #portfolio .bc-story-card-turn { transition: none; }
 }
