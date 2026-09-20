@@ -666,21 +666,7 @@ body {
   letter-spacing: -1px;
 }
 
-#portfolio .bc-weekend-title > span,
-#portfolio .bc-race-button { display: block; }
-
-#portfolio .bc-race-button {
-  font: inherit;
-  letter-spacing: inherit;
-  text-align: left;
-  text-decoration: underline;
-  text-decoration-color: var(--bc-rule);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 5px;
-  transition: color .2s ease;
-}
-
-#portfolio .bc-race-button:hover { color: var(--bc-accent); }
+#portfolio .bc-weekend-title > span { display: block; }
 
 #portfolio .bc-weekends > p {
   position: relative;
@@ -691,20 +677,26 @@ body {
 }
 
 #portfolio .bc-small-card {
-  position: absolute;
-  right: 34px;
-  bottom: 30px;
-  width: 76px;
-  height: 106px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  min-height: 94px;
+  margin-top: 12px;
+  padding: 14px 18px;
   overflow: visible;
   isolation: isolate;
-  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--bc-accent) 42%, var(--bc-rule));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bc-accent) 10%, var(--bc-paper));
+  text-align: left;
   color: var(--bc-card-ink);
-  transform: rotate(15deg);
-  transition: filter .2s ease;
+  transition: background .2s ease, border-color .2s ease;
 }
 
-#portfolio .bc-small-card > .bc-card-object {
+#portfolio .bc-deal-art { display: block; position: relative; width: 42px; height: 59px; flex: 0 0 42px; transform: rotate(-8deg); isolation: isolate; }
+#portfolio .bc-deal-art > .bc-card-object {
   inset: auto;
   top: 0;
   left: 0;
@@ -713,28 +705,17 @@ body {
   transition: none;
 }
 
-#portfolio .bc-small-card > .bc-shuffle-leaf { opacity: 0; }
-#portfolio .bc-small-card:hover { filter: brightness(1.12); }
+#portfolio .bc-deal-art > .bc-shuffle-leaf { opacity: 0; }
+#portfolio .bc-small-card:hover { border-color: var(--bc-accent); background: color-mix(in srgb, var(--bc-accent) 17%, var(--bc-paper)); }
+#portfolio .bc-small-card[aria-busy='true'] { cursor: progress; }
+#portfolio .bc-deal-copy { display: grid; gap: 5px; }
+#portfolio .bc-deal-copy > span { color: var(--bc-muted); font-size: 12px; line-height: 1.4; }
+#portfolio .bc-deal-count { margin-left: auto; color: var(--bc-muted); font: 10px/1.4 'IBM Plex Mono', monospace; white-space: nowrap; }
 
 #portfolio .bc-shuffle-hint {
-  position: absolute;
-  right: 12px;
-  bottom: 9px;
-  width: 120px;
-  color: var(--bc-muted);
-  font-size: 11px;
-  text-align: center;
-  pointer-events: none;
-}
-
-#portfolio .bc-finish {
-  position: absolute;
-  bottom: 36px;
-  left: 0;
-  width: 88px;
-  height: 16px;
-  background: conic-gradient(var(--bc-muted) 25%, transparent 0 50%, var(--bc-muted) 0 75%, transparent 0) 0 0 / 16px 16px;
-  opacity: .22;
+  color: var(--bc-ink);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 #portfolio .bc-chapters { padding: 30px 0 28px 30px; }
@@ -892,10 +873,8 @@ body {
   #portfolio .bc-spread { grid-template-columns: minmax(0, 1fr); }
   #portfolio .bc-weekends { min-height: 283px; padding: 26px 0 40px; border-right: 0; border-bottom: 1px solid var(--bc-rule); }
   #portfolio .bc-weekend-title { margin-top: 23px; font-size: 29px; letter-spacing: -1px; }
-  #portfolio .bc-race-button { min-height: 36px; }
-  #portfolio .bc-small-card { right: 9px; bottom: 35px; width: 66px; height: 94px; }
-  #portfolio .bc-shuffle-hint { right: -11px; bottom: 12px; width: 106px; font-size: 10px; }
-  #portfolio .bc-finish { bottom: 24px; width: 55px; height: 8px; background-size: 8px 8px; }
+  #portfolio .bc-small-card { padding: 14px; gap: 14px; }
+  #portfolio .bc-deal-count { display: none; }
   #portfolio .bc-chapters { padding: 26px 0 30px; }
   #portfolio .bc-chapters h3 { margin: 20px 0; font-size: 24px; }
   #portfolio .bc-book-stack { max-width: 100%; gap: 16px; }
@@ -918,7 +897,6 @@ body {
     min-height: 44px;
   }
 
-  #portfolio .bc-race-button { min-height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

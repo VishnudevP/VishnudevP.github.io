@@ -44,16 +44,16 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   stage.className = 'bc-personal-stage';
   stage.hidden = true;
   stage.innerHTML = `
-    <article class="bc-personal-card" aria-labelledby="personal-card-title">
+    <button type="button" class="bc-personal-close"><span aria-hidden="true">×</span> Close card</button>
+    <article class="bc-personal-card" aria-labelledby="personal-card-title" tabindex="-1">
       <div class="bc-personal-card-top"><span class="bc-personal-rank" aria-hidden="true"></span><span class="bc-personal-count"></span></div>
       <span class="bc-personal-topic"></span>
       <h3 id="personal-card-title"></h3>
       <div class="bc-personal-art" aria-hidden="true"></div>
       <p class="bc-personal-copy"></p>
       <div class="bc-personal-action"></div>
-    </article>
-    <button type="button" class="bc-personal-close">Put away</button>`;
-  article.append(stage);
+    </article>`;
+  article.insertBefore(stage, trigger);
   const sheet = stage.querySelector<HTMLElement>('.bc-personal-card')!;
   const art = stage.querySelector<HTMLElement>('.bc-personal-art')!;
   const action = stage.querySelector<HTMLElement>('.bc-personal-action')!;
@@ -61,8 +61,18 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   const picks = document.createElement('div');
   picks.className = 'bc-personal-picks';
   picks.setAttribute('role', 'group');
-  picks.setAttribute('aria-label', 'Explore a card');
-  picks.innerHTML = '<button type="button" data-interest="music" aria-pressed="false">Record crate</button><button type="button" data-interest="f1" aria-pressed="false">Starting grid</button>';
+  picks.setAttribute('aria-label', 'Choose something to explore');
+  picks.innerHTML = `
+    <button type="button" data-interest="music" aria-pressed="false" aria-controls="personal-card-stage">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="11"/><circle cx="14" cy="14" r="7"/><circle cx="14" cy="14" r="2"/></svg>
+      <span><strong>Music</strong><small>Browse playlists</small></span>
+    </button>
+    <button type="button" data-interest="f1" aria-pressed="false" aria-controls="personal-card-stage">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 23V5h22v12H3M3 5h5v6H3m10-6h6v6h-6m6 0h6v6h-6M8 11h5v6H8"/></svg>
+      <span><strong>Formula 1</strong><small>Test your reflexes</small></span>
+    </button>`;
+  stage.id = 'personal-card-stage';
+  trigger.setAttribute('aria-controls', stage.id);
   article.insertBefore(picks, stage);
   picks.querySelectorAll<HTMLButtonElement>('button').forEach(button => {
     button.addEventListener('click', () => {
@@ -107,9 +117,8 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     disposeScene();
     disposeScene = () => {};
     sheet.dataset.interest = card.id;
-    stage.classList.toggle('bc-personal-object-stage', card.id === 'music' || card.id === 'f1');
     stage.querySelector('.bc-personal-rank')!.textContent = `${card.rank} ${card.suit}`;
-    stage.querySelector('.bc-personal-count')!.textContent = `${seen.size} / ${cards.length}`;
+    stage.querySelector('.bc-personal-count')!.textContent = `${seen.size} of ${cards.length} explored`;
     stage.querySelector('.bc-personal-topic')!.textContent = card.topic;
     stage.querySelector('h3')!.textContent = card.title;
     stage.querySelector('.bc-personal-copy')!.textContent = card.copy;
@@ -172,13 +181,13 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     pip.textContent = card.suit;
     miniature!.querySelector('.bc-card-letter')!.replaceChildren(pip);
     miniature!.querySelector('.bc-card-imprint')!.textContent = card.topic;
-    hint!.textContent = 'Draw another';
+    hint!.textContent = 'Draw another card';
     trigger!.setAttribute('aria-label', 'Draw another card about me');
     live!.textContent = `${card.topic}. ${card.title} ${card.copy} ${seen.size} of ${cards.length} interests explored.`;
   }
 
   root.addEventListener('personaldeckdraw', event => {
-    const focusFromTitle = title!.contains(document.activeElement);
+    const focusFromDeck = document.activeElement === trigger;
     clearMotions();
     const prior = !stage.hidden ? sheet.cloneNode(true) as HTMLElement : null;
     if (prior) {
@@ -196,7 +205,7 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     article!.dataset.personalOpen = 'true';
     title!.inert = true;
     trigger!.setAttribute('aria-expanded', 'true');
-    if (focusFromTitle) (sheet.querySelector<HTMLButtonElement>('.bc-grid-trigger') ?? close).focus({ preventScroll: true });
+    if (focusFromDeck) sheet.focus({ preventScroll: true });
     if (!prior) stage.scrollIntoView({ block: 'nearest', behavior: reduced.matches ? 'instant' : 'smooth' });
     void motion(sheet, [{ opacity: 0, transform: 'translate(45px, 24px) rotate(9deg) scale(.88)' }, { opacity: 1, transform: 'rotate(-2deg) scale(1)' }], 380);
   }, options);
@@ -232,6 +241,7 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   }, options);
   root.addEventListener('personaldeckreset', reset, options);
   root.addEventListener('personaldeckdrawing', () => {
+    hint!.textContent = 'Dealing…';
     clearMotions();
     const artClasses = art.className;
     const controlClasses = action.className;
@@ -243,5 +253,5 @@ export function initPersonalDeck(root: HTMLElement): () => void {
   }, options);
   reduced.addEventListener('change', reset, options);
   trigger.setAttribute('aria-expanded', 'false');
-  return () => { controller.abort(); reset(); stage.remove(); picks.remove(); trigger.removeAttribute('aria-expanded'); };
+  return () => { controller.abort(); reset(); stage.remove(); picks.remove(); trigger.removeAttribute('aria-expanded'); trigger.removeAttribute('aria-controls'); };
 }

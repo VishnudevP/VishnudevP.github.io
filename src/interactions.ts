@@ -10,10 +10,10 @@ export function initPortfolio(root: HTMLElement): () => void {
   const card = required<HTMLButtonElement>('.bc-playing-card');
   const cardObject = required('.bc-playing-card .bc-card-object');
   const smallCard = required<HTMLButtonElement>('.bc-small-card');
+  const miniArt = required<HTMLElement>('.bc-deal-art');
   const seal = required<HTMLElement>('.bc-chapter-seal');
   const live = required('.bc-live');
   const returnButton = required<HTMLButtonElement>('.bc-return');
-  const raceButton = required<HTMLButtonElement>('.bc-race-button');
   const shuffleHint = required('.bc-shuffle-hint');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -21,8 +21,8 @@ export function initPortfolio(root: HTMLElement): () => void {
   const listenerOptions = { signal: controller.signal };
   const isBeyondWork = (): boolean => ['#beyond-work', '#bonus'].includes(window.location.hash);
   const state = { chapter: isBeyondWork() };
-  const originalMiniContents = [...smallCard.childNodes];
-  const originalMiniHeight = smallCard.style.height;
+  const originalMiniContents = [...miniArt.childNodes];
+  const originalMiniHeight = miniArt.style.height;
   const cloneArtwork = (): HTMLElement => {
     const clone = cardObject.cloneNode(true) as HTMLElement;
     clone.removeAttribute('id');
@@ -35,7 +35,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   miniature.classList.add('bc-personal-mini');
   const shuffleLeaves = [cloneArtwork(), cloneArtwork()];
   shuffleLeaves.forEach(leaf => leaf.classList.add('bc-shuffle-leaf'));
-  smallCard.replaceChildren(...shuffleLeaves, miniature);
+  miniArt.replaceChildren(...shuffleLeaves, miniature);
 
   let destroyed = false;
   let busy = false;
@@ -54,7 +54,7 @@ export function initPortfolio(root: HTMLElement): () => void {
     const style = getComputedStyle(card);
     const width = Number.parseFloat(style.width);
     const height = Number.parseFloat(style.height);
-    const miniWidth = Number.parseFloat(getComputedStyle(smallCard).width);
+    const miniWidth = Number.parseFloat(getComputedStyle(miniArt).width);
     if (![width, height, miniWidth].every(value => Number.isFinite(value) && value > 0)) return null;
     const scale = miniWidth / width;
     if (scale < 0.02 || scale > 1) return null;
@@ -64,7 +64,7 @@ export function initPortfolio(root: HTMLElement): () => void {
   function syncMiniature(): void {
     const size = cardDimensions();
     if (!size) return;
-    smallCard.style.height = `${size.height * size.scale}px`;
+    miniArt.style.height = `${size.height * size.scale}px`;
     const sealWidth = Number.parseFloat(getComputedStyle(seal).width);
     if (Number.isFinite(sealWidth) && sealWidth > 0) {
       seal.style.height = `${size.height * sealWidth / size.width}px`;
@@ -339,7 +339,6 @@ export function initPortfolio(root: HTMLElement): () => void {
   }
 
   smallCard.addEventListener('click', () => { void drawPersonalCard(); }, listenerOptions);
-  raceButton.addEventListener('click', () => { void drawPersonalCard('f1'); }, listenerOptions);
   root.addEventListener('personaldeckrequest', event => {
     const id: unknown = (event as CustomEvent<{ id?: unknown }>).detail?.id;
     if (id === 'music' || id === 'f1') void drawPersonalCard(id);
@@ -416,9 +415,9 @@ export function initPortfolio(root: HTMLElement): () => void {
     state.chapter = pendingChapter;
     paint();
     sealArtwork.remove();
-    smallCard.replaceChildren(...originalMiniContents);
-    if (originalMiniHeight) smallCard.style.height = originalMiniHeight;
-    else smallCard.style.removeProperty('height');
+    miniArt.replaceChildren(...originalMiniContents);
+    if (originalMiniHeight) miniArt.style.height = originalMiniHeight;
+    else miniArt.style.removeProperty('height');
     delete root.dataset.enhanced;
   };
 }

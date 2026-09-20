@@ -56,7 +56,7 @@ export function mountRecordCrate(art: HTMLElement, controls: HTMLElement, option
   open.className = 'bc-crate-open';
   open.target = '_blank';
   open.rel = 'noopener noreferrer';
-  open.textContent = 'Open playlist';
+  open.textContent = 'Open in Spotify';
   const caption = document.createElement('div');
   caption.className = 'bc-crate-caption';
   caption.append(selectedTitle, open);
