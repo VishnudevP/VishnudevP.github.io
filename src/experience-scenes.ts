@@ -26,7 +26,7 @@ const scenes: Record<string, SceneSpec> = {
       ${check(176, 83, 3)}`,
   },
   opentext: {
-    label: 'One event pipeline',
+    label: 'Log pipeline',
     description: 'Separate log sources become a consistent stream for reporting.',
     artwork: `${floor}
       <path class="bc-scene-flow" data-stage="0" d="m35 41 45 22m-45 0 45 0m-45 22 45-22"/>
@@ -64,7 +64,7 @@ const scenes: Record<string, SceneSpec> = {
       ${check(181, 79, 3)}`,
   },
   sashido: {
-    label: 'From guide to app',
+    label: 'Developer examples',
     description: 'Developer documentation connects a sample application to the platform.',
     artwork: `${floor}
       <path class="bc-scene-flow" data-stage="1" d="m46 85 54 30 64-35"/>
