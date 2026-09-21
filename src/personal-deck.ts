@@ -12,13 +12,13 @@ interface PersonalCard {
 }
 
 const cards: readonly PersonalCard[] = [
-  { id: 'music', rank: 'Q', suit: '♥', topic: 'MUSIC', title: 'A month, saved.', copy: 'I used to make a playlist for each month, with a photo I took that month as its cover.', action: 'music' },
-  { id: 'f1', rank: 'A', suit: '♦', topic: 'FORMULA 1', title: 'Race weekends.', copy: 'F1 is on the watch list. You know what comes after five red lights.', action: 'race' },
-  { id: 'poker', rank: 'K', suit: '♠', topic: 'POKER', title: 'At the table.', copy: 'Away from the keyboard, a different kind of game.' },
-  { id: 'chapters', rank: 'J', suit: '♣', topic: 'ANIME & MANHWA', title: 'One more chapter.', copy: 'Sometimes an episode. Sometimes a chapter. Both belong here.' },
-  { id: 'photography', rank: '9', suit: '♦', topic: 'PHOTOGRAPHY', title: 'Through the lens.', copy: 'The photos on my old monthly playlist covers were little pieces of that month.', action: 'camera' },
-  { id: 'ufc', rank: '10', suit: '♠', topic: 'UFC', title: 'Fight nights.', copy: 'Another part of life away from code: UFC.' },
-  { id: 'valorant', rank: '7', suit: '♣', topic: 'VALORANT', title: 'Reaver. Prelude.', copy: 'Reaver and Prelude to Chaos. My picks for dark, dramatic skin designs.' },
+  { id: 'music', rank: 'Q', suit: '♥', topic: 'MUSIC', title: 'Saved playlists', copy: '', action: 'music' },
+  { id: 'f1', rank: 'A', suit: '♦', topic: 'FORMULA 1', title: 'Formula 1', copy: '', action: 'race' },
+  { id: 'poker', rank: 'K', suit: '♠', topic: 'POKER', title: 'Poker', copy: '' },
+  { id: 'chapters', rank: 'J', suit: '♣', topic: 'ANIME & MANHWA', title: 'Anime & manhwa', copy: '' },
+  { id: 'photography', rank: '9', suit: '♦', topic: 'PHOTOGRAPHY', title: 'Photography', copy: 'I used my own photos as covers for my monthly playlists.', action: 'camera' },
+  { id: 'ufc', rank: '10', suit: '♠', topic: 'UFC', title: 'UFC', copy: '' },
+  { id: 'valorant', rank: '7', suit: '♣', topic: 'VALORANT', title: 'Valorant', copy: 'My favorite skins: Reaver and Prelude to Chaos.' },
 ];
 
 /** Draw from a shuffled bag, so every interest appears before any repeats. */
@@ -47,7 +47,6 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     <button type="button" class="bc-personal-close"><span aria-hidden="true">×</span> Close card</button>
     <article class="bc-personal-card" aria-labelledby="personal-card-title" tabindex="-1">
       <div class="bc-personal-card-top"><span class="bc-personal-rank" aria-hidden="true"></span><span class="bc-personal-count"></span></div>
-      <span class="bc-personal-topic"></span>
       <h3 id="personal-card-title"></h3>
       <div class="bc-personal-art" aria-hidden="true"></div>
       <p class="bc-personal-copy"></p>
@@ -119,9 +118,10 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     sheet.dataset.interest = card.id;
     stage.querySelector('.bc-personal-rank')!.textContent = `${card.rank} ${card.suit}`;
     stage.querySelector('.bc-personal-count')!.textContent = `${seen.size} of ${cards.length} explored`;
-    stage.querySelector('.bc-personal-topic')!.textContent = card.topic;
     stage.querySelector('h3')!.textContent = card.title;
-    stage.querySelector('.bc-personal-copy')!.textContent = card.copy;
+    const copy = stage.querySelector<HTMLParagraphElement>('.bc-personal-copy')!;
+    copy.textContent = card.copy;
+    copy.hidden = !card.copy;
     action.replaceChildren();
     art.replaceChildren();
     art.className = 'bc-personal-art';
@@ -163,8 +163,8 @@ export function initPersonalDeck(root: HTMLElement): () => void {
         button.setAttribute('aria-disabled', 'true');
         await motion(art, [{ transform: 'scale(1)' }, { transform: 'scale(.25) rotate(60deg)', offset: .45 }, { transform: 'scale(1) rotate(120deg)' }], 450);
         if (token !== effectEpoch) return;
-        button.textContent = 'One more shot';
-        live!.textContent = 'Click. A little shutter animation.';
+        button.textContent = 'Take another shot';
+        live!.textContent = 'Shutter animation complete.';
         drawing = false;
         button.removeAttribute('aria-disabled');
       }, options);
@@ -183,7 +183,7 @@ export function initPersonalDeck(root: HTMLElement): () => void {
     miniature!.querySelector('.bc-card-imprint')!.textContent = card.topic;
     hint!.textContent = 'Draw another card';
     trigger!.setAttribute('aria-label', 'Draw another card about me');
-    live!.textContent = `${card.topic}. ${card.title} ${card.copy} ${seen.size} of ${cards.length} interests explored.`;
+    live!.textContent = `${card.title}. ${card.copy ? `${card.copy} ` : ''}${seen.size} of ${cards.length} interests explored.`;
   }
 
   root.addEventListener('personaldeckdraw', event => {

@@ -35,7 +35,7 @@ npm run preview # Serve the production build locally
 - `src/main.ts`: entry point.
 - `public/`: files copied directly into the build, including the favicon.
 
-The anime and manhwa covers are intentional placeholders until the favourites are chosen. Playlists are a small saved archive; they do not require a monthly update or Spotify credentials.
+The anime and manhwa illustrations represent those interests without naming individual titles. Playlists are a small saved archive; they do not require a monthly update or Spotify credentials.
 
 Choose a deck from the header: Noir (black and gold), Ivory (cream and oxblood), Midnight (navy and silver), or Bordeaux (wine and rose gold). The choice changes the site palette and card details, and is saved only in the visitor’s browser. Existing light/dark preferences carry over to Ivory/Noir. There is no backend, database, analytics, admin screen, or API key. Do not commit local `.env` files.
 
@@ -49,7 +49,7 @@ Before pushing UI changes, run the type check and production build, then verify:
 4. Use the Music / Browse playlists and Formula 1 / Test your reflexes tiles, or the full-width Draw a card button. Random draws exhaust all seven before refilling; the two tiles revisit either card at any time. Check the unique exploration count, miniature deal animation, and camera shutter. Browse playlist months using the crate, arrow keys, a horizontal swipe, and the month buttons; confirm Open in Spotify follows the selection. In Starting grid, try an early start, wait for lights out for a measured result, and replay. Close a card using Close card or Escape, then navigate away while an effect or countdown is running. Check keyboard focus enters a newly drawn card and returns to the draw button on close.
 5. Check narrow screens, visible keyboard focus, and the OS reduced-motion setting.
 6. Select each employer. Use Up/Down on desktop or Left/Right on mobile, plus Home/End, to move through the roles. Hover, focus, or tap its work illustration, and switch roles during the trace. Check that the illustration stacks cleanly on a phone and all employer dates remain visible.
-7. Browse the hero deck using Next card, Left/Right keys, and horizontal swipes. Check that vertical touch scrolling works and releasing a swipe does not open a page. Check each destination button, then open and close Crowdsupply’s Read project story disclosure with mouse and keyboard; the card inside it should flip with the open state.
+7. Browse the hero deck using Next card, Left/Right keys, and horizontal swipes. Check that vertical touch scrolling works and releasing a swipe does not open a page. Check each destination button, then open and close Crowdsupply’s Project details disclosure with mouse and keyboard; the card inside it should flip with the open state.
 8. Find all four suits: cycle through the deck, view three companies, open the project story, and draw a card in Beyond Work. Play Find the ace, check winning and missed picks, retry, and close mid-mix. Reload to confirm session progress. Escape in either card interaction should close it without leaving the page.
 
 Chapter navigation fades the outgoing page before revealing the next. When the source card is visible, it settles into a small card beside the Beyond Work heading; footer navigation uses the same page fade. Reduced motion changes chapters without animation.

@@ -37,9 +37,7 @@ export function initDecks(root: HTMLElement): () => void {
   dialog.setAttribute('aria-labelledby', 'bc-deck-title');
   dialog.innerHTML = `
     <div class="bc-deck-dialog-head">
-      <p class="bc-kicker">THE COLLECTION</p>
-      <h2 id="bc-deck-title">Pick your deck<span>.</span></h2>
-      <p class="bc-deck-description">A different feel, from the first card to the last.</p>
+      <h2 id="bc-deck-title">Pick your deck</h2>
     </div>
     <div class="bc-deck-collection" role="group" aria-label="Available decks">
       ${decks.map(deck => `

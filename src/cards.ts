@@ -25,10 +25,10 @@ export function initCards(root: HTMLElement): () => void {
   let deckDiscovered = false;
 
   const chapters = [
-    { name: 'Beyond work', action: 'Explore beyond work', target: 'beyond-work', description: 'A little more about me.', rank: 'V', suit: '♥', caption: 'OFF THE CLOCK' },
-    { name: 'Building', action: 'Explore Oversine', target: 'work', description: 'What I’m building with Oversine.', rank: 'A', suit: '♣', caption: 'OVERSINE' },
-    { name: 'Experience', action: 'View experience', target: 'experience', description: 'The teams I’ve been part of.', rank: 'K', suit: '♦', caption: 'THE EXPERIENCE' },
-    { name: 'Projects', action: 'View projects', target: 'projects', description: 'Things I’ve brought to life.', rank: 'Q', suit: '♠', caption: 'PAST BUILDS' },
+    { name: 'Beyond work', action: 'Explore beyond work', target: 'beyond-work', description: 'Music, games, and other interests.', rank: 'V', suit: '♥', caption: 'OFF THE CLOCK' },
+    { name: 'Building', action: 'Explore Oversine', target: 'work', description: 'My startup.', rank: 'A', suit: '♣', caption: 'OVERSINE' },
+    { name: 'Experience', action: 'View experience', target: 'experience', description: 'Internships and past roles.', rank: 'K', suit: '♦', caption: 'EXPERIENCE' },
+    { name: 'Projects', action: 'View projects', target: 'projects', description: 'What I’ve built.', rank: 'Q', suit: '♠', caption: 'PROJECTS' },
   ];
 
   function artwork(rank: string, suit: string, caption: string, name: string): string {
@@ -83,7 +83,7 @@ export function initCards(root: HTMLElement): () => void {
   action.setAttribute('aria-label', 'Next card');
   const guide = document.createElement('span');
   guide.className = 'bc-deck-guide';
-  guide.textContent = 'You can also swipe the deck';
+  guide.textContent = 'Swipe to browse';
   guide.setAttribute('aria-hidden', 'true');
   const controls = document.createElement('div');
   controls.className = 'bc-deck-controls';

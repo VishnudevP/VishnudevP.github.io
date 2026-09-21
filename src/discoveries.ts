@@ -1,10 +1,10 @@
 type Suit = 'clubs' | 'diamonds' | 'spades' | 'hearts';
 
 const discoveries: ReadonlyArray<{ suit: Suit; mark: string; clue: string; found: string }> = [
-  { suit: 'clubs', mark: '♣', clue: 'Turn through all four cards at the top.', found: 'Four cards at the top.' },
-  { suit: 'diamonds', mark: '♦', clue: 'Visit three companies in Experience.', found: 'Three stops in Experience.' },
-  { suit: 'spades', mark: '♠', clue: 'Turn over the Crowdsupply story card.', found: 'The story behind Crowdsupply.' },
-  { suit: 'hearts', mark: '♥', clue: 'Draw a card in Beyond work.', found: 'A card from Beyond work.' },
+  { suit: 'clubs', mark: '♣', clue: 'Browse all four cards at the top.', found: 'All four cards viewed.' },
+  { suit: 'diamonds', mark: '♦', clue: 'View three roles in Experience.', found: 'Three roles viewed.' },
+  { suit: 'spades', mark: '♠', clue: 'Open Crowdsupply’s project details.', found: 'Project details opened.' },
+  { suit: 'hearts', mark: '♥', clue: 'Draw a card in Beyond work.', found: 'Personal card drawn.' },
 ];
 
 const storageKey = 'vishnu-card-discoveries';
@@ -90,7 +90,7 @@ export function initDiscoveries(root: HTMLElement): () => void {
       if (collection.hand.children[slot] !== card) collection.hand.insertBefore(card, collection.hand.children[slot] ?? null);
     });
     collection.action.setAttribute('aria-disabled', String(phase === 'mixing'));
-    collection.action.textContent = phase === 'mixing' ? 'Keep watching…'
+    collection.action.textContent = phase === 'mixing' ? 'Shuffling…'
       : phase === 'result' ? 'Try again'
       : phase === 'choosing' ? 'Start over'
       : reducedMotion.matches ? 'Hide the cards' : 'Mix the cards';
@@ -108,7 +108,7 @@ export function initDiscoveries(root: HTMLElement): () => void {
     }
     collection.instruction.textContent = reducedMotion.matches
       ? 'Remember where the ace is, then hide the cards.'
-      : 'Follow the ace. Keep an eye on where it goes.';
+      : 'Follow the ace as the cards move.';
     collection.reader.textContent = '';
     paintTrick(collection);
   }
@@ -167,8 +167,8 @@ export function initDiscoveries(root: HTMLElement): () => void {
     collection.selected = identity;
     collection.phase = 'result';
     collection.instruction.textContent = identity === 0
-      ? 'You kept up. Ace found.'
-      : `The ace was ${collection.order.indexOf(0) === 1 ? 'in the middle' : `on the ${positions[collection.order.indexOf(0)]}`}. One more?`;
+      ? 'You found the ace.'
+      : `The ace was ${collection.order.indexOf(0) === 1 ? 'in the middle' : `on the ${positions[collection.order.indexOf(0)]}`}.`;
     collection.reader.textContent = '';
     paintTrick(collection);
     if (!reducedMotion.matches) {
@@ -184,11 +184,11 @@ export function initDiscoveries(root: HTMLElement): () => void {
     const details = document.createElement('details');
     details.className = 'bc-discoveries';
     details.innerHTML = `
-      <summary class="bc-discoveries-summary" title="A few things to find">
+      <summary class="bc-discoveries-summary" title="Find four suits">
         ${discoveries.map(item => `<span class="bc-discovery-mark" aria-hidden="true">${item.mark}</span>`).join('')}
       </summary>
       <div class="bc-discoveries-panel">
-        <p class="bc-discoveries-heading">A few things to find</p>
+        <p class="bc-discoveries-heading">Find four suits</p>
         <ul class="bc-discoveries-clues">
           ${discoveries.map(item => `<li><span aria-hidden="true">${item.mark}</span><span class="bc-discovery-clue"></span></li>`).join('')}
         </ul>
@@ -265,7 +265,7 @@ export function initDiscoveries(root: HTMLElement): () => void {
     const complete = found.size === discoveries.length;
     collections.forEach(collection => {
       collection.summary.setAttribute('aria-label', `Card discoveries, ${found.size} of ${discoveries.length}${complete ? '. Find the ace unlocked' : ''}`);
-      collection.summary.title = complete ? 'All four suits found. Play Find the ace.' : 'A few things to find';
+      collection.summary.title = complete ? 'All four suits found. Play Find the ace.' : 'Find four suits';
       collection.details.dataset.complete = String(complete);
       discoveries.forEach((item, index) => {
         const discovered = found.has(item.suit);
@@ -278,8 +278,8 @@ export function initDiscoveries(root: HTMLElement): () => void {
       collection.list.hidden = complete;
       collection.reward.hidden = !complete;
       collection.details.querySelector<HTMLElement>('.bc-discoveries-heading')!.textContent = complete
-        ? 'Find the ace.'
-        : 'A few things to find';
+        ? 'Find the ace'
+        : 'Find four suits';
     });
   }
 
@@ -290,7 +290,7 @@ export function initDiscoveries(root: HTMLElement): () => void {
     try { sessionStorage.setItem(storageKey, JSON.stringify([...found])); } catch { /* Storage is optional. */ }
     paint();
     if (found.size === discoveries.length) {
-      live.textContent = 'All four card discoveries found. A small Find the ace card trick is unlocked in the footer.';
+      live.textContent = 'All four suits found. Find the ace is unlocked in the footer.';
     }
   }, { signal });
 

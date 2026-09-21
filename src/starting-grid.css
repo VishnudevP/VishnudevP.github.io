@@ -18,8 +18,7 @@
 #portfolio .bc-grid-beam-side { fill: color-mix(in srgb, var(--bc-card-ink) 18%, var(--bc-card-paper)); }
 #portfolio .bc-grid-lamp { fill: color-mix(in srgb, var(--bc-card-ink) 10%, var(--bc-card-paper)); stroke-opacity: .6; }
 #portfolio .bc-grid-lamp[data-on='true'] { fill: var(--bc-race-red); stroke: var(--bc-race-red); stroke-opacity: 1; }
-#portfolio .bc-grid-label, #portfolio .bc-grid-coordinate { fill: currentColor; font: 4.7px 'IBM Plex Mono', monospace; letter-spacing: .65px; opacity: .58; }
-#portfolio .bc-grid-coordinate { font-size: 5px; }
+#portfolio .bc-grid-label { fill: currentColor; font: 4.7px 'IBM Plex Mono', monospace; letter-spacing: .65px; opacity: .58; }
 #portfolio .bc-grid-controls { display: grid; gap: 12px; }
 #portfolio .bc-grid-instruction { margin: 0; font: 12px/1.6 'DM Sans', sans-serif; opacity: .85; }
 #portfolio .bc-personal-action .bc-grid-trigger {

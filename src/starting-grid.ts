@@ -58,13 +58,12 @@ export function mountStartingGrid(
       </g>
       <text class="bc-grid-label" x="21" y="38">START / FINISH</text>
       <path class="bc-grid-faint" d="M21 45h29l14 16" stroke="currentColor" stroke-width=".7"/>
-      <text class="bc-grid-coordinate" x="190" y="161">01 / GRID</text>
     </svg>`;
 
   const interfaceElement = document.createElement('div');
   interfaceElement.className = 'bc-grid-controls';
   interfaceElement.innerHTML = `
-    <p class="bc-grid-instruction" id="bc-grid-instruction-${suffix}">A visual reaction test. Press again when all five lights go out.</p>
+    <p class="bc-grid-instruction" id="bc-grid-instruction-${suffix}">Press again when all five lights go out.</p>
     <button class="bc-grid-trigger" type="button" aria-describedby="bc-grid-instruction-${suffix} bc-grid-status-${suffix}">Start the lights</button>
     <p class="bc-grid-status" id="bc-grid-status-${suffix}">Click, Enter or Space.</p>`;
   controls.append(interfaceElement);
@@ -110,7 +109,7 @@ export function mountStartingGrid(
     if (!active()) return;
     stopTimer();
     setLights(0);
-    changeState('paused', 'Start again', 'Round paused. Start again when you’re ready.');
+    changeState('paused', 'Start again', 'Round paused.');
   }
 
   function illuminate(index: number): void {
@@ -120,7 +119,7 @@ export function mountStartingGrid(
       schedule(() => illuminate(index + 1), 460);
       return;
     }
-    changeState('waiting', 'Wait for lights out', 'Five lights. Wait for them to go out.', false);
+    changeState('waiting', 'Wait for lights out', 'All five lights are on.', false);
     schedule(() => {
       if (document.hidden || !document.hasFocus()) {
         interrupt();
@@ -130,7 +129,7 @@ export function mountStartingGrid(
       lightsOutAt = performance.now();
       changeState('go', 'Go!', 'Lights out. Go!');
       schedule(() => {
-        changeState('paused', 'Try again', 'Round ended. Try again when you’re ready.');
+        changeState('paused', 'Try again', 'Round ended.');
       }, 8000);
     }, 1000 + Math.random() * 1800);
   }
@@ -159,7 +158,7 @@ export function mountStartingGrid(
     carMotion?.cancel();
     carMotion = undefined;
     setLights(0);
-    changeState('countdown', 'Wait for lights out', 'Watch the lights. Press again only when they go out.');
+    changeState('countdown', 'Wait for lights out', 'Wait until all five lights go out.');
     schedule(() => illuminate(0), 380);
   }
 
