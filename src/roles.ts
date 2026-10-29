@@ -100,7 +100,6 @@ export const roles: Role[] = [
     id: 'magnify', track: 'work', company: 'Magnify Digital', short: 'Magnify', title: 'Software Engineer Intern', dates: 'Sep 2024 – Mar 2025',
     start: monthIndex(2024, 9), end: monthIndex(2025, 3), hue: 78,
     summary: 'Built reporting tools and data pipelines for marketing teams.',
-    metrics: [['30%', 'better reporting accuracy']],
     points: [
       'Built real-time ad analytics with Next.js, TypeScript, and GraphQL, improving reporting accuracy by 30%.',
       'Built AWS Lambda and RDS pipelines that combined third-party data from millions of daily ad impressions.',
