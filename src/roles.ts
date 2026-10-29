@@ -112,7 +112,6 @@ export const roles: Role[] = [
     id: 'shyftlabs', track: 'work', company: 'ShyftLabs', short: 'ShyftLabs', title: 'Software Engineer Intern', dates: 'May – Aug 2024',
     start: monthIndex(2024, 5), end: monthIndex(2024, 8), hue: 150,
     summary: 'Built dashboards and backend services for Carter, a retail media platform.',
-    metrics: [['25%', 'better ad-reporting accuracy'], ['30%', 'lower response times']],
     points: [
       'Built Next.js and React campaign dashboards, improving ad-reporting accuracy by 25%.',
       'Built ad-delivery services with Kotlin, Spring Boot, and GraphQL, reducing response times by 30%.',
