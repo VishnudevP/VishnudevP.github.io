@@ -88,7 +88,6 @@ export const roles: Role[] = [
     id: 'ground', track: 'work', company: 'Ground News', short: 'Ground News', title: 'Software Engineer Intern', dates: 'May – Aug 2025',
     start: monthIndex(2025, 5), end: monthIndex(2025, 8), hue: 22,
     summary: 'Improved article relevance and backend performance.',
-    metrics: [['35%', 'improvement in article relevance'], ['2×', 'concurrent request capacity'], ['500K+', 'monthly readers supported']],
     points: [
       'Rebuilt the retrieval and ranking engine with Elasticsearch, Redis, and TypeScript.',
       'Partitioned the database and deployed AWS microservices to support 500K+ monthly readers.',
