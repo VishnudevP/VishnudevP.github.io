@@ -62,7 +62,6 @@ export const roles: Role[] = [
     id: 'amazon', track: 'work', company: 'Amazon', short: 'Amazon', title: 'Software Engineer Intern, Amazon Ads', dates: 'May – Aug 2026',
     start: monthIndex(2026, 5), end: monthIndex(2026, 8), hue: 55,
     summary: 'Built tools to test interfaces and control dashboard widgets with natural language.',
-    metrics: [['60+', 'rendered states validated'], ['<8 min', 'per validation run'], ['3', 'customer-facing regressions caught before release']],
     points: [
       'Built a Playwright and TypeScript framework that generated UI tests with a language model. It caught three customer-facing regressions before release.',
       'Built a React and TypeScript assistant that used natural-language requests to control three types of dashboard widget.',
