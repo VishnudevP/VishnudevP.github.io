@@ -488,7 +488,6 @@ export function initTimeline(): void {
   // ---------- The two sides ----------
   const workFace = required<HTMLElement>('.face[data-side="work"]');
   const lifeFace = required<HTMLElement>('.face[data-side="life"]');
-  required<HTMLElement>('.sub', workFace).textContent = `Each square is a month, from ${label(0)}, when I started at Waterloo, to the present.`;
   const work = mountGrid(workFace, tracks, [...roles, ...terms], role => role.track === 'work');
   const lifeSide = mountGrid(lifeFace, lifeTracks, life, () => true);
 
