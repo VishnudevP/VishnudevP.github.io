@@ -75,7 +75,6 @@ export const roles: Role[] = [
     id: 'opentext', track: 'work', company: 'OpenText', short: 'OpenText', title: 'Software Engineer Intern', dates: 'Jan – Apr 2026',
     start: monthIndex(2026, 1), end: monthIndex(2026, 4), hue: 255,
     summary: 'Combined CDN, origin, and analytics data for traffic analysis.',
-    metrics: [['3M+', 'events a month'], ['10M+', 'historical events analyzed']],
     points: [
       'Consolidated IIS, Akamai CDN, and Google Analytics logs in Graylog and OpenSearch, processing 3M+ events a month.',
       'Standardized log formats to analyze 10M+ historical events across traffic sources.',
