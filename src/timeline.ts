@@ -543,7 +543,8 @@ export function initTimeline(): void {
   };
   const toggles = [...list.querySelectorAll<HTMLButtonElement>('.ai > button')];
   toggles.forEach(button => {
-    setOpen(button, false);
+    // The current role (Versine) starts open.
+    setOpen(button, button.getAttribute('aria-controls') === `role-${roles.find(role => role.now)?.id}`);
     button.addEventListener('click', () => setOpen(button, button.getAttribute('aria-expanded') !== 'true'));
   });
   list.addEventListener('click', event => {
