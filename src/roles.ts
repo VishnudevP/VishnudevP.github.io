@@ -49,7 +49,7 @@ export interface Role {
 /** Newest first. Wording follows the rest of the site. */
 export const roles: Role[] = [
   {
-    id: 'versine', track: 'work', company: 'Versine', short: 'Versine', title: 'My startup · Oversine, Inc.', dates: 'Sep 2026 – now',
+    id: 'versine', track: 'work', company: 'Versine', short: 'Versine', title: 'Oversine, Inc.', dates: 'Sep 2026 – now',
     start: monthIndex(2026, 9), end: monthIndex(2026, 9), now: true,
     summary: 'Let your agent send and receive money.',
     points: [
