@@ -1,419 +1,191 @@
 <!doctype html>
-<html lang="en" data-palette="dark" data-deck="noir">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Vishnudev Poil — Software developer</title>
     <meta
       name="description"
-      content="Vishnudev Poil — developer building Oversine, with a background in Management Engineering at Waterloo. Experience, projects, and life beyond work."
+      content="Vishnudev Poil, software developer building Versine, which lets AI agents send and receive money. Management Engineering at Waterloo; interned at Amazon, OpenText and Ground News."
     />
-    <meta name="theme-color" content="#1c1b1a" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Vishnudev Poil — Developer" />
+    <meta property="og:title" content="Vishnudev Poil — Software developer" />
     <meta property="og:url" content="https://vishnudevp.github.io/" />
-    <meta
-      property="og:description"
-      content="Building Oversine. Explore my experience, past projects, and life beyond work."
-    />
+    <meta property="og:description" content="Building Versine, which lets AI agents send and receive money. Experience at Amazon, OpenText and Ground News." />
     <meta name="twitter:card" content="summary" />
-    <title>Vishnudev Poil — Developer</title>
     <link rel="canonical" href="https://vishnudevp.github.io/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-      (() => {
-        const decks = {
-          noir: ['dark', '#1c1b1a'], ivory: ['light', '#f5f0e8'],
-          midnight: ['dark', '#151c2a'], bordeaux: ['dark', '#241b20'],
-        };
-        let deck = matchMedia('(prefers-color-scheme: dark)').matches ? 'noir' : 'ivory';
-        try {
-          const saved = localStorage.getItem('vishnu-deck');
-          const legacy = localStorage.getItem('vishnu-theme');
-          if (Object.hasOwn(decks, saved)) deck = saved;
-          else if (legacy === 'light' || legacy === 'dark') deck = legacy === 'light' ? 'ivory' : 'noir';
-        } catch {}
-        const [palette, background] = decks[deck];
-        document.documentElement.dataset.deck = deck;
-        document.documentElement.dataset.palette = palette;
-        document.documentElement.style.colorScheme = palette;
-        document.documentElement.style.backgroundColor = background;
-        document.querySelector('meta[name="theme-color"]').content = background;
-      })();
-    </script>
-    <noscript>
-      <style>
-        #portfolio {
-          display: block !important;
-        }
-        #portfolio .bc-bonus[hidden] {
-          display: block !important;
-        }
-        #portfolio .bc-deck-toggle,
-        #portfolio .bc-card-place,
-        #portfolio .bc-bonus-link,
-        #portfolio .bc-return,
-        #portfolio .bc-end-return,
-        #portfolio .bc-small-card,
-        #portfolio .bc-shuffle-hint {
-          display: none !important;
-        }
-      </style>
-    </noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <a class="skip-link" href="#intro">Skip to content</a>
-    <div
-      id="portfolio"
-      aria-label="Vishnudev Poil’s portfolio"
-      data-palette="dark"
-      data-finish="Foil"
-      data-motion="deal"
-    >
-      <div class="bc-cover bc-sheet">
-        <header class="bc-header">
-          <a href="#intro" class="bc-home">
-            vishnu
-            <span>/</span>
-            poil
-          </a>
-          <nav aria-label="Portfolio">
-            <a href="#experience">Experience</a>
-            <a class="bc-nav-projects" href="#projects">Projects</a>
-            <button class="bc-deck-toggle" type="button" aria-label="Choose your deck" aria-haspopup="dialog">
-              <span class="bc-deck-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-              <span class="bc-deck-label">Choose deck</span>
-            </button>
-          </nav>
-        </header>
-        <main>
-          <section class="bc-intro" id="intro">
-            <div class="bc-intro-copy">
-              <h1>Hi, I’m Vishnu<span>.</span></h1>
-              <p>
-                I’m a software developer with a background in Management
-                Engineering at Waterloo.
-              </p>
-              <p class="bc-intro-last">
-                I’m building Oversine, an authentication platform for AI agents.
-              </p>
-            </div>
-            <div class="bc-card-place">
-              <button
-                class="bc-playing-card"
-                type="button"
-                aria-label="Explore beyond work with Vishnu’s playing card"
-              >
-                <span class="bc-card-object" aria-hidden="true">
-                  <span class="bc-card-face bc-card-front">
-                    <span class="bc-card-frame"></span>
-                    <span class="bc-card-corner bc-card-corner-top">
-                      V
-                      <small>P</small>
-                    </span>
-                    <span class="bc-card-corner bc-card-corner-bottom">
-                      V
-                      <small>P</small>
-                    </span>
-                    <span class="bc-guilloche">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </span>
-                    <span class="bc-card-letter">
-                      <span>V</span>
-                      <span>V</span>
-                    </span>
-                    <span class="bc-card-imprint">VISHNUDEV POIL</span>
-                  </span>
-                  <span class="bc-card-face bc-card-back">
-                    <span class="bc-card-frame"></span>
-                    <span class="bc-card-back-text">
-                      Beyond
-                      <br />
-                      <em>work</em>
-                    </span>
-                  </span>
-                </span>
-              </button>
-              <button class="bc-card-hint" type="button">
-                Beyond work
-              </button>
-            </div>
-          </section>
-          <section class="bc-now" id="work" aria-labelledby="oversine-title">
-            <div class="bc-now-label"><span class="bc-now-type">My startup</span></div>
-            <div class="bc-now-content">
-              <h2 id="oversine-title">oversine</h2>
-              <p>Authentication for AI agents.</p>
-              <a class="bc-work-action" href="https://oversine.com/" target="_blank" rel="noopener noreferrer">Visit Oversine</a>
-            </div>
-          </section>
-          <section class="bc-experience" id="experience" aria-labelledby="experience-title">
-            <div class="bc-section-heading">
-              <h2 id="experience-title">Experience</h2>
-            </div>
-            <div class="bc-experience-browser">
-              <div class="bc-employer-list" hidden>
-                <button class="bc-employer" data-role="amazon" type="button">
-                  <span>Amazon</span><small>2026</small>
-                </button>
-                <button class="bc-employer" data-role="opentext" type="button">
-                  <span>OpenText</span><small>2026</small>
-                </button>
-                <button class="bc-employer" data-role="ground-news" type="button">
-                  <span>Ground News</span><small>2025</small>
-                </button>
-                <button class="bc-employer" data-role="magnify" type="button">
-                  <span>Magnify Digital</span><small>2024–25</small>
-                </button>
-                <button class="bc-employer" data-role="shyftlabs" type="button">
-                  <span>ShyftLabs</span><small>2024</small>
-                </button>
-                <button class="bc-employer" data-role="wenu" type="button">
-                  <span>WENU</span><small>2023</small>
-                </button>
-                <button class="bc-employer" data-role="sashido" type="button">
-                  <span>Sashido</span><small>2021</small>
-                </button>
-              </div>
-              <div class="bc-job-pages">
-                <article class="bc-job" id="job-amazon" data-role="amazon">
-                  <header class="bc-job-head">
-                    <div><h3>Amazon</h3><p>Software Engineer Intern, Amazon Ads</p></div>
-                    <span class="bc-job-dates">May – August 2026</span>
-                  </header>
-                  <h4>Testing tools for Amazon Ads</h4>
-                  <p class="bc-job-intro">Built tools to test interfaces and control dashboard widgets with natural language.</p>
-                  <dl class="bc-job-results">
-                    <div><dt>rendered states validated</dt><dd>60+</dd></div>
-                    <div><dt>per validation run</dt><dd>&lt;8 min</dd></div>
-                  </dl>
-                  <ul class="bc-job-contributions">
-                    <li>Built a Playwright and TypeScript framework that generated UI tests with a language model. It caught three customer-facing regressions before release.</li>
-                    <li>Built a React and TypeScript assistant that used natural-language requests to control three types of dashboard widget.</li>
-                    <li>Added UI validation to an eight-stage CI/CD pipeline with AWS CDK, blocking releases when checks failed.</li>
-                  </ul>
-                </article>
-                <article class="bc-job" id="job-opentext" data-role="opentext">
-                  <header class="bc-job-head">
-                    <div><h3>OpenText</h3><p>Software Engineer Intern</p></div>
-                    <span class="bc-job-dates">January – April 2026</span>
-                  </header>
-                  <h4>Log analytics and reporting</h4>
-                  <p class="bc-job-intro">Combined CDN, origin, and analytics data for traffic analysis.</p>
-                  <ul class="bc-job-contributions">
-                    <li>Consolidated IIS, Akamai CDN, and Google Analytics logs in Graylog and OpenSearch, processing 3M+ events a month.</li>
-                    <li>Standardized log formats to analyze 10M+ historical events across traffic sources.</li>
-                    <li>Built a reporting dashboard using Angular, Node.js, and PostgreSQL.</li>
-                  </ul>
-                </article>
-                <article class="bc-job" id="job-ground-news" data-role="ground-news">
-                  <header class="bc-job-head">
-                    <div><h3>Ground News</h3><p>Software Engineer Intern</p></div>
-                    <span class="bc-job-dates">May – August 2025</span>
-                  </header>
-                  <h4>News search and ranking</h4>
-                  <p class="bc-job-intro">Improved article relevance and backend performance.</p>
-                  <dl class="bc-job-results">
-                    <div><dt>improvement in article relevance</dt><dd>35%</dd></div>
-                    <div><dt>concurrent request capacity</dt><dd>2×</dd></div>
-                  </dl>
-                  <ul class="bc-job-contributions">
-                    <li>Rebuilt the retrieval and ranking engine with Elasticsearch, Redis, and TypeScript.</li>
-                    <li>Partitioned the database and deployed AWS microservices to support 500K+ monthly readers.</li>
-                  </ul>
-                </article>
-                <article class="bc-job" id="job-magnify" data-role="magnify">
-                  <header class="bc-job-head">
-                    <div><h3>Magnify Digital</h3><p>Software Engineer Intern</p></div>
-                    <span class="bc-job-dates">September 2024 – March 2025</span>
-                  </header>
-                  <h4>Ad analytics</h4>
-                  <p class="bc-job-intro">Built reporting tools and data pipelines for marketing teams.</p>
-                  <ul class="bc-job-contributions">
-                    <li>Built real-time ad analytics with Next.js, TypeScript, and GraphQL, improving reporting accuracy by 30%.</li>
-                    <li>Built AWS Lambda and RDS pipelines that combined third-party data from millions of daily ad impressions.</li>
-                  </ul>
-                </article>
-                <article class="bc-job" id="job-shyftlabs" data-role="shyftlabs">
-                  <header class="bc-job-head">
-                    <div><h3>ShyftLabs</h3><p>Software Engineer Intern</p></div>
-                    <span class="bc-job-dates">May – August 2024</span>
-                  </header>
-                  <h4>Retail media dashboards</h4>
-                  <p class="bc-job-intro">Built dashboards and backend services for Carter, a retail media platform.</p>
-                  <ul class="bc-job-contributions">
-                    <li>Built Next.js and React campaign dashboards, improving ad-reporting accuracy by 25%.</li>
-                    <li>Built ad-delivery services with Kotlin, Spring Boot, and GraphQL, reducing response times by 30%.</li>
-                  </ul>
-                </article>
-                <article class="bc-job" id="job-wenu" data-role="wenu">
-                  <header class="bc-job-head">
-                    <div><h3>WENU</h3><p>Full-Stack Developer Intern</p></div>
-                    <span class="bc-job-dates">June – September 2023</span>
-                  </header>
-                  <h4>Payments and reliability</h4>
-                  <p class="bc-job-intro">Worked on payment integration, backend code, and bug fixes.</p>
-                  <ul class="bc-job-contributions">
-                    <li>Integrated Stripe payments and updated backend flows in PHP and SQL.</li>
-                    <li>Used Cypress and Sentry to investigate website issues.</li>
-                  </ul>
-                </article>
-                <article class="bc-job" id="job-sashido" data-role="sashido">
-                  <header class="bc-job-head">
-                    <div><h3>Sashido</h3><p>Software Engineer Intern</p></div>
-                    <span class="bc-job-dates">August – November 2021</span>
-                  </header>
-                  <h4>Developer examples and documentation</h4>
-                  <p class="bc-job-intro">Created a sample app and tutorial for Sashido’s platform.</p>
-                  <ul class="bc-job-contributions">
-                    <li>Built a sample app using Sashido and Google’s Teachable Machine.</li>
-                    <li>Tested the platform and suggested improvements to the website.</li>
-                  </ul>
-                </article>
-              </div>
-            </div>
-          </section>
-          <section class="bc-project-archive" id="projects" aria-labelledby="projects-title">
-            <div class="bc-section-heading">
-              <h2 id="projects-title">Projects</h2>
-            </div>
-            <article class="bc-project-entry">
-              <div class="bc-project-name"><span class="bc-kicker">2020 — 2021</span><h3>Crowdsupply</h3><span>Full-stack developer</span></div>
-              <div class="bc-project-story">
-                <p class="bc-project-purpose">Community grocery updates</p>
-                <p>Built during COVID so people could share grocery stock levels and store wait times.</p>
-                <details class="bc-project-notes">
-                  <summary><span class="bc-story-read">Project details</span><span class="bc-story-close">Hide details</span><span class="bc-story-toggle" aria-hidden="true">+</span></summary>
-                  <p>I built the initial website and later developed it into a React and Node.js app.</p>
-                </details>
-              </div>
-            </article>
-          </section>
-        </main>
-        <footer class="bc-footer">
-          <span>Vishnudev Poil</span>
-          <span>vishnudev.me</span>
-          <a
-            href="https://github.com/VishnudevP"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/vishnudev-poil" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <button type="button" class="bc-bonus-link">Beyond work</button>
-        </footer>
-      </div>
-      <section
-        id="beyond-work"
-        class="bc-bonus bc-sheet"
-        aria-label="Beyond work"
-        hidden
-      >
-        <header class="bc-header">
-          <span class="bc-home">
-            vishnu
-            <span>/</span>
-            poil
-          </span>
-          <div class="bc-header-actions">
-            <button class="bc-return" type="button">Back to work</button>
-            <button class="bc-deck-toggle" type="button" aria-label="Choose your deck" aria-haspopup="dialog">
-              <span class="bc-deck-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-              <span class="bc-deck-label">Choose deck</span>
-            </button>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="wrap top">
+      <a class="me" href="#"><i aria-hidden="true">V</i>Vishnudev Poil</a>
+      <nav aria-label="Primary">
+        <a href="#timeline" class="keep">Timeline</a>
+        <a href="#roles">Roles</a>
+        <a href="#education">Education</a>
+        <a href="#beyond">Beyond work</a>
+        <a href="/resume.pdf">Résumé</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="wrap hero" aria-labelledby="name">
+        <div>
+          <h1 id="name">Vishnudev Poil <span>(Vishnu)</span></h1>
+          <p class="lede">Software developer. I’m building <b>Versine</b>, so your agent can send and receive money.</p>
+          <p class="bg">Management Engineering, University of Waterloo. Interned at Amazon, OpenText and Ground News.</p>
+          <div class="links">
+            <a class="btn pri" href="mailto:vmandrap@uwaterloo.ca"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2" /><path d="m2 4 6 5 6-5" /></svg>Email</a>
+            <a class="btn" href="https://www.linkedin.com/in/vishnudevpoil/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="btn" href="https://github.com/VishnudevP" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn" href="/resume.pdf">Résumé</a>
           </div>
-        </header>
-        <div class="bc-bonus-heading">
-          <div class="bc-chapter-seal" aria-hidden="true"></div>
-          <h2>
-            Beyond
-            <em>work</em>
-          </h2>
         </div>
-        <div class="bc-spread">
-          <article class="bc-weekends">
-            <h3 class="bc-weekend-title">Interests</h3>
-            <button
-              class="bc-small-card"
-              type="button"
-              aria-label="Draw a card about me"
-            >
-              <span class="bc-deal-art" aria-hidden="true"></span>
-              <span class="bc-deal-copy">
-                <strong class="bc-shuffle-hint">Draw a card</strong>
-              </span>
-              <span class="bc-deal-count" aria-hidden="true">7 cards</span>
-            </button>
-          </article>
-          <article class="bc-chapters">
-            <h3>Anime &amp; manhwa</h3>
-            <div
-              class="bc-book-stack"
-              aria-label="Anime and manhwa"
-            >
-              <div class="bc-book bc-book-one">
-                <span aria-hidden="true">♣</span>
-                <strong>Anime</strong>
-              </div>
-              <div class="bc-book bc-book-two">
-                <span aria-hidden="true">♠</span>
-                <strong>Manhwa</strong>
-              </div>
-            </div>
-          </article>
-          <article class="bc-soundtrack">
-            <div>
-              <h3>Playlists</h3>
-              <p>
-                I used to make monthly playlists with my own photos as the covers.
-              </p>
-            </div>
-            <div class="bc-playlist-list">
-              <a
-                href="https://open.spotify.com/playlist/5n2epHpOtFEQMm9WbuegXs"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>November</span>
-                <span>2025</span>
-              </a>
-              <a
-                href="https://open.spotify.com/playlist/2wEa8YBXmogelz0fnEEbVk"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>September</span>
-                <span>2025</span>
-              </a>
-              <a
-                href="https://open.spotify.com/playlist/6zuuYvkXprO83aHJPNDQVU"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>July</span>
-                <span>2025</span>
-              </a>
-            </div>
-          </article>
-        </div>
-        <footer class="bc-footer">
-          <span>Vishnudev Poil</span>
-          <span>vishnudev.me</span>
-          <button class="bc-end-return" type="button">Back to work</button>
-        </footer>
+        <aside class="now" aria-labelledby="now-title">
+          <div class="eb"><i aria-hidden="true"></i>Now · My startup</div>
+          <h2 id="now-title">Versine</h2>
+          <p class="now-lede">Let your agent send and receive money.</p>
+          <p>Ask ChatGPT, Claude or Siri to pay a friend, split a bill or settle an invoice, within limits you set and with payments only you can approve. The waitlist is open now.</p>
+          <div class="row"><span>Oversine, Inc.</span><a href="https://versine.com/" target="_blank" rel="noopener noreferrer">versine.com <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" /></svg></a></div>
+        </aside>
       </section>
-      <span class="bc-live" aria-live="polite"></span>
-    </div>
+
+      <section class="wrap" id="timeline" aria-labelledby="timeline-title">
+        <div class="flip" id="card">
+          <div class="flip-in">
+          <div class="panel face" data-side="work">
+            <div class="ph">
+              <div>
+                <div class="th">
+                  <h2 id="timeline-title">Timeline</h2>
+                  <div class="flipsw" role="group" aria-label="Timeline side">
+                    <button type="button" data-show="work" aria-pressed="true">Work</button>
+                    <button type="button" data-show="life" aria-pressed="false">Life</button>
+                  </div>
+                </div>
+                <p class="sub">Each square is a month.</p>
+              </div>
+              <div class="read" aria-live="polite"><span class="m read-month">—</span><span class="r read-role"></span></div>
+            </div>
+            <div class="scroller">
+              <div class="grid" role="grid" aria-label="Months since September 2022, by track" aria-describedby="keys-work"></div>
+              <div class="lane" aria-hidden="true"></div>
+            </div>
+            <label class="scrub"><span class="sr">Scrub through months</span><input type="range" class="range" min="0" value="0" /></label>
+            <div class="foot">
+              <div class="legend">
+                <span><i class="f" aria-hidden="true"></i>Each colour is a role</span>
+                <span><i class="study" aria-hidden="true"></i>Study term</span>
+                <span><i class="coop" aria-hidden="true"></i>Co-op term</span>
+                <span><i class="ring" aria-hidden="true"></i>Now</span>
+              </div>
+              <div class="keys" id="keys-work"><kbd>←</kbd><kbd>→</kbd> months <kbd>↑</kbd><kbd>↓</kbd> tracks <kbd>[</kbd><kbd>]</kbd> roles <kbd>↵</kbd> open · drag to scrub</div>
+            </div>
+          </div>
+          <div class="panel face" data-side="life">
+            <div class="ph">
+              <div>
+                <div class="th">
+                  <h2>Beyond work</h2>
+                  <div class="flipsw" role="group" aria-label="Timeline side">
+                    <button type="button" data-show="work" aria-pressed="false">Work</button>
+                    <button type="button" data-show="life" aria-pressed="true">Life</button>
+                  </div>
+                </div>
+                <p class="sub">Trips, things I do, and my monthly playlists.</p>
+              </div>
+              <div class="read" aria-live="polite"><span class="m read-month">—</span><span class="r read-role"></span></div>
+            </div>
+            <div class="scroller">
+              <div class="grid" role="grid" aria-label="Months since September 2022: trips, life and music" aria-describedby="keys-life"></div>
+              <div class="lane" aria-hidden="true"></div>
+            </div>
+            <label class="scrub"><span class="sr">Scrub through months</span><input type="range" class="range" min="0" value="0" /></label>
+            <div class="foot">
+              <div class="legend">
+                <span><i style="--h:190" aria-hidden="true"></i>Trips</span>
+                <span><i style="--h:85" aria-hidden="true"></i>Life</span>
+                <span><i style="--h:330" aria-hidden="true"></i>Music</span>
+              </div>
+              <div class="keys" id="keys-life"><kbd>←</kbd><kbd>→</kbd> months <kbd>↑</kbd><kbd>↓</kbd> rows <kbd>↵</kbd> open · drag to scrub</div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="scrim" id="scrim"></div>
+        <div class="dwrap" id="dwrap" role="region" aria-label="Details">
+          <div class="din"><div class="detail" id="detail" tabindex="-1"></div></div>
+        </div>
+      </section>
+
+      <section class="wrap block" id="roles" aria-labelledby="roles-title">
+        <div class="sh"><h2 id="roles-title">Roles</h2><button type="button" id="expand-all" aria-pressed="false">Expand all</button></div>
+        <div class="acc" id="acc"></div>
+      </section>
+
+      <section class="wrap block" id="education" aria-labelledby="education-title">
+        <div class="sh"><h2 id="education-title">Education</h2></div>
+        <div class="edu">
+          <div>
+            <h3>University of Waterloo</h3>
+            <p>Management Engineering, Honours, Co-operative Program · Computing Option</p>
+            <p class="edu-meta">Bachelor of Applied Science · Sep 2022 – May 2027 (expected)</p>
+            <p class="edu-award">President’s Scholarship of Distinction</p>
+          </div>
+          <div>
+            <h4 class="courses-h">Selected courses</h4>
+            <ul class="chips">
+              <li>Algorithms and Data Structures</li>
+              <li>Databases and Software Design</li>
+              <li>Principles of Software Engineering</li>
+              <li>Software Design and Architectures</li>
+              <li>Introduction to Machine Learning</li>
+              <li>Search Engines</li>
+              <li>Human-Computer Interaction</li>
+              <li>Decision Support Systems</li>
+              <li>Deterministic Optimization Models and Methods</li>
+              <li>Simulation Analysis and Design</li>
+            </ul>
+            <p class="edu-hint">Every term and its courses are on the School row of the timeline.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap block" id="beyond" aria-labelledby="beyond-title">
+        <div class="sh"><h2 id="beyond-title">Beyond work</h2></div>
+        <div class="beyond">
+          <div class="music">
+            <p class="bl">I used to make monthly playlists, with my own photos as the covers.</p>
+            <ul class="covers" aria-label="Playlists">
+              <li><a href="https://open.spotify.com/playlist/5n2epHpOtFEQMm9WbuegXs" target="_blank" rel="noopener noreferrer"><img src="/covers/nov-2025.jpg" alt="A snowy night outside a building" width="640" height="534" loading="lazy" /><span><b><span class="full">November</span><span class="short">Nov</span> 2025</b> <em>Spotify ↗</em></span></a></li>
+              <li><a href="https://open.spotify.com/playlist/2wEa8YBXmogelz0fnEEbVk" target="_blank" rel="noopener noreferrer"><img src="/covers/sep-2025.jpg" alt="The Shanghai skyline at night" width="640" height="534" loading="lazy" /><span><b><span class="full">September</span><span class="short">Sep</span> 2025</b> <em>Spotify ↗</em></span></a></li>
+              <li><a href="https://open.spotify.com/playlist/6zuuYvkXprO83aHJPNDQVU" target="_blank" rel="noopener noreferrer"><img src="/covers/jul-2025.jpg" alt="A sunset over the water" width="640" height="534" loading="lazy" /><span><b><span class="full">July</span><span class="short">Jul</span> 2025</b> <em>Spotify ↗</em></span></a></li>
+            </ul>
+          </div>
+          <ul class="interests">
+            <li><b>Photography</b><span>I shot the covers for those playlists.</span></li>
+            <li><b>Valorant</b><span>Favourite skins: Reaver and Prelude to Chaos.</span></li>
+            <li><b>Formula 1</b></li>
+            <li><b>Poker</b></li>
+            <li><b>Anime &amp; manhwa</b></li>
+            <li><b>UFC</b></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <span>© 2026 Vishnudev Poil</span>
+      <nav aria-label="Contact"><a href="mailto:vmandrap@uwaterloo.ca">Email</a><a href="https://www.linkedin.com/in/vishnudevpoil/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/VishnudevP" target="_blank" rel="noopener noreferrer">GitHub</a><a href="/resume.pdf">Résumé</a></nav>
+    </footer>
+    <div class="tip" id="tip" aria-hidden="true"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
