@@ -43,6 +43,6 @@ Before pushing UI changes, run the type check and production build, then check:
 
 Local development and commits do not publish anything. `.github/workflows/deploy.yml` has no push trigger; pull requests only check the build. Publication requires manually running **Publish site (manual)** from `main`, which publishes `dist/` through GitHub Pages.
 
-The current hosting address is <https://vishnudevp.github.io/>.
+The site is served at <https://vishnudev.me/> (GoDaddy DNS pointing at GitHub Pages; the custom domain is set in the repository’s Pages settings).
 
 Design explorations from the redesign live in `explorations/`, which is git-ignored and not part of the site or the build.
