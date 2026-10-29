@@ -6,3 +6,7 @@ dist/
 .DS_Store
 *.log
 coverage/
+
+# Design explorations and local tool config stay out of the repo
+explorations/
+.claude/
