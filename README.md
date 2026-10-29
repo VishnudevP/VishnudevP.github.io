@@ -1,6 +1,6 @@
 # Vishnu’s portfolio
 
-A one-page portfolio built with Vite and TypeScript. The centrepiece is a contribution-style timeline: every month since September 2022 is a square, with a Work row coloured by role and a School row for each study and co-op term. Hover or drag across it to see what was happening that month, and open any role or term for its details. The card flips to a Life side with trips, things I've done and monthly playlists. Below it are the roles as an expandable list, Education, and a short Beyond Work section.
+A one-page portfolio built with Vite and TypeScript. The centrepiece is a contribution-style timeline: every month since September 2022 is a square, with a Work row coloured by role and a School row for each study and co-op term. Hover or drag across it to see what was happening that month, and open any role or term for its details. The card can flip to a Life side with trips, things I've done and monthly playlists; it's hidden for now (remove `hidden` from the two `.flipsw` switches in `index.html` to show it). Below it are the roles as an expandable list, Education, and a short Beyond Work section.
 
 ## Develop
 
