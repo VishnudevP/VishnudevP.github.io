@@ -54,6 +54,8 @@ export function initTimeline(): void {
   // so the "now" marker always has a month of its own.
   const count = Math.max(monthIndex(today.getFullYear(), today.getMonth() + 1), monthIndex(2026, 9)) + 1;
   const last = count - 1;
+  // The current month reads as "Present" rather than a date.
+  const when = (i: number): string => (i === last ? 'Present' : label(i));
   for (const role of roles) if (role.now) role.end = last;
   const onGrid = (role: Role): boolean => role.end >= 0 && role.start <= last;
 
@@ -210,7 +212,7 @@ export function initTimeline(): void {
         if (role?.hue != null) cell.style.setProperty('--h', hueOf(role));
         cell.dataset.row = String(row);
         cell.dataset.col = String(col);
-        cell.setAttribute('aria-label', `${labelLong(col)}, ${track.name}: ${role ? `${role.company}, ${kind(role)}` : 'nothing listed'}`);
+        cell.setAttribute('aria-label', `${col === last ? 'Present' : labelLong(col)}, ${track.name}: ${role ? `${role.company}, ${kind(role)}` : 'nothing listed'}`);
         rowEl.append(cell);
         cells[row][col] = cell;
       }
@@ -265,7 +267,7 @@ export function initTimeline(): void {
 
     function setReadout(row: number, col: number): void {
       const role = roleAt(row, col) ?? anyRoleAt(col);
-      readMonth.textContent = label(col);
+      readMonth.textContent = when(col);
       if (!role) { readRole.innerHTML = '<em>Nothing listed</em>'; return; }
       readRole.style.setProperty('--swatch', swatch(role));
       readRole.innerHTML = `<i></i><span><b>${escape(role.company)}</b> <em>· ${escape(kind(role))}</em></span>`;
@@ -277,8 +279,8 @@ export function initTimeline(): void {
       const role = roleAt(row, col);
       const courses = role?.courses?.length ? ` · ${role.courses.length} course${role.courses.length > 1 ? 's' : ''}` : '';
       tip.innerHTML = role
-        ? `<b>${escape(role.company)}</b>${role.term ? '' : ` · ${escape(kind(role))}`}<span>${label(col)}${courses}</span>`
-        : `<b>${label(col)}</b><span>${rows[row].name} · nothing listed</span>`;
+        ? `<b>${escape(role.company)}</b>${role.term ? '' : ` · ${escape(kind(role))}`}<span>${when(col)}${courses}</span>`
+        : `<b>${when(col)}</b><span>${rows[row].name} · nothing listed</span>`;
       const box = cell.getBoundingClientRect();
       const x = box.left + box.width / 2 + window.scrollX;
       tip.style.left = `${x}px`;
@@ -486,7 +488,7 @@ export function initTimeline(): void {
   // ---------- The two sides ----------
   const workFace = required<HTMLElement>('.face[data-side="work"]');
   const lifeFace = required<HTMLElement>('.face[data-side="life"]');
-  required<HTMLElement>('.sub', workFace).textContent = `Each square is a month, from ${label(0)}, when I started at Waterloo, to ${label(last)}.`;
+  required<HTMLElement>('.sub', workFace).textContent = `Each square is a month, from ${label(0)}, when I started at Waterloo, to the present.`;
   const work = mountGrid(workFace, tracks, [...roles, ...terms], role => role.track === 'work');
   const lifeSide = mountGrid(lifeFace, lifeTracks, life, () => true);
 
