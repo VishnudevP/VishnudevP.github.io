@@ -52,7 +52,6 @@ img { display: block; max-width: 100%; height: auto; }
 .skip { position: absolute; z-index: 60; left: 16px; top: 12px; padding: 8px 12px; border-radius: 8px; background: var(--ink); color: var(--bg); transform: translateY(-200%); }
 .skip:focus { transform: none; }
 .wrap { width: min(1240px, 100% - 64px); margin: 0 auto; }
-.eb { font: 500 11px/1 var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.07em; }
 
 /* Top bar */
 .top { display: flex; align-items: center; justify-content: space-between; height: 64px; border-bottom: 1px solid var(--line); }
@@ -76,8 +75,6 @@ img { display: block; max-width: 100%; height: auto; }
 .btn svg { width: 13px; height: 13px; flex: none; }
 
 .now { position: relative; border-radius: 18px; padding: 24px 24px 22px; background: var(--panel); box-shadow: var(--shadow); }
-.now .eb { display: flex; align-items: center; gap: 8px; }
-.now .eb i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgb(34 197 94 / 18%); }
 .now h2 { font-size: 26px; font-weight: 600; letter-spacing: -0.04em; margin-top: 14px; line-height: 1.1; }
 .now .now-lede { font-size: 16px; color: var(--ink); margin-top: 6px; letter-spacing: -0.01em; }
 .now p:not(.now-lede) { font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin-top: 10px; }
