@@ -117,7 +117,7 @@ export const roles: Role[] = [
   },
   {
     id: 'wenu', track: 'work', company: 'WENU', short: 'WENU', title: 'Full-Stack Developer Intern', dates: 'Jun – Sep 2023',
-    start: monthIndex(2023, 6), end: monthIndex(2023, 9), hue: 200,
+    start: monthIndex(2023, 6), end: monthIndex(2023, 9), hue: 285,
     summary: 'Worked on payment integration, backend code, and bug fixes.',
     points: [
       'Integrated Stripe payments and updated backend flows in PHP and SQL.',
