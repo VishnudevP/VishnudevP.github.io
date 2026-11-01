@@ -16,7 +16,7 @@ const calendar = (i: number): [month: number, year: number] => [(i + FIRST_MONTH
 const label = (i: number): string => { const [m, y] = calendar(i); return `${MONTHS[m]} ${y}`; };
 const labelLong = (i: number): string => { const [m, y] = calendar(i); return `${MONTHS_LONG[m]} ${y}`; };
 const hueOf = (role: Role): string => String(role.hue ?? 0);
-const swatch = (role: Role): string => (role.term ? 'var(--ink-3)' : role.hue == null ? 'var(--ink)' : `oklch(var(--L) var(--C) ${role.hue})`);
+const swatch = (role: Role): string => (role.now ? 'var(--versine)' : role.term ? 'var(--ink-3)' : role.hue == null ? 'var(--ink)' : `oklch(var(--L) var(--C) ${role.hue})`);
 /** School terms use neutral ink; everything else wears its own colour. */
 const inked = (role: Role): boolean => !!role.now || !!role.term;
 /** The short line shown after the name in the readout and tooltip. */
@@ -79,7 +79,7 @@ export function initTimeline(): void {
     detail.style.setProperty('--h', hueOf(role));
     detail.innerHTML =
       '<div class="grab" aria-hidden="true"></div>' +
-      `<div class="dh"><div class="who"><div class="mk${inked(role) ? ' ink' : ''}" aria-hidden="true">${escape(mark)}</div>` +
+      `<div class="dh"><div class="who"><div class="mk${role.now ? ' vs' : inked(role) ? ' ink' : ''}" aria-hidden="true">${escape(mark)}</div>` +
       `<div><h3 id="detail-title">${escape(role.company)}</h3><p>${escape(role.title)}<span class="when">${escape(when)}</span></p></div></div>` +
       '<div class="dctl">' +
       `<button type="button" class="ib" data-step="-1" aria-label="Newer ${noun}"${index <= 0 ? ' disabled' : ''}>${icons.prev}</button>` +
