@@ -21,7 +21,7 @@ const swatch = (role: Role): string => (role.now ? 'var(--versine)' : role.term 
 const inked = (role: Role): boolean => !!role.now || !!role.term;
 /** The short line shown after the name in the readout and tooltip. */
 const kind = (role: Role): string =>
-  role.now ? 'Now' : role.term === 'study' ? 'Study term' : role.term === 'coop' ? 'Co-op term' : role.title.replace(', Amazon Ads', '');
+  role.term === 'study' ? 'Study term' : role.term === 'coop' ? 'Co-op term' : role.title.replace(', Amazon Ads', '');
 const duration = (role: Role): string => {
   if (role.now) return '';
   const months = role.end - role.start + 1;
