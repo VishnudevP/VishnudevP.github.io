@@ -23,8 +23,9 @@
   --versine-edge: #2ec9dc;
 }
 
+/* Dark follows the system unless the toggle in the top bar has picked a side (data-theme on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #0b0b0d;
     --panel: #141417;
     --ink: #ececef;
@@ -39,7 +40,25 @@
     --L: 0.72;
     --shadow: 0 0 0 1px rgb(255 255 255 / 6%), 0 24px 60px -24px rgb(0 0 0 / 70%);
     --versine-edge: #65edff;
+    color-scheme: dark;
   }
+}
+:root[data-theme='dark'] {
+  --bg: #0b0b0d;
+  --panel: #141417;
+  --ink: #ececef;
+  --ink-2: #a3a3ad;
+  --ink-3: #74747e;
+  --line: rgb(255 255 255 / 7%);
+  --line-2: rgb(255 255 255 / 13%);
+  --sel: rgb(255 255 255 / 6%);
+  --cell: rgb(255 255 255 / 6%);
+  --cell-hi: rgb(255 255 255 / 14%);
+  --accent: #8b8cff;
+  --L: 0.72;
+  --shadow: 0 0 0 1px rgb(255 255 255 / 6%), 0 24px 60px -24px rgb(0 0 0 / 70%);
+  --versine-edge: #65edff;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -64,6 +83,12 @@ img { display: block; max-width: 100%; height: auto; }
 .top nav { display: flex; gap: 4px; }
 .top nav a { font-size: 13.5px; color: var(--ink-2); padding: 7px 10px; border-radius: 8px; transition: background 0.2s, color 0.2s; }
 .top nav a:hover { background: var(--sel); color: var(--ink); }
+.top .end { display: flex; align-items: center; gap: 6px; }
+.mode { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: var(--ink-2); border: 1px solid var(--line); transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.mode:hover { background: var(--sel); color: var(--ink); border-color: var(--line-2); }
+.mode svg { width: 16px; height: 16px; }
+.mode .sun, :root[data-shown='dark'] .mode .moon { display: none; }
+:root[data-shown='dark'] .mode .sun { display: block; }
 
 /* Hero */
 .hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; align-items: end; padding: 72px 0 48px; }
