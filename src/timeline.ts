@@ -79,7 +79,8 @@ export function initTimeline(): void {
     detail.style.setProperty('--h', hueOf(role));
     detail.innerHTML =
       '<div class="grab" aria-hidden="true"></div>' +
-      `<div class="dh"><div class="who"><div class="mk${role.now ? ' vs' : inked(role) ? ' ink' : ''}" aria-hidden="true">${escape(mark)}</div>` +
+      `<div class="dh"><div class="who"><div class="mk${role.logo ? ` logo${role.logo.tile ? ' tile' : ''}` : inked(role) ? ' ink' : ''}" aria-hidden="true">` +
+      `${role.logo ? `<img src="${escape(role.logo.src)}" alt="">` : escape(mark)}</div>` +
       `<div><h3 id="detail-title">${escape(role.company)}</h3><p>${escape(role.title)}<span class="when">${escape(when)}</span></p></div></div>` +
       '<div class="dctl">' +
       `<button type="button" class="ib" data-step="-1" aria-label="Newer ${noun}"${index <= 0 ? ' disabled' : ''}>${icons.prev}</button>` +

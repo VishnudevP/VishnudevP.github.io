@@ -41,6 +41,8 @@ export interface Role {
   stack?: string[];
   link?: [label: string, href: string];
   location?: string;
+  /** The company's logo for the details badge: `tile` for logos that fill a square, otherwise drawn on white. */
+  logo?: { src: string; tile?: boolean };
   /** Life entries: a photo shown in the details, as [src, alt]. */
   photo?: [src: string, alt: string];
   note?: string;
@@ -51,6 +53,7 @@ export const roles: Role[] = [
   {
     id: 'versine', track: 'work', company: 'Versine', short: 'Versine', title: 'Co-founder', dates: 'Sep 2026 – now',
     start: monthIndex(2026, 9), end: monthIndex(2026, 9), now: true,
+    logo: { src: '/logos/versine.png', tile: true },
     summary: 'Let your agent send and receive money.',
     points: [
       'Ask ChatGPT, Claude or Siri to pay a friend, split a bill or settle an invoice, within limits you set and with payments only you can approve.',
@@ -61,6 +64,7 @@ export const roles: Role[] = [
   {
     id: 'amazon', track: 'work', company: 'Amazon', short: 'Amazon', title: 'Software Engineer Intern, Amazon Ads', dates: 'May – Aug 2026',
     start: monthIndex(2026, 5), end: monthIndex(2026, 8), hue: 55,
+    logo: { src: '/logos/amazon.svg' },
     summary: 'Built tools to test interfaces and control dashboard widgets with natural language.',
     points: [
       'Built a Playwright and TypeScript framework that generated UI tests with a language model. It caught three customer-facing regressions before release.',
@@ -73,6 +77,7 @@ export const roles: Role[] = [
   {
     id: 'opentext', track: 'work', company: 'OpenText', short: 'OpenText', title: 'Software Engineer Intern', dates: 'Jan – Apr 2026',
     start: monthIndex(2026, 1), end: monthIndex(2026, 4), hue: 255,
+    logo: { src: '/logos/opentext.png', tile: true },
     summary: 'Combined CDN, origin, and analytics data for traffic analysis.',
     points: [
       'Consolidated IIS, Akamai CDN, and Google Analytics logs in Graylog and OpenSearch, processing 3M+ events a month.',
@@ -85,6 +90,7 @@ export const roles: Role[] = [
   {
     id: 'ground', track: 'work', company: 'Ground News', short: 'Ground News', title: 'Software Engineer Intern', dates: 'May – Aug 2025',
     start: monthIndex(2025, 5), end: monthIndex(2025, 8), hue: 22,
+    logo: { src: '/logos/ground.svg' },
     summary: 'Improved article relevance and backend performance.',
     points: [
       'Rebuilt the retrieval and ranking engine with Elasticsearch, Redis, and TypeScript.',
@@ -96,6 +102,7 @@ export const roles: Role[] = [
   {
     id: 'magnify', track: 'work', company: 'Magnify Digital', short: 'Magnify', title: 'Software Engineer Intern', dates: 'Sep 2024 – Mar 2025',
     start: monthIndex(2024, 9), end: monthIndex(2025, 3), hue: 78,
+    logo: { src: '/logos/magnify.png' },
     summary: 'Built reporting tools and data pipelines for marketing teams.',
     points: [
       'Built real-time ad analytics with Next.js, TypeScript, and GraphQL, improving reporting accuracy by 30%.',
@@ -107,6 +114,7 @@ export const roles: Role[] = [
   {
     id: 'shyftlabs', track: 'work', company: 'ShyftLabs', short: 'ShyftLabs', title: 'Software Engineer Intern', dates: 'May – Aug 2024',
     start: monthIndex(2024, 5), end: monthIndex(2024, 8), hue: 150,
+    logo: { src: '/logos/shyftlabs.png' },
     summary: 'Built dashboards and backend services for Carter, a retail media platform.',
     points: [
       'Built Next.js and React campaign dashboards, improving ad-reporting accuracy by 25%.',
@@ -128,6 +136,7 @@ export const roles: Role[] = [
   {
     id: 'sashido', track: 'work', company: 'Sashido', short: 'Sashido', title: 'Software Engineer Intern', dates: 'Aug – Nov 2021',
     start: monthIndex(2021, 8), end: monthIndex(2021, 11), hue: 300,
+    logo: { src: '/logos/sashido.png', tile: true },
     summary: 'Created a sample app and tutorial for Sashido’s platform.',
     points: [
       'Built a sample app using Sashido and Google’s Teachable Machine.',
